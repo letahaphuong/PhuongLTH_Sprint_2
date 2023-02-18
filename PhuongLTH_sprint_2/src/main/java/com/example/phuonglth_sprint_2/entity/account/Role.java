@@ -1,14 +1,9 @@
 package com.example.phuonglth_sprint_2.entity.account;
-
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
 
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "roles")
 public class Role {
     @Id
@@ -19,6 +14,14 @@ public class Role {
     @NaturalId
     @Column(length = 60)
     private RoleName name;
+
+    public Role() {
+    }
+
+    public Role(Long idRole, RoleName name) {
+        this.idRole = idRole;
+        this.name = name;
+    }
 
     public Long getIdRole() {
         return idRole;

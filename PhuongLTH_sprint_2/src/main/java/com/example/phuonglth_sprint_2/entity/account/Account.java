@@ -8,8 +8,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Setter
-@Getter
 @Table(name = "Account", uniqueConstraints = {
         @UniqueConstraint(columnNames = {
                 "email"
@@ -22,6 +20,9 @@ public class Account {
     private Long idAccount;
 
     private String name;
+
+    @Lob // chuỗi văn bản dài
+    private String avatar;
 
     private String email;
 
@@ -37,13 +38,28 @@ public class Account {
     public Account() {
     }
 
-    public Account(Long idAccount, String name, String email, String encryptPassword, boolean flagDelete, Set<Role> roles) {
+    public Account(Long idAccount, String name, String email,String avatar, String encryptPassword, boolean flagDelete, Set<Role> roles) {
         this.idAccount = idAccount;
         this.name = name;
+        this.avatar = avatar;
         this.email = email;
         this.encryptPassword = encryptPassword;
         this.flagDelete = flagDelete;
         this.roles = roles;
+    }
+
+    public Account(String name, String email, String encode) {
+        this.name = name;
+        this.email = email;
+        this.encryptPassword = encode;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public Long getIdAccount() {

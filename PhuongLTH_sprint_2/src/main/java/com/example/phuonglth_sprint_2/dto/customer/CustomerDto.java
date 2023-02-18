@@ -1,36 +1,39 @@
-package com.example.phuonglth_sprint_2.entity.customer;
+package com.example.phuonglth_sprint_2.dto.customer;
 
 import com.example.phuonglth_sprint_2.entity.account.Account;
 import com.example.phuonglth_sprint_2.entity.product.Product;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.validation.constraints.NotBlank;
 
+public class CustomerDto {
 
-@Entity
-public class Customer {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idCustomer;
+    @NotBlank(message = "Không được để trống.")
     private String name;
+    @NotBlank(message = "Không được để trống.")
     private String email;
+    @NotBlank(message = "Không được để trống.")
     private String address;
+    @NotBlank(message = "Không được để trống.")
     private String idCard;
     @Column(columnDefinition = "bit")
     private boolean gender;
     private String dateOfBirth;
     @Column(columnDefinition = "bit default false")
     private boolean flagDelete;
+    @NotBlank(message = "Không được để trống.")
     private String phone;
-
-    @ManyToOne
     private Product product;
-    @OneToOne
     private Account account;
+    private String encryptPassword;
 
-    public Customer() {
+    public CustomerDto() {
     }
 
-    public Customer(Long idCustomer, String name, String email, String address, String idCard, boolean gender, String dateOfBirth, boolean flagDelete, String phone, Product product, Account account) {
+    public CustomerDto(Long idCustomer, String name, String email, String address, String idCard, boolean gender, String dateOfBirth, boolean flagDelete, String phone, Product product, Account account, String encryptPassword) {
         this.idCustomer = idCustomer;
         this.name = name;
         this.email = email;
@@ -42,6 +45,7 @@ public class Customer {
         this.phone = phone;
         this.product = product;
         this.account = account;
+        this.encryptPassword = encryptPassword;
     }
 
     public Long getIdCustomer() {
@@ -130,5 +134,13 @@ public class Customer {
 
     public void setAccount(Account account) {
         this.account = account;
+    }
+
+    public String getEncryptPassword() {
+        return encryptPassword;
+    }
+
+    public void setEncryptPassword(String encryptPassword) {
+        this.encryptPassword = encryptPassword;
     }
 }
