@@ -1,10 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ToastrService} from 'ngx-toastr';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {SecurityService} from "../service/security.service";
-import {TokenService} from "../service/token.service";
-import {Router} from "@angular/router";
-import {Title} from "@angular/platform-browser";
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {SecurityService} from '../service/security.service';
+import {TokenService} from '../service/token.service';
+import {Router} from '@angular/router';
+import {Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-login',
@@ -31,8 +31,8 @@ export class LoginComponent implements OnInit {
 
   getFormLogin(): void {
     this.signInForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.minLength(3)]],
-      password: ['', [Validators.required, Validators.minLength(5)]],
+      email: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
+      password: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(150)]],
       rememberMe: [false]
     });
   }

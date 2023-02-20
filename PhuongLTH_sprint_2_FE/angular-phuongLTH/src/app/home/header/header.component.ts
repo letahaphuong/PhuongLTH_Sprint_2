@@ -12,6 +12,7 @@ export class HeaderComponent implements OnInit {
   checkLogin = false;
   name: string | null = '';
   roles: string[] = [];
+  avatar: string | null = '';
 
   constructor(private toast: ToastrService,
               private router: Router,
@@ -23,6 +24,7 @@ export class HeaderComponent implements OnInit {
       this.checkLogin = true;
       this.name = this.tokenService.getName();
       this.roles = this.tokenService.getRole();
+      this.avatar = this.tokenService.getAvatar();
     }
   }
 

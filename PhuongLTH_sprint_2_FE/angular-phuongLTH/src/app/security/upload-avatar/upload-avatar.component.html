@@ -1,0 +1,11 @@
+<div>
+  <input type="file" (change)="onFileChanged($event)">
+  <button class="btn btn-secondary" type="button" disabled *ngIf="checkUpload">
+    <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+    Đang tải...
+  </button>
+  <button *ngIf="downloadURL? !selectedFire : selectedFire && !checkUpload" class="btn-secondary btn" (click)="onUpload()">Tải lên</button>
+  <div *ngIf="downloadURL" style="margin-bottom: 10px; margin-top: 10px">
+    <img [src]="downloadURL" style="width: 300px; height: auto">
+  </div>
+</div>

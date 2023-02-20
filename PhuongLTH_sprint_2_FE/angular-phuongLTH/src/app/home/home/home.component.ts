@@ -12,4 +12,7 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  uploadAvatar($event: string): void {
+    console.log($event);
+  }
 }

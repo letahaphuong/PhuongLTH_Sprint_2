@@ -1,7 +1,7 @@
 package com.example.phuonglth_sprint_2.jwt.userprincal;
 
 import com.example.phuonglth_sprint_2.entity.account.Account;
-import com.example.phuonglth_sprint_2.repository.IAccountRepository;
+import com.example.phuonglth_sprint_2.repository.account.IAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

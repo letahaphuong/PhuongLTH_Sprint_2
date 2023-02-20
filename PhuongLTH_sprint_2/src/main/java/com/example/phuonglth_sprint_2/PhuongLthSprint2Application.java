@@ -10,4 +10,5 @@ public class PhuongLthSprint2Application {
         SpringApplication.run(PhuongLthSprint2Application.class, args);
     }
 
+
 }

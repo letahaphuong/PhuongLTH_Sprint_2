@@ -1,8 +1,11 @@
 package com.example.phuonglth_sprint_2.entity.employee;
 
 import com.example.phuonglth_sprint_2.entity.account.Account;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 public class Employee {
@@ -15,6 +18,8 @@ public class Employee {
     private String phone;
     private String email;
     private String idCard;
+    @Column(columnDefinition = "bit")
+    private boolean gender;
     @OneToOne
     private Account account;
     @Column(columnDefinition = "date")
@@ -22,19 +27,40 @@ public class Employee {
     @Column(columnDefinition = "bit default false")
     private boolean flagDelete;
 
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "create_date")
+    private Date createDate;
+
+    @UpdateTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "modify_date")
+    private Date modifyDate;
+
     public Employee() {
     }
 
-    public Employee(Long idEmployee, String name, String address, String phone, String email, String idCard, Account account, String dateOfBirth, boolean flagDelete) {
+    public Employee(Long idEmployee, String name, String address, String phone, String email, String idCard, boolean gender, Account account, String dateOfBirth, boolean flagDelete, Date createDate, Date modifyDate) {
         this.idEmployee = idEmployee;
         this.name = name;
         this.address = address;
         this.phone = phone;
         this.email = email;
         this.idCard = idCard;
+        this.gender = gender;
         this.account = account;
         this.dateOfBirth = dateOfBirth;
         this.flagDelete = flagDelete;
+        this.createDate = createDate;
+        this.modifyDate = modifyDate;
+    }
+
+    public boolean isGender() {
+        return gender;
+    }
+
+    public void setGender(boolean gender) {
+        this.gender = gender;
     }
 
     public Long getIdEmployee() {

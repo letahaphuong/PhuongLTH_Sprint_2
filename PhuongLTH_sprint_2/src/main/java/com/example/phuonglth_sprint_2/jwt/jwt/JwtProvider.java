@@ -13,7 +13,7 @@ import java.util.Date;
 public class JwtProvider {
     private static final Logger logger = LoggerFactory.getLogger(JwtProvider.class);// ghi log trong class jwtprovider
     private String jwtSecret = "letahaphuong@gmail.com"; // chữ ký của token
-    private int jwtExpiration = 86400; // thời gian sống token 1 ngày
+    private final int jwtExpiration = 86400; // thời gian sống token 1 ngày
 
     public String createToken(Authentication authentication) {
         AccountPrinciple accountPrinciple = (AccountPrinciple) authentication.getPrincipal();
@@ -21,7 +21,7 @@ public class JwtProvider {
         return Jwts.builder()
                 .setSubject(accountPrinciple.getUsername()) // thêm vào
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(new Date().getTime() + jwtExpiration * 1000))
+                .setExpiration(new Date(new Date().getTime() + jwtExpiration * 1000L))
                 .signWith(SignatureAlgorithm.HS512, jwtSecret)
                 .compact();
     }

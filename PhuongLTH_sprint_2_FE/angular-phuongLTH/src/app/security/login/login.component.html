@@ -11,7 +11,8 @@
               <div class="text-danger"
                    *ngIf="signInForm.controls.email.invalid && signInForm.controls.email.touched else elseBlock">
                 <span *ngIf="signInForm.controls.email.hasError('required')"><i class="fa-solid fa-triangle-exclamation"></i>&nbsp;Tên tài khoản không được để trống.</span>
-                <span *ngIf="signInForm.controls.email.hasError('minlength')"><i class="fa-solid fa-triangle-exclamation"></i>&nbsp;Tên tài khoản Không nhỏ hơn 3 ký tự.</span>
+                <span *ngIf="signInForm.controls.email.hasError('minlength')"><i class="fa-solid fa-triangle-exclamation"></i>&nbsp;Tên tài khoản không nhỏ hơn 3 ký tự.</span>
+                <span *ngIf="signInForm.controls.email.hasError('maxlength')"><i class="fa-solid fa-triangle-exclamation"></i>&nbsp;Tên tài khoản không được quá 100 ký tự.</span>
               </div>
               <ng-template #elseBlock><br></ng-template>
             </div>
@@ -21,7 +22,8 @@
               <div class="text-danger"
                    *ngIf="signInForm.controls.password.invalid && signInForm.controls.password.touched else elseBlock">
                 <span *ngIf="signInForm.controls.password.hasError('required')"><i class="fa-solid fa-triangle-exclamation"></i>&nbsp;Mật khẩu không được để trống.</span>
-                <span *ngIf="signInForm.controls.password.hasError('minlength')"><i class="fa-solid fa-triangle-exclamation"></i>&nbsp;Mật khẩu Không nhỏ hơn 5 ký tự.</span>
+                <span *ngIf="signInForm.controls.password.hasError('minlength')"><i class="fa-solid fa-triangle-exclamation"></i>&nbsp;Mật khẩu không nhỏ hơn 5 ký tự.</span>
+                <span *ngIf="signInForm.controls.password.hasError('maxlength')"><i class="fa-solid fa-triangle-exclamation"></i>&nbsp;Mật khẩu không được quá 150 ký tự.</span>
               </div>
               <ng-template #elseBlock><br></ng-template>
             </div>

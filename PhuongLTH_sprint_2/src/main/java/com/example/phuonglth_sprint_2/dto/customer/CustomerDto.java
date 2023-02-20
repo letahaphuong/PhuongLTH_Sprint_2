@@ -29,11 +29,12 @@ public class CustomerDto {
     private Product product;
     private Account account;
     private String encryptPassword;
+    private String avatar;
 
     public CustomerDto() {
     }
 
-    public CustomerDto(Long idCustomer, String name, String email, String address, String idCard, boolean gender, String dateOfBirth, boolean flagDelete, String phone, Product product, Account account, String encryptPassword) {
+    public CustomerDto(Long idCustomer, String name, String email, String address, String idCard, boolean gender, String dateOfBirth, boolean flagDelete, String phone, Product product, Account account, String encryptPassword, String avatar) {
         this.idCustomer = idCustomer;
         this.name = name;
         this.email = email;
@@ -46,6 +47,15 @@ public class CustomerDto {
         this.product = product;
         this.account = account;
         this.encryptPassword = encryptPassword;
+        this.avatar = avatar;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public Long getIdCustomer() {

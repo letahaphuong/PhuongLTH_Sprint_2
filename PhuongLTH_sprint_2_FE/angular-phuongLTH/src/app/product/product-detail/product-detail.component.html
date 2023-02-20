@@ -1,0 +1,91 @@
+<!--<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">-->
+<!--<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>-->
+
+<div class="container">
+  <div class="row">
+    <div class="container d-flex">
+      <div class="col-xs-5 item-photo">
+        <img src="../../../assets/images/items/kbvision-3.jpg" style="max-width:100%;"/>
+      </div>
+      <div class="col-xs-6 justify-content-between" style="border:0px">
+        <br>
+        <br>
+        <h3>Camera IP hồng ngoại không dây KBVISION KBONE KN-H22PW</h3>
+        <h5 style="color:#337ab7">Hãng sản xuất <a href="#">KBVISION</a></h5>
+        <h5 class=""><span>Giá:</span></h5>
+        <span class="title-text">1,650,000 đ</span>
+
+        <div class="section">
+          <h6 class="title-attr" style="margin-top:15px;"><span>Dộ phân giải : <span
+            class="title-attr">2.0 Megapixel.</span></span></h6>
+          <h6 class="title-attr" style="margin-top:15px;"><span>Tốc độ ghi hình : <span
+            class="title-attr">30fps@1080P.</span></span></h6>
+        </div>
+        <div class="section" style="padding-bottom:20px;">
+          <h6 class="title-attr"><span>Số lượng</span></h6>
+          <div>
+            <div style="height: 27px" class="btn btn-minus"><p>-</p></div>
+            <input  style="height: 27px" value="1" style="width: 40px"/>
+            <div style="height: 27px" class="btn btn-plus"><p>+</p></div>
+          </div>
+        </div>
+
+        <div class="section" style="padding-bottom:20px;">
+          <button class="btn btn-success" style="border-radius: 10px" routerLink="/product/cart">
+            <span style="margin-right:20px" class=" glyphicon glyphicon-shopping-cart"
+                  aria-hidden="true"></span>Thêm vào giỏ hàng
+          </button>
+        </div>
+        <div>
+          <h1>Lượt đánh giá</h1>
+          <div *ngIf="showRatingValue">
+            Tỉ lệ : {{ ratingValue }} / 10
+          </div>
+
+
+          <span class="rating-bar" (mouseleave)="reset()">
+        <span class="fa fa-star"
+        [class.active]="item.active"
+        *ngFor="let item of ratingUnits; index as i"
+        (click)="select(i)" (mouseenter)="enter(i)">
+<!--    {{item.value}}-->
+        </span>
+</span>
+        </div>
+      </div>
+      <div class="col-xs-1"></div>
+    </div>
+
+    <div class="container">
+
+      <div class="col-xs-12">
+        <ul class="menu-items">
+          <li class="active1">Chi tiết sản phẩm</li>
+        </ul>
+        <div style="width:100%;border-top:1px solid silver">
+          <p style="padding:15px;">
+          <span>
+            Camera Kbvision là thương hiệu Mỹ hàng nguyên chiếc giá tốt, với quy mô của một doanh nghiệp đa quốc gia, tùy theo từng phân khúc sản phẩm và lĩnh vực mà các sản phẩm của Camera KBvision được sản xuất tại các nhà máy của Tập đoàn tại Mỹ, Đài Loan, Trung Quốc và Hàn Quốc. Toàn bộ các hoạt động R&D, design và marketing sẽ do tập đoàn mẹ tại Mỹ đảm nhận. Và cửa hàng bán camera tại Đà Nẵng là một trong những đơn vị Phân phối và lắp đặt KBvision chính thức tại Việt Nam đồng thời là một trong những công ty lắp đặt Camera KBvision KH Series hàng đầu.
+          </span>
+          </p>
+          <span>
+          <ul>
+            <li>Cảm biến hình ảnh: 1/2.8 inch CMOS.</li>
+            <li>Độ phân giải: max 25/30fps@1080P(1920×1080).</li>
+            <li>Chuẩn nén hình ảnh: H265+/H.265/H.264+/H264 giúp tiết kiệm băng thông và dung lượng lưu trữ.</li>
+            <li>Ống kính: 3.6mm (góc nhìn 91°).</li>
+            <li>Ống kính: 3.6mm (góc nhìn 91°).</li>
+            <li>Hỗ trợ công nghệ Starlight giúp quan sát tốt hơn trong điều kiện thiếu sáng.</li>
+            <li>Hỗ trợ chức năng phát hiện thông minh: Hàng rào ảo, xâm nhập, phát hiện tăng giảm điện áp</li>
+            <li>Hỗ trợ thẻ nhớ 256GB.</li>
+            <li> Hỗ trợ chuẩn kết nối Onvif.</li>
+            <li> Hỗ trợ tên miền kbvision.tv.</li>
+
+          </ul>
+        </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

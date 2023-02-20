@@ -1,9 +1,13 @@
 package com.example.phuonglth_sprint_2.entity.customer;
 
 import com.example.phuonglth_sprint_2.entity.account.Account;
+import com.example.phuonglth_sprint_2.entity.product.Order;
 import com.example.phuonglth_sprint_2.entity.product.Product;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.util.Date;
 
 
 @Entity
@@ -23,14 +27,24 @@ public class Customer {
     private String phone;
 
     @ManyToOne
-    private Product product;
+    private Order order;
     @OneToOne
     private Account account;
+
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "create_date")
+    private Date createDate;
+
+    @UpdateTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "modify_date")
+    private Date modifyDate;
 
     public Customer() {
     }
 
-    public Customer(Long idCustomer, String name, String email, String address, String idCard, boolean gender, String dateOfBirth, boolean flagDelete, String phone, Product product, Account account) {
+    public Customer(Long idCustomer, String name, String email, String address, String idCard, boolean gender, String dateOfBirth, boolean flagDelete, String phone, Order order, Account account) {
         this.idCustomer = idCustomer;
         this.name = name;
         this.email = email;
@@ -40,7 +54,7 @@ public class Customer {
         this.dateOfBirth = dateOfBirth;
         this.flagDelete = flagDelete;
         this.phone = phone;
-        this.product = product;
+        this.order = order;
         this.account = account;
     }
 
@@ -116,12 +130,12 @@ public class Customer {
         this.phone = phone;
     }
 
-    public Product getProduct() {
-        return product;
+    public Order getOrder() {
+        return order;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setOrder(Order order) {
+        this.order = order;
     }
 
     public Account getAccount() {
