@@ -48,6 +48,9 @@ export class LoginComponent implements OnInit {
         if (data.token !== undefined) {
           if (this.signInForm?.value.rememberMe) {
             this.tokenService.rememberMe(data.roles, data.name, data.token);
+            this.toast.info('Đăng nhập thành công.', 'Thông báo', {
+              timeOut: 3000
+            });
             location.href = 'http://localhost:4200/home';
           } else {
             this.tokenService.setToken(data.token);

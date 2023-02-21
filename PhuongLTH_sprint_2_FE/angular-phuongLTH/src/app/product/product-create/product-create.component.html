@@ -1,0 +1,164 @@
+<div class="container pt-2 mb-5" style="background-color:#FFFFFF;">
+  <button class="btn" type="button" routerLink=""><i class="fa-solid fa-arrow-left"></i></button>
+  <p class="text-center p-title fw-bold">THÊM BÀI ĐĂNG</p>
+  <hr>
+  <form [formGroup]="productForm" (ngSubmit)="createProduct()" >
+    <div class="row mt-4 mx-3 mb-3">
+      <div class="col-2"></div>
+      <div class="col-2">
+        <label for="nameProduct" class="form-label">Tên Sản Phẩm(<span
+          class="requirement-field">*</span>):</label>
+      </div>
+      <div class="col-5">
+        <input formControlName="nameProduct" class="form-control" type="text" id="nameProduct">
+      </div>
+    </div>
+    <div class="row mt-4 mx-3 mb-3">
+      <div class="col-2"></div>
+      <div class="col-2">
+        <label for="description" class="form-label">Miêu Tả(<span
+          class="requirement-field">*</span>):</label>
+      </div>
+      <div class="col-5">
+        <textarea formControlName="description" class="form-control" type="text" id="description"></textarea>
+      </div>
+    </div>
+    <div class="row mt-4 mx-3 mb-3">
+      <div class="col-2"></div>
+      <div class="col-2">
+        <label for="imageSensor" class="form-label">Cảm Biến Hình Ảnh(<span
+          class="requirement-field">*</span>):</label>
+      </div>
+      <div class="col-5">
+        <input formControlName="imageSensor" class="form-control" type="text" id="imageSensor">
+      </div>
+    </div>
+    <div class="row mt-4 mx-3 mb-3">
+      <div class="col-2"></div>
+      <div class="col-2">
+        <label for="resolution" class="form-label">Độ Phân Giải(<span
+          class="requirement-field">*</span>):</label>
+      </div>
+      <div class="col-5">
+        <input formControlName="resolution" class="form-control" type="text" id="resolution">
+      </div>
+    </div>
+    <div class="row mt-4 mx-3 mb-3">
+      <div class="col-2"></div>
+      <div class="col-2">
+        <label for="memory" class="form-label">Bộ nhớ(<span
+          class="requirement-field">*</span>):</label>
+      </div>
+      <div class="col-5">
+        <input formControlName="memory" class="form-control" type="text" id="memory">
+      </div>
+    </div>
+    <div class="row mt-4 mx-3 mb-3">
+      <div class="col-2"></div>
+      <div class="col-2">
+        <label for="autoWhiteBalanceFunction" class="form-label">Tự Động Cân Bằng Sáng(<span
+          class="requirement-field">*</span>):</label>
+      </div>
+      <div class="col-5">
+        <input formControlName="autoWhiteBalanceFunction" class="form-control" type="text" id="autoWhiteBalanceFunction">
+      </div>
+    </div>
+    <div class="row mt-4 mx-3 mb-3">
+      <div class="col-2"></div>
+      <div class="col-2">
+        <label for="material" class="form-label">Chất Liêu(<span
+          class="requirement-field">*</span>):</label>
+      </div>
+      <div class="col-5">
+        <input formControlName="material" class="form-control" type="text" id="material">
+      </div>
+    </div>
+    <div class="row mt-4 mx-3 mb-3">
+      <div class="col-2"></div>
+      <div class="col-2">
+        <label for="speedRecord" class="form-label">Tốc Độ Ghi Hình(<span
+          class="requirement-field">*</span>):</label>
+      </div>
+      <div class="col-5">
+        <input formControlName="speedRecord" class="form-control" type="text" id="speedRecord">
+      </div>
+    </div>
+    <div class="row mt-4 mx-3 mb-3">
+      <div class="col-2"></div>
+      <div class="col-2">
+        <label for="infraredVision" class="form-label">Tầm Quan Sát(<span
+          class="requirement-field">*</span>):</label>
+      </div>
+      <div class="col-5">
+        <input formControlName="infraredVision" class="form-control" type="text" id="infraredVision">
+      </div>
+    </div>
+    <div class="row mt-4 mx-3 mb-3">
+      <div class="col-2"></div>
+      <div class="col-2">
+        <label for="nameCategory" class="form-label">Hãng Sản Xuất(<span
+          class="requirement-field">*</span>):</label>
+      </div>
+      <div class="col-5">
+        <select class="form-select" formControlName="createDateProduct"  id="nameCategory">
+          <option [selected]="true" [value]="">--Chọn hãng sản xuất--</option>
+          <option [value]="1">HIKVISION</option>
+          <option [value]="2">KBVISION</option>
+          <option [value]="3">VANTECH</option>
+          <option [value]="4">YOOSEE</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="row mx-3 mb-3">
+      <div class="col-2"></div>
+      <div class="col-2">
+        <label for="price" class="form-label"> Giá(<span
+          class="requirement-field">*</span>):</label>
+      </div>
+      <div class="col-4">
+        <div class="input-group flex-nowrap">
+          <input formControlName="price" type="tel" id="price" class="form-control">
+        </div>
+
+      </div>
+    </div>
+    <div class="row mx-3">
+      <div class="col-2"></div>
+      <div class="col-2">
+        <label for="addImage" class="form-label"> Ảnh minh hoạ(<span
+          class="requirement-field">*</span>):</label>
+      </div>
+      <div class="col-8">
+        <input id="addImage"  type="file" class="form-control-file" (change)="showPreview($event)">
+      </div>
+    </div>
+    <div class="row mx-3 mb-3">
+      <div class="col-5"></div>
+      <div class="col-4 p-0">
+        <button type="submit" class="btn btn-primary me-3">
+          Xác nhận
+        </button>
+      </div>
+    </div>
+<!--    <div class="row mx-3 mb-3">-->
+<!--      <div class="col-2"></div>-->
+<!--      <div class="col-2"></div>-->
+<!--      <div class="col-5">-->
+<!--        <div class="form-text" *ngIf="submitTimes<=0 && !isOverSizeImage && !isNotImage">-->
+<!--          Vui lòng thêm ảnh.-->
+<!--        </div>-->
+<!--        <div class="text-danger" *ngIf="(submitTimes>0 && (imageList.length == 0||nameImageList.length == 0))">-->
+<!--          Vui lòng thêm ảnh.-->
+<!--        </div>-->
+<!--        <div class="text-danger" *ngIf="(isNotImage)">-->
+<!--          File không hợp lệ, vui lòng chỉ chọn file ảnh.-->
+<!--        </div>-->
+<!--        <div class="text-danger" *ngIf="(isOverSizeImage)">-->
+<!--          File ảnh không được quá kích thước 5MB.-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+  </form>
+</div>
+

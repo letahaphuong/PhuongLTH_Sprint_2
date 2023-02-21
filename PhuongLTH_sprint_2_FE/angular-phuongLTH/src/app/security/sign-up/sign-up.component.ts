@@ -13,7 +13,7 @@ import {
 import {TokenService} from '../service/token.service';
 import {ToastrService} from 'ngx-toastr';
 import {Title} from '@angular/platform-browser';
-import { differenceInYears } from 'date-fns';
+import {differenceInYears} from 'date-fns';
 
 @Component({
   selector: 'app-sign-up',
@@ -39,10 +39,11 @@ export class SignUpComponent implements OnInit {
         'ễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]+'), Validators.minLength(3), Validators.maxLength(100)]),
       email: new FormControl('', [Validators.required, Validators.pattern('^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$'),
         Validators.minLength(5), Validators.maxLength(100)]),
-      address: new FormControl('', [Validators.required, Validators.pattern('^[0-9]{1,3}[ ]\\p{Lu}\\p{Ll}+(\\s\\p{Lu}\\p{Ll}+)*$')
+      address: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z _ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪ' +
+        'ễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]+')
         , Validators.minLength(5), Validators.maxLength(100)]),
       idCard: new FormControl('', [Validators.required, Validators.pattern('^\\d{12}$')]),
-      gender: new FormControl(),
+      gender: new FormControl('', [Validators.required]),
       dateOfBirth: new FormControl('', [Validators.required, this.validateOfBirth]),
       phone: new FormControl('', [Validators.required, Validators.pattern('(((\\+|)84)|0)(3|5|7|8|9)+([0-9]{8})')]),
       encryptPassword: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]),
@@ -59,6 +60,9 @@ export class SignUpComponent implements OnInit {
       this.toast.success('Thêm mới thành công.');
       this.router.navigateByUrl('/security/login');
     }, error => {
+      if (error.status === 409) {
+        this.toast.error('Thêm mới thất bại, em mail đã tồn tại');
+      }
       this.toast.error('Thêm mới không thành công.');
     });
   }
@@ -68,4 +72,5 @@ export class SignUpComponent implements OnInit {
     const age = differenceInYears(new Date(), date);
     return (age <= 18) ? {greaterThan18: true} : null;
   }
+
 }

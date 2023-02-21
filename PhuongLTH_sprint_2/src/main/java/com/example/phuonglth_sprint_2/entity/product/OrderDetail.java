@@ -1,6 +1,10 @@
 package com.example.phuonglth_sprint_2.entity.product;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 public class OrderDetail {
@@ -11,7 +15,15 @@ public class OrderDetail {
     private int quantityOrder;
 
     private double price;
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "create_date")
+    private Date createDate;
 
+    @UpdateTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "modify_date")
+    private Date modifyDate;
     @ManyToOne
     private Order order;
     @ManyToOne

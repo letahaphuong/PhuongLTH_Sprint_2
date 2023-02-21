@@ -13,10 +13,9 @@ import {Title} from '@angular/platform-browser';
 export class CustomerListComponent implements OnInit {
   customerViewInfo: CustomerView[] = [];
   customerViewList!: CustomerViewInfoJson;
-  request = {page: 0, size: 3};
+  request = {page: 0, size: 5};
   pageNumber = 0;
   totalPages = 0;
-  // temp: HoKhau = {id: 0};
   name = '';
   email = '';
 

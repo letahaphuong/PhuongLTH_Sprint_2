@@ -78,7 +78,7 @@ public class SecurityController {
                     HttpStatus.BAD_REQUEST);
         }
         if (accountService.existsByEmail(customerDto.getEmail())) {
-            return new ResponseEntity<>(new ResponseMessage("Email chưa được đăng ký."), HttpStatus.OK);
+            return new ResponseEntity<>(new ResponseMessage("Email đã được đăng ký."), HttpStatus.CONFLICT);
         }
         Customer customer = new Customer();
         BeanUtils.copyProperties(customerDto, customer);
@@ -145,7 +145,7 @@ public class SecurityController {
                     HttpStatus.BAD_REQUEST);
         }
         if (accountService.existsByEmail(employeeDto.getEmail())) {
-            return new ResponseEntity<>(new ResponseMessage("Email chưa được đăng ký."), HttpStatus.OK);
+            return new ResponseEntity<>(new ResponseMessage("Email đã được đăng ký."), HttpStatus.ACCEPTED);
         }
         Employee employee = new Employee();
         BeanUtils.copyProperties(employeeDto, employee);

@@ -26,12 +26,13 @@ public class ProductDto {
     @NotBlank(message = "Không được để trống.")
     private String autoWhiteBalanceFunction; // tự độn
     private CategoryProduct categoryProduct;
-    private Image image;
+    private String url;
+    private double price;
 
     public ProductDto() {
     }
 
-    public ProductDto(Long idProduct, String nameProduct, String description, String imageSensor, String resolution, String material, String speedRecord, String infraredVision, String memory, String autoWhiteBalanceFunction, CategoryProduct categoryProduct, Image image) {
+    public ProductDto(Long idProduct, String nameProduct, String description, String imageSensor, String resolution, String material, String speedRecord, String infraredVision, String memory, String autoWhiteBalanceFunction, CategoryProduct categoryProduct, String url, double price) {
         this.idProduct = idProduct;
         this.nameProduct = nameProduct;
         this.description = description;
@@ -43,7 +44,8 @@ public class ProductDto {
         this.memory = memory;
         this.autoWhiteBalanceFunction = autoWhiteBalanceFunction;
         this.categoryProduct = categoryProduct;
-        this.image = image;
+        this.url = url;
+        this.price = price;
     }
 
     public Long getIdProduct() {
@@ -134,11 +136,19 @@ public class ProductDto {
         this.categoryProduct = categoryProduct;
     }
 
-    public Image getImage() {
-        return image;
+    public String getUrl() {
+        return url;
     }
 
-    public void setImage(Image image) {
-        this.image = image;
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 }

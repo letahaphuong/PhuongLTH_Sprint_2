@@ -11,8 +11,38 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ICustomerRepository extends JpaRepository<Customer, Long> {
-    @Query(value = "select id_customer as idCustomer,date_of_birth as dateOfBirth, email, gender,id_card as idCard, `name`," +
-            "phone,account_id_account as accountId, order_id_order as orderId, create_date as createDate, modify_date as modifyDate, address from customer  where flag_delete = false and `name` like concat('%', :name, '%') and email like concat('%', :email, '%')",nativeQuery = true)
+    @Query(value = "select id_customer        as idCustomer,\n" +
+            "       date_of_birth      as dateOfBirth,\n" +
+            "       email,\n" +
+            "       gender,\n" +
+            "       id_card            as idCard,\n" +
+            "       `name`,\n" +
+            "       phone,\n" +
+            "       account_id_account as accountId,\n" +
+            "       order_id_order     as orderId,\n" +
+            "       create_date        as createDate,\n" +
+            "       modify_date        as modifyDate,\n" +
+            "       address\n" +
+            "from customer\n" +
+            "where flag_delete = false\n" +
+            "  and `name` like concat('%', :name, '%')\n" +
+            "  and email like concat('%', :email, '%')",
+            countQuery = "select id_customer        as idCustomer,\n" +
+                    "       date_of_birth      as dateOfBirth,\n" +
+                    "       email,\n" +
+                    "       gender,\n" +
+                    "       id_card            as idCard,\n" +
+                    "       `name`,\n" +
+                    "       phone,\n" +
+                    "       account_id_account as accountId,\n" +
+                    "       order_id_order     as orderId,\n" +
+                    "       create_date        as createDate,\n" +
+                    "       modify_date        as modifyDate,\n" +
+                    "       address\n" +
+                    "from customer\n" +
+                    "where flag_delete = false\n" +
+                    "  and `name` like concat('%', :name, '%')\n" +
+                    "  and email like concat('%', :email, '%')",nativeQuery = true)
     Page<CustomerView> getAllCustomer(@Param("name") String name, @Param("email") String email, Pageable pageable);
 
     @Query(value = "update customer set flag_delete = true where id_customer = :id",nativeQuery = true)

@@ -1,0 +1,157 @@
+<div class="m-0">
+  <div class="row d-flex justify-content-center m-0">
+    <h3 class="mb-4 text-center mt-5">Danh sách khách hàng</h3>
+    <div class="col-5">
+      <div class="col-2">
+        <!--        <a routerLink="/create" class="btn btn-outline-success">Thêm mới CCDC</a>-->
+      </div>
+    </div>
+    <div class="col-5">
+    </div>
+  </div>
+</div>
+<div class=" m-0 row">
+  <div class="col-2"></div>
+  <div class="col-10">  <form>
+    <div class="row container-fluid justify-content-around">
+      <div class="row mt-2 mb-2 align-items-center ">
+        <div class="col-md-4 col-sm-12 align-items-center" style="float: left">
+          <div class="row">
+            <label class="col-md-6 col-sm-12 text-center mt-1" for="codeEmployee"><span>Hãng Sản Xuất</span></label>
+            <input class="col-md-6 col-sm-12 form-control text-center" type="search" id="codeEmployee"
+                   name="nameCategory" #nameCategory placeholder="Hãng sản xuất">
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-12 align-items-center " >
+          <div class="row me-1">
+            <label class="col-md-6 text-center mt-1" for="nameEmployee"><span>Tên Sản Phẩm</span></label>
+            <input class="col-md-6 form-control " type="search" id="nameEmployee"
+                   name="nameProduct" #nameProduct placeholder="Tên sản phẩm">
+          </div>
+        </div>
+        <div class="col-md-4  col-sm-12 align-items-center">
+          <div class="row me-1">
+            <label class="col-md-6 text-center mt-1" for="nameEmployee"><span>Giá Sản Phẩm</span></label>
+            <input class="col-md-6 form-control " type="search" id="price"
+                   name="price" #price placeholder="Giá">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-2 col-sm-12 d-flex">
+          <button class="btn button-css btn-outline-secondary buttonReset" type="reset" (click)="reload()">
+            <i class="fa-solid fa-arrows-rotate"></i>
+            Làm mới
+          </button>
+          <button class="btn button-css btn-outline-danger buttonSearch ms-4" type="button"
+                  (click)="search(nameCategory.value, nameProduct.value,price.value, false)">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            Tìm kiếm
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+  </div>
+</div>
+<div><br></div>
+<div class="row m-0">
+  <div class="col-lg-2">
+  </div>
+  <div class="col-lg-8" style="border-top: 2px solid black">
+    <div>
+      <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Tên sản phẩm</th>
+          <th scope="col">Hảng sản xuất</th>
+          <th scope="col">Giá</th>
+          <th scope="col">Tầm quay</th>
+          <th scope="col">Tốc độ ghi hình</th>
+          <th scope="col">Ngày tạo sản phẩm</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr
+          *ngFor="let productView of productViewInfo;index as i">
+          <td>{{i + 1}}</td>
+          <td>{{productView?.nameProduct}}</td>
+          <td>{{productView?.nameCategory}}</td>
+          <td>{{productView?.price}}</td>
+          <td>{{productView?.infraredVision}}</td>
+          <td>{{productView?.speedRecord}}</td>
+          <td>{{productView?.createDateProduct}}</td>
+          <td>
+            <!--            <button (click)="tempMuon = congcu" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#muon">-->
+            <!--              mượn-->
+            <!--            </button>-->
+            <!--          </td>-->
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<div style="min-height: 60px">
+  <div *ngIf="productViewInfo.length != 0; else elseBlockPagination">
+    <div *ngIf="productViewList" class="d-flex justify-content-center" id="last-row">
+      <div>
+        <nav aria-label="Page navigation example">
+          <ul class="pagination">
+            <li class="page-item" [ngClass]="productViewList.first ? 'disabled': ''">
+              <a role="button" class="page-link" (click)="changePage(0)">Trang đầu</a>
+            </li>
+            <li class="page-item" [ngClass]="productViewList.first ? 'disabled': ''">
+              <a role="button" class="page-link" (click)="changePage(productViewList.number - 1)"><</a>
+            </li>
+            <li class="page-item" *ngIf="productViewList.number - 3 > 0">
+              <a role="button" class="page-link"
+                 (click)="changePage(productViewList.number - 4)">{{productViewList.number - 3}}</a>
+            </li>
+            <li class="page-item" *ngIf="productViewList.number - 2 > 0">
+              <a role="button" class="page-link"
+                 (click)="changePage(productViewList.number - 3)">{{productViewList.number - 2}}</a>
+            </li>
+            <li class="page-item" *ngIf="productViewList.number - 1 > 0">
+              <a role="button" class="page-link"
+                 (click)="changePage(productViewList.number - 2)">{{productViewList.number - 1}}</a>
+            </li>
+            <li class="page-item" *ngIf="productViewList.number > 0">
+              <a role="button" class="page-link"
+                 (click)="changePage(productViewList.number - 1)">{{productViewList.number}}</a>
+            </li>
+            <li class="page-item active"><a class="page-link">{{productViewList.number + 1}}</a></li>
+            <li class="page-item" *ngIf="productViewList.number + 2 <= productViewList.totalPages">
+              <a role="button" class="page-link"
+                 (click)="changePage(productViewList.number + 1)">{{productViewList.number + 2}}</a>
+            </li>
+            <li class="page-item" *ngIf="productViewList.number + 3 <= productViewList.totalPages">
+              <a role="button" class="page-link"
+                 (click)="changePage(productViewList.number + 2)">{{productViewList.number + 3}}</a>
+            </li>
+            <li class="page-item" *ngIf="productViewList.number + 4 <= productViewList.totalPages">
+              <a role="button" class="page-link"
+                 (click)="changePage(productViewList.number + 3)">{{productViewList.number + 4}}</a>
+            </li>
+            <li class="page-item" *ngIf="productViewList.number + 5 <= productViewList.totalPages">
+              <a role="button" class="page-link"
+                 (click)="changePage(productViewList.number + 4)">{{productViewList.number + 5}}</a>
+            </li>
+            <li class="page-item" [ngClass]="productViewList.last ? 'disabled': ''">
+              <a role="button" class="page-link"
+                 (click)="changePage(productViewList.number + 1)">></a>
+            </li>
+            <li class="page-item" [ngClass]="productViewList.last ? 'disabled': ''">
+              <a role="button" class="page-link"
+                 (click)="changePage(productViewList.totalPages - 1)">
+                Trang cuối
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <ng-template #elseBlockPagination style="color: red">Không có dữ liệu</ng-template>
+</div>

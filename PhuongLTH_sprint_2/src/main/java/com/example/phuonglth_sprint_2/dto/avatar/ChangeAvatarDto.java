@@ -10,24 +10,14 @@ import java.util.Date;
 
 public class ChangeAvatarDto {
     private String avatar;
-    @CreationTimestamp
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "create_date")
-    private Date createDate;
-
-    @UpdateTimestamp
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "modify_date")
-    private Date modifyDate;
 
 
     public ChangeAvatarDto() {
     }
 
-    public ChangeAvatarDto(String avatar, Date createDate, Date modifyDate) {
+    public ChangeAvatarDto(String avatar) {
         this.avatar = avatar;
-        this.createDate = createDate;
-        this.modifyDate = modifyDate;
+
     }
 
     public String getAvatar() {
@@ -38,19 +28,4 @@ public class ChangeAvatarDto {
         this.avatar = avatar;
     }
 
-    public Date getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
-
-    public Date getModifyDate() {
-        return modifyDate;
-    }
-
-    public void setModifyDate(Date modifyDate) {
-        this.modifyDate = modifyDate;
-    }
 }

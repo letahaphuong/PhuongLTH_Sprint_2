@@ -18,95 +18,88 @@
   <div class="container">
 
     <header class="section-heading">
-      <button type="submit" class="btn btn-outline-primary float-right">Xem thêm</button>
       <h3 class="section-title">Sản phẩm phổ biến</h3>
-    </header><!-- sect-heading -->
+    </header>
     <div class="row">
-      <div class="col-md-3">
-        <div routerLink="/product/detail/:id" class="card card-product-grid">
-          <a routerLink="/product/detail/:id" class="img-wrap"> <img src="../../../assets/images/items/yoosee-3.jpg"/> </a>
-          <figcaption class="info-wrap">
-            <a href="#" class="title">Camera IP Hồng Ngoại Không Dây 3.0 Megapixel YOOSEE 316S</a>
-            <div class="price mt-1">800,000 đ</div> <!-- price-wrap.// -->
-          </figcaption>
-        </div>
-      </div> <!-- col.// -->
-      <div class="col-md-3">
-        <div routerLink="/product/detail/:id" class="card card-product-grid">
-          <a routerLink="/product/detail/:id" class="img-wrap"><img
-            src="../../../assets/images/items/vantech-4.jpg" />
+      <div class="col-md-3" *ngFor="let item of productViewInfo">
+        <div [routerLink]="['/product/detail/',item.idProduct]" class="card card-product-grid">
+          <a [routerLink]="['/product/detail/',item.idProduct]" class="img-wrap">
+            <img *ngIf="item.url == ''" src="https://firebasestorage.googleapis.com/v0/b/sprint2-afb08.appspot.com/o/cameraiphongngoai5mphuvironfnp525aip.png?alt=media&token=4df6176c-93eb-4644-832f-4f2e36bf511f" alt="">
+            <img *ngIf="item.url != ''" [src]="item.url" alt="">
           </a>
           <figcaption class="info-wrap">
-            <a href="#" class="title">Camera IP Robot hồng ngoại VT-6300C</a>
-            <div class="price mt-1">1,700,000 đ</div> <!-- price-wrap.// -->
+            <a [routerLink]="['/product/detail/',item.idProduct]" class="title">{{item.nameProduct}}</a>
+            <div class="price mt-1">{{item.price | number}} đ</div>
           </figcaption>
         </div>
-      </div> <!-- col.// -->
-      <div class="col-md-3">
-        <div routerLink="/product/detail/:id" class="card card-product-grid">
-          <a routerLink="/product/detail/:id" class="img-wrap"><img
-            src="../../../assets/images/items/yoosee-2.jpg"/>
-          </a>
-          <figcaption class="info-wrap">
-            <a href="#" class="title">Camera IP hồng ngoại không dây YOOSEE C-QR61S1</a>
-            <div class="price mt-1">840,000 đ</div> <!-- price-wrap.// -->
-          </figcaption>
+      </div>
+    </div>
+    <footer class="section-footer">
+      <div style="min-height: 60px">
+        <div *ngIf="productViewInfo.length != 0; else elseBlockPagination">
+          <div *ngIf="productViewList" class="d-flex justify-content-center" id="last-row">
+            <div>
+              <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                  <li class="page-item" [ngClass]="productViewList.first ? 'disabled': ''">
+                    <a role="button" class="page-link" (click)="changePage(0)">Trang đầu</a>
+                  </li>
+                  <li class="page-item" [ngClass]="productViewList.first ? 'disabled': ''">
+                    <a role="button" class="page-link" (click)="changePage(productViewList.number - 1)"><</a>
+                  </li>
+                  <li class="page-item" *ngIf="productViewList.number - 3 > 0">
+                    <a role="button" class="page-link"
+                       (click)="changePage(productViewList.number - 4)">{{productViewList.number - 3}}</a>
+                  </li>
+                  <li class="page-item" *ngIf="productViewList.number - 2 > 0">
+                    <a role="button" class="page-link"
+                       (click)="changePage(productViewList.number - 3)">{{productViewList.number - 2}}</a>
+                  </li>
+                  <li class="page-item" *ngIf="productViewList.number - 1 > 0">
+                    <a role="button" class="page-link"
+                       (click)="changePage(productViewList.number - 2)">{{productViewList.number - 1}}</a>
+                  </li>
+                  <li class="page-item" *ngIf="productViewList.number > 0">
+                    <a role="button" class="page-link"
+                       (click)="changePage(productViewList.number - 1)">{{productViewList.number}}</a>
+                  </li>
+                  <li class="page-item active"><a class="page-link">{{productViewList.number + 1}}</a></li>
+                  <li class="page-item" *ngIf="productViewList.number + 2 <= productViewList.totalPages">
+                    <a role="button" class="page-link"
+                       (click)="changePage(productViewList.number + 1)">{{productViewList.number + 2}}</a>
+                  </li>
+                  <li class="page-item" *ngIf="productViewList.number + 3 <= productViewList.totalPages">
+                    <a role="button" class="page-link"
+                       (click)="changePage(productViewList.number + 2)">{{productViewList.number + 3}}</a>
+                  </li>
+                  <li class="page-item" *ngIf="productViewList.number + 4 <= productViewList.totalPages">
+                    <a role="button" class="page-link"
+                       (click)="changePage(productViewList.number + 3)">{{productViewList.number + 4}}</a>
+                  </li>
+                  <li class="page-item" *ngIf="productViewList.number + 5 <= productViewList.totalPages">
+                    <a role="button" class="page-link"
+                       (click)="changePage(productViewList.number + 4)">{{productViewList.number + 5}}</a>
+                  </li>
+                  <li class="page-item" [ngClass]="productViewList.last ? 'disabled': ''">
+                    <a role="button" class="page-link"
+                       (click)="changePage(productViewList.number + 1)">></a>
+                  </li>
+                  <li class="page-item" [ngClass]="productViewList.last ? 'disabled': ''">
+                    <a role="button" class="page-link"
+                       (click)="changePage(productViewList.totalPages - 1)">
+                      Trang cuối
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
         </div>
-      </div> <!-- col.// -->
-      <div class="col-md-3">
-        <div routerLink="/product/detail/:id" class="card card-product-grid">
-          <a routerLink="/product/detail/:id" class="img-wrap"><img
-            src="../../../assets/images/items/vantech-1.jpg"/>
-          </a>
-          <figcaption class="info-wrap">
-            <a href="#" class="title">Camera IP HD không dây hồng ngoại YOOSEE HX-S4-200</a>
-            <div class="price mt-1">780,000 đ</div> <!-- price-wrap.// -->
-          </figcaption>
-        </div>
-      </div> <!-- col.// -->
-      <div class="col-md-3">
-        <div routerLink="/product/detail/:id" class="card card-product-grid">
-          <a routerLink="/product/detail/:id" class="img-wrap"><img
-            src="../../../assets/images/items/vantech-6.jpg"/>
-          </a>
-          <figcaption class="info-wrap">
-            <a href="#" class="title">Camera IP Robot hồng ngoại VP-6600C</a>
-            <div class="price mt-1">950,000 đ</div> <!-- price-wrap.// -->
-          </figcaption>
-        </div>
-      </div> <!-- col.// -->
-      <div class="col-md-3">
-        <div routerLink="/product/detail/:id" class="card card-product-grid">
-          <a routerLink="/product/detail/:id" class="img-wrap"><img src="../../../assets/images/items/kbvision-5.jpg"/></a>
-          <figcaption class="info-wrap">
-            <a href="#" class="title">Camera IP hồng ngoại không dây KBVISION KX-D4002WAN</a>
-            <div class="price mt-1">2,500,000 đ</div> <!-- price-wrap.// -->
-          </figcaption>
-        </div>
-      </div> <!-- col.// -->
-      <div class="col-md-3">
-        <div routerLink="/product/detail/:id" class="card card-product-grid">
-          <a routerLink="/product/detail/:id" class="img-wrap"><img
-            src="../../../assets/images/items/kbvision-3.jpg"/>
-          </a>
-          <figcaption class="info-wrap">
-            <a href="#" class="title">Camera IP hồng ngoại không dây KBVISION KBONE KN-H22PW</a>
-            <div class="price mt-1">1,650,000 đ</div> <!-- price-wrap.// -->
-          </figcaption>
-        </div>
-      </div> <!-- col.// -->
-      <div class="col-md-3">
-        <div routerLink="/product/detail/:id" class="card card-product-grid">
-          <a routerLink="/product/detail/:id" class="img-wrap"><img src="../../../assets/images/items/vantech-6.jpg"/></a>
-          <figcaption class="info-wrap">
-            <a href="#" class="title">Camera HD-TVI hồng ngoại HIKVISION DS-2CE16C0T-IT3</a>
-            <div class="price mt-1">520,000 đ</div> <!-- price-wrap.// -->
-          </figcaption>
-        </div>
-      </div> <!-- col.// -->
-    </div> <!-- row.// -->
-
-  </div><!-- container // -->
+        <ng-template #elseBlockPagination style="color: red">Không có dữ liệu</ng-template>
+      </div>
+    </footer>
+    <br>
+  </div>
 </section>
 <!-- ========================= SECTION  END// ========================= -->
 

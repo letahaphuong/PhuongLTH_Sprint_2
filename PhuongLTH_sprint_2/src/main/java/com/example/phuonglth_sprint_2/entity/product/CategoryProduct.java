@@ -1,6 +1,10 @@
 package com.example.phuonglth_sprint_2.entity.product;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import javax.persistence.*;
+import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -10,6 +14,15 @@ public class CategoryProduct {
     private Long idCategory;
 
     private String nameCategory;
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "create_date")
+    private Date createDate;
+
+    @UpdateTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "modify_date")
+    private Date modifyDate;
 
     @OneToMany(mappedBy = "categoryProduct")
     private Set<Product> products;

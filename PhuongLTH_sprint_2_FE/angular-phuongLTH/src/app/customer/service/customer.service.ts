@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {environment} from '../../../environments/environment.prod';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
@@ -9,11 +9,15 @@ import {CustomerView} from '../../dto/customer-view';
 })
 export class CustomerService {
   private API_CUSTOMER = environment.API_CUSTOMER;
-  constructor(private http: HttpClient) { }
+
+  constructor(private http: HttpClient) {
+  }
+
   showAllList(request: any): Observable<CustomerView[]> {
     const params = request;
     return this.http.get<CustomerView[]>(this.API_CUSTOMER, {params});
   }
+
   search(name: string, email: string, request: any): Observable<any> {
     const params = request;
     const url = this.API_CUSTOMER +

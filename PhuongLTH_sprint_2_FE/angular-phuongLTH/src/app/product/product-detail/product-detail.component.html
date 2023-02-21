@@ -3,35 +3,37 @@
 
 <div class="container">
   <div class="row">
-    <div class="container d-flex">
-      <div class="col-xs-5 item-photo">
-        <img src="../../../assets/images/items/kbvision-3.jpg" style="max-width:100%;"/>
+    <div class="container d-flex justify-content-between">
+      <div class="col-xs-5 item-photo me-5">
+        <img [src]="productDetail?.url" style="max-width:100%;width: 675px; height: 540px"/>
       </div>
       <div class="col-xs-6 justify-content-between" style="border:0px">
         <br>
         <br>
-        <h3>Camera IP hồng ngoại không dây KBVISION KBONE KN-H22PW</h3>
-        <h5 style="color:#337ab7">Hãng sản xuất <a href="#">KBVISION</a></h5>
+        <h3>{{productDetail?.nameProduct}}</h3>
+        <h5 style="color:#337ab7">Hãng sản xuất <a href="#">{{productDetail?.nameCategory}}</a></h5>
         <h5 class=""><span>Giá:</span></h5>
-        <span class="title-text">1,650,000 đ</span>
+        <span class="title-text">{{productDetail?.price | number}} đ</span>
 
         <div class="section">
-          <h6 class="title-attr" style="margin-top:15px;"><span>Dộ phân giải : <span
-            class="title-attr">2.0 Megapixel.</span></span></h6>
+          <h6 class="title-attr" style="margin-top:15px;"><span>Độ phân giải : <span
+            class="title-attr">{{productDetail?.resolution}}.</span></span></h6>
           <h6 class="title-attr" style="margin-top:15px;"><span>Tốc độ ghi hình : <span
-            class="title-attr">30fps@1080P.</span></span></h6>
+            class="title-attr">{{productDetail?.speedRecord}}.</span></span></h6>
+          <h6 class="title-attr" style="margin-top:15px;"><span style="color: blue">Tư vấn mua hàng :</span> <span
+            class="title-attr">0964 80 81 85</span></h6>
         </div>
         <div class="section" style="padding-bottom:20px;">
           <h6 class="title-attr"><span>Số lượng</span></h6>
           <div>
-            <div style="height: 27px" class="btn btn-minus"><p>-</p></div>
-            <input  style="height: 27px" value="1" style="width: 40px"/>
-            <div style="height: 27px" class="btn btn-plus"><p>+</p></div>
+            <div style="height: 27px" class="btn btn-minus"(click)="minus()"><p >-</p></div>
+            <input  style="height: 27px" [value]="quantityShow" style="width: 40px"/>
+            <div style="height: 27px" class="btn btn-plus" (click)="plus()"><p>+</p></div>
           </div>
         </div>
 
         <div class="section" style="padding-bottom:20px;">
-          <button class="btn btn-success" style="border-radius: 10px" routerLink="/product/cart">
+          <button class="btn btn-success" style="border-radius: 10px" [routerLink]="['/product/cart/',productDetail?.idProduct]">
             <span style="margin-right:20px" class=" glyphicon glyphicon-shopping-cart"
                   aria-hidden="true"></span>Thêm vào giỏ hàng
           </button>
@@ -48,7 +50,6 @@
         [class.active]="item.active"
         *ngFor="let item of ratingUnits; index as i"
         (click)="select(i)" (mouseenter)="enter(i)">
-<!--    {{item.value}}-->
         </span>
 </span>
         </div>
@@ -65,21 +66,20 @@
         <div style="width:100%;border-top:1px solid silver">
           <p style="padding:15px;">
           <span>
-            Camera Kbvision là thương hiệu Mỹ hàng nguyên chiếc giá tốt, với quy mô của một doanh nghiệp đa quốc gia, tùy theo từng phân khúc sản phẩm và lĩnh vực mà các sản phẩm của Camera KBvision được sản xuất tại các nhà máy của Tập đoàn tại Mỹ, Đài Loan, Trung Quốc và Hàn Quốc. Toàn bộ các hoạt động R&D, design và marketing sẽ do tập đoàn mẹ tại Mỹ đảm nhận. Và cửa hàng bán camera tại Đà Nẵng là một trong những đơn vị Phân phối và lắp đặt KBvision chính thức tại Việt Nam đồng thời là một trong những công ty lắp đặt Camera KBvision KH Series hàng đầu.
+            {{productDetail?.description}}
           </span>
           </p>
           <span>
           <ul>
-            <li>Cảm biến hình ảnh: 1/2.8 inch CMOS.</li>
-            <li>Độ phân giải: max 25/30fps@1080P(1920×1080).</li>
-            <li>Chuẩn nén hình ảnh: H265+/H.265/H.264+/H264 giúp tiết kiệm băng thông và dung lượng lưu trữ.</li>
-            <li>Ống kính: 3.6mm (góc nhìn 91°).</li>
-            <li>Ống kính: 3.6mm (góc nhìn 91°).</li>
-            <li>Hỗ trợ công nghệ Starlight giúp quan sát tốt hơn trong điều kiện thiếu sáng.</li>
-            <li>Hỗ trợ chức năng phát hiện thông minh: Hàng rào ảo, xâm nhập, phát hiện tăng giảm điện áp</li>
-            <li>Hỗ trợ thẻ nhớ 256GB.</li>
-            <li> Hỗ trợ chuẩn kết nối Onvif.</li>
-            <li> Hỗ trợ tên miền kbvision.tv.</li>
+            <li>Cảm biến hình ảnh: {{productDetail?.imageSensor}}.</li>
+            <li>Độ phân giải: {{productDetail?.resolution}}.</li>
+            <li>Chất liệu: {{productDetail?.material}}.</li>
+            <li>Cảm biến hình ảnh: {{productDetail?.imageSensor}}.</li>
+            <li>Bộ nhớ: {{productDetail?.memory}}.</li>
+            <li>Tốc độ ghi hình: {{productDetail?.speedRecord}}</li>
+            <li>Công nghệ tự động cân bằng ánh sáng: {{productDetail?.autoWhiteBalanceFunction}}.</li>
+            <li>Tầm quan sát: {{productDetail?.infraredVision}}</li>
+            <li>Ngày tạo: {{productDetail?.createDateProduct}}</li>
 
           </ul>
         </span>

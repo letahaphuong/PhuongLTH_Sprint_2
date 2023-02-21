@@ -1,4 +1,4 @@
-package com.example.phuonglth_sprint_2.controller;
+package com.example.phuonglth_sprint_2.controller.customer;
 
 import com.example.phuonglth_sprint_2.dto.customer.CustomerDto;
 import com.example.phuonglth_sprint_2.dto.customer.CustomerView;

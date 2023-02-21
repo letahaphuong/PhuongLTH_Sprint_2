@@ -16,7 +16,6 @@ public class Order {
     private Long idOrder;
 
     private Long codeOrder; // mã đơn hàng
-    private String orderDate; // ngày đặt hàng
     private boolean orderStatus; // tình trạng đặt hàng
     private boolean paymentStatus; // tình trạng thanh toán
     private String shippingAddress;// địa chỉ giao hàng
@@ -40,14 +39,15 @@ public class Order {
     public Order() {
     }
 
-    public Order(Long idOrder, Long codeOrder, String orderDate, boolean orderStatus, boolean paymentStatus, String shippingAddress, String orderPhoneNumber, Set<Customer> customers, Set<OrderDetail> orderDetails) {
+    public Order(Long idOrder, Long codeOrder, boolean orderStatus, boolean paymentStatus, String shippingAddress, String orderPhoneNumber, Date createDate, Date modifyDate, Set<Customer> customers, Set<OrderDetail> orderDetails) {
         this.idOrder = idOrder;
         this.codeOrder = codeOrder;
-        this.orderDate = orderDate;
         this.orderStatus = orderStatus;
         this.paymentStatus = paymentStatus;
         this.shippingAddress = shippingAddress;
         this.orderPhoneNumber = orderPhoneNumber;
+        this.createDate = createDate;
+        this.modifyDate = modifyDate;
         this.customers = customers;
         this.orderDetails = orderDetails;
     }
@@ -66,14 +66,6 @@ public class Order {
 
     public void setCodeOrder(Long codeOrder) {
         this.codeOrder = codeOrder;
-    }
-
-    public String getOrderDate() {
-        return orderDate;
-    }
-
-    public void setOrderDate(String orderDate) {
-        this.orderDate = orderDate;
     }
 
     public boolean isOrderStatus() {
@@ -108,6 +100,22 @@ public class Order {
         this.orderPhoneNumber = orderPhoneNumber;
     }
 
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    public Date getModifyDate() {
+        return modifyDate;
+    }
+
+    public void setModifyDate(Date modifyDate) {
+        this.modifyDate = modifyDate;
+    }
+
     public Set<Customer> getCustomers() {
         return customers;
     }
@@ -116,11 +124,11 @@ public class Order {
         this.customers = customers;
     }
 
-    public Set<OrderDetail> getProductOrders() {
+    public Set<OrderDetail> getOrderDetails() {
         return orderDetails;
     }
 
-    public void setProductOrders(Set<OrderDetail> orderDetails) {
+    public void setOrderDetails(Set<OrderDetail> orderDetails) {
         this.orderDetails = orderDetails;
     }
 }

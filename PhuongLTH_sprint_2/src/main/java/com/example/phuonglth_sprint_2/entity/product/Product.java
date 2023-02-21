@@ -21,6 +21,7 @@ public class Product {
     private String speedRecord; // tốc độ ghi hình
     private String infraredVision; // tầm quan sát
     private String memory;
+    private double price;
     private String autoWhiteBalanceFunction; // tự động cân bằng sáng
     @Column(columnDefinition = "bit default false")
     private boolean flagDelete;
@@ -46,7 +47,7 @@ public class Product {
     public Product() {
     }
 
-    public Product(Long idProduct, String nameProduct, String description, String imageSensor, String resolution, String material, String speedRecord, String infraredVision, String memory, String autoWhiteBalanceFunction, boolean flagDelete, Set<OrderDetail> orderDetails, CategoryProduct categoryProduct, Image image) {
+    public Product(Long idProduct, String nameProduct, String description, String imageSensor, String resolution, String material, String speedRecord, String infraredVision, String memory, double price, String autoWhiteBalanceFunction, boolean flagDelete, Set<OrderDetail> orderDetails, CategoryProduct categoryProduct, Image image, Date createDate, Date modifyDate) {
         this.idProduct = idProduct;
         this.nameProduct = nameProduct;
         this.description = description;
@@ -56,11 +57,46 @@ public class Product {
         this.speedRecord = speedRecord;
         this.infraredVision = infraredVision;
         this.memory = memory;
+        this.price = price;
         this.autoWhiteBalanceFunction = autoWhiteBalanceFunction;
         this.flagDelete = flagDelete;
         this.orderDetails = orderDetails;
         this.categoryProduct = categoryProduct;
         this.image = image;
+        this.createDate = createDate;
+        this.modifyDate = modifyDate;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public Set<OrderDetail> getOrderDetails() {
+        return orderDetails;
+    }
+
+    public void setOrderDetails(Set<OrderDetail> orderDetails) {
+        this.orderDetails = orderDetails;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    public Date getModifyDate() {
+        return modifyDate;
+    }
+
+    public void setModifyDate(Date modifyDate) {
+        this.modifyDate = modifyDate;
     }
 
     public boolean isFlagDelete() {
