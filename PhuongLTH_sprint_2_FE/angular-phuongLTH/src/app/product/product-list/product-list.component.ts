@@ -19,6 +19,7 @@ export class ProductListComponent implements OnInit {
   nameCategory = '';
   nameProduct = '';
   price = '';
+  temp: ProductView | undefined;
 
   constructor(
     private homeService: HomeService,

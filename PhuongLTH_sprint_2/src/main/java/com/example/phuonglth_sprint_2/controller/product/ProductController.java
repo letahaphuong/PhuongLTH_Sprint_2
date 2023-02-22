@@ -7,10 +7,14 @@ import com.example.phuonglth_sprint_2.dto.product.ProductView;
 import com.example.phuonglth_sprint_2.dto.response.ResponseMessage;
 import com.example.phuonglth_sprint_2.entity.product.CategoryProduct;
 import com.example.phuonglth_sprint_2.entity.product.Image;
+import com.example.phuonglth_sprint_2.entity.product.OrderDetail;
 import com.example.phuonglth_sprint_2.entity.product.Product;
 import com.example.phuonglth_sprint_2.service.product.ICategoryService;
 import com.example.phuonglth_sprint_2.service.product.IImageService;
+import com.example.phuonglth_sprint_2.service.product.IOrderDetailService;
 import com.example.phuonglth_sprint_2.service.product.IProductService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -28,7 +32,7 @@ import java.util.Optional;
 @RequestMapping("api/product")
 @CrossOrigin("*")
 public class ProductController {
-
+    private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
     @Autowired
     IProductService productService;
 
@@ -37,6 +41,9 @@ public class ProductController {
 
     @Autowired
     IImageService iImageService;
+
+    @Autowired
+    IOrderDetailService orderDetailService;
 
     @PostMapping("category")
     public ResponseEntity<CategoryDto> saveCategory(@Valid @RequestBody CategoryDto categoryDto, BindingResult bindingResult) {
@@ -88,11 +95,58 @@ public class ProductController {
         } else {
             Product product = new Product();
             BeanUtils.copyProperties(productDto, product);
-            Image image = new Image();
-            image.setUrl(productDto.getUrl());
-            iImageService.save(image);
             productService.save(product);
+            Image image = new Image();
+            String img = productDto.getUrl();
+            image.setUrl(productDto.getUrl());
+            Long idProduct = productService.getLastInsertId();
+            iImageService.saveImage(img, idProduct);
             return new ResponseEntity<>(HttpStatus.OK);
         }
     }
+
+    @PostMapping("cart/create")
+    public ResponseEntity<?> createCart(@Valid @RequestBody CartDto cartDto, BindingResult bindingResult) {
+        try {
+            if (bindingResult.hasErrors()) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            } else {
+                OrderDetail orderDetail = new OrderDetail();
+                BeanUtils.copyProperties(cartDto, orderDetail);
+                orderDetailService.save(orderDetail);
+                return new ResponseEntity<>(HttpStatus.CREATED);
+            }
+        } catch (Exception e) {
+            logger.error("Không tạo được giỏ hàng", e);
+            return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
+        }
+    }
+
+    @DeleteMapping("delete/{id}")
+    public ResponseEntity<?> delete(@PathVariable("id") Long idProduct) {
+        Optional<Product> product = productService.finProDuctByIdToDelete(idProduct);
+        if (product.isPresent()) {
+            productService.removeFlag(idProduct);
+            return new ResponseEntity<>(new ResponseMessage("Xoá thành công"), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(new ResponseMessage("Không tồn tại"), HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PatchMapping("{id}")
+    public ResponseEntity<?> editProduct(@Valid @RequestBody ProductDto productDto, BindingResult bindingResult, @PathVariable("id")Long idProduct) {
+        Optional<Product> product = productService.finProDuctByIdToDelete(idProduct);
+        if (!product.isPresent()) {
+            return new ResponseEntity<>(new ResponseMessage("Sản phẩm không tồn tại"), HttpStatus.NOT_FOUND);
+        } else if (bindingResult.hasErrors()) {
+            return new ResponseEntity<>(new ResponseMessage("Lỗi valid"), HttpStatus.BAD_REQUEST);
+        } else {
+            Product productCopy = new Product();
+            BeanUtils.copyProperties(productDto, productCopy);
+            productService.save(productCopy);
+            return new ResponseEntity<>(new ResponseMessage("Sửa thành công"), HttpStatus.OK);
+        }
+
+    }
+
 }

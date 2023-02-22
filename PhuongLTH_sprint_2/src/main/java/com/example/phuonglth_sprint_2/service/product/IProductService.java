@@ -22,5 +22,10 @@ public interface IProductService {
 
     Optional<ProductView> finProDuctById(String idProduct);
 
+    Optional<Product> finProDuctByIdToDelete(Long idProduct);
+
     void removeFlag(Long id);
+
+    Long getLastInsertId();
+
 }

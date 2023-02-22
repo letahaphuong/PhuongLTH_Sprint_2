@@ -29,6 +29,8 @@
           </a>
           <figcaption class="info-wrap">
             <a [routerLink]="['/product/detail/',item.idProduct]" class="title">{{item.nameProduct}}</a>
+           <a *ngIf="item.quantity > 0" class="title" >Tình trạng: <span style="color: #1d37fd">Còn hàng</span></a>
+            <a *ngIf="item.quantity == 0" class="title">Tình trạng:<span style="color: #1d37fd">Hết hàng</span></a>
             <div class="price mt-1">{{item.price | number}} đ</div>
           </figcaption>
         </div>

@@ -4,12 +4,13 @@ import {LoginComponent} from './login/login.component';
 import {SignUpComponent} from './sign-up/sign-up.component';
 import {ChangeAvatrComponent} from './change-avatr/change-avatr.component';
 import {PaymentComponent} from './payment/payment.component';
+import {AuthGuardGuard} from '../authGauth/authorization/auth-guard.guard';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'sign-up', component: SignUpComponent},
   {path: 'change-avatar', component: ChangeAvatrComponent},
-  {path: 'payment', component: PaymentComponent}
+  {path: 'payment', component: PaymentComponent, canActivate: [AuthGuardGuard]}
 ];
 
 @NgModule({

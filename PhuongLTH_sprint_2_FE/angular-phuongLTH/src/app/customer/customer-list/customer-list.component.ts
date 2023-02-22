@@ -46,14 +46,15 @@ export class CustomerListComponent implements OnInit {
     });
   }
 
-  changePage(pageNumber: number): void {
-    this.request.page = pageNumber;
-    this.ngOnInit();
-  }
-
   reload(): void {
     this.request.page = 0;
     this.getAll(this.request);
+  }
+
+
+  changePage(pageNumber: number): void {
+    this.request.page = pageNumber;
+    this.ngOnInit();
   }
 
   search(name: string, email: string, flag: boolean): void {

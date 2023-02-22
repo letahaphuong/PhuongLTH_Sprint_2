@@ -28,11 +28,12 @@ public class ProductDto {
     private CategoryProduct categoryProduct;
     private String url;
     private double price;
+    private int quantity;
 
     public ProductDto() {
     }
 
-    public ProductDto(Long idProduct, String nameProduct, String description, String imageSensor, String resolution, String material, String speedRecord, String infraredVision, String memory, String autoWhiteBalanceFunction, CategoryProduct categoryProduct, String url, double price) {
+    public ProductDto(Long idProduct, String nameProduct, String description, String imageSensor, String resolution, String material, String speedRecord, String infraredVision, String memory, String autoWhiteBalanceFunction, CategoryProduct categoryProduct, String url, double price, int quantity) {
         this.idProduct = idProduct;
         this.nameProduct = nameProduct;
         this.description = description;
@@ -46,6 +47,7 @@ public class ProductDto {
         this.categoryProduct = categoryProduct;
         this.url = url;
         this.price = price;
+        this.quantity = quantity;
     }
 
     public Long getIdProduct() {
@@ -150,5 +152,13 @@ public class ProductDto {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }

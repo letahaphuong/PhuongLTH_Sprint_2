@@ -50,7 +50,18 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public void removeFlag(Long id) {
-
+    public Optional<Product> finProDuctByIdToDelete(Long idProduct) {
+        return productRepository.findById(idProduct);
     }
+
+    @Override
+    public void removeFlag(Long id) {
+        productRepository.deleteByFlag(id);
+    }
+
+    @Override
+    public Long getLastInsertId() {
+        return productRepository.getLastInsertId();
+    }
+
 }

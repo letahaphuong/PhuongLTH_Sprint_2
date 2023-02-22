@@ -6,9 +6,11 @@ import com.example.phuonglth_sprint_2.entity.product.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -26,6 +28,7 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
             "       p.infrared_vision             as infraredVision,\n" +
             "       p.material,\n" +
             "       p.memory,\n" +
+            "       p.quantity,\n" +
             "       p.resolution,\n" +
             "       p.price,\n" +
             "       p.speed_record                as speedRecord,\n" +
@@ -33,7 +36,7 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
             "       i.url\n" +
             "from product p\n" +
             "         join category_product cp on cp.id_category = p.category_product_id_category\n" +
-            "         join image i on p.image_id_image = i.id_image\n" +
+            "         join image i on p.id_product = i.product_id_product\n" +
             "where p.flag_delete = false\n" +
             "   and cp.name_category LIKE CONCAT('%', :nameCategory, '%')\n" +
             "   and p.name_product LIKE CONCAT('%', :nameProduct, '%')\n" +
@@ -50,6 +53,7 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
                     "       p.infrared_vision             as infraredVision,\n" +
                     "       p.material,\n" +
                     "       p.memory,\n" +
+                    "       p.quantity,\n" +
                     "       p.resolution,\n" +
                     "       p.price,\n" +
                     "       p.speed_record                as speedRecord,\n" +
@@ -57,7 +61,7 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
                     "       i.url\n" +
                     "from product p\n" +
                     "         join category_product cp on cp.id_category = p.category_product_id_category\n" +
-                    "         join image i on p.image_id_image = i.id_image\n" +
+                    "         join image i on p.id_product = i.product_id_product\n" +
                     "where p.flag_delete = false\n" +
                     "   and cp.name_category LIKE CONCAT('%', :nameCategory, '%')\n" +
                     "   and p.name_product LIKE CONCAT('%', :nameProduct, '%')\n" +
@@ -76,6 +80,7 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
             "       p.infrared_vision             as infraredVision,\n" +
             "       p.material,\n" +
             "       p.memory,\n" +
+            "       p.quantity,\n" +
             "       p.resolution,\n" +
             "       p.price,\n" +
             "       p.speed_record                as speedRecord,\n" +
@@ -83,7 +88,7 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
             "       i.url\n" +
             "from product p\n" +
             "         join category_product cp on cp.id_category = p.category_product_id_category\n" +
-            "         join image i on p.image_id_image = i.id_image\n" +
+            "         join image i on p.id_product = i.product_id_product\n" +
             "where p.flag_delete = false\n" +
             "   and p.id_product = :idProduct",
             countQuery = "select p.id_product                  as idProduct,\n" +
@@ -97,6 +102,7 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
                     "       p.infrared_vision             as infraredVision,\n" +
                     "       p.material,\n" +
                     "       p.memory,\n" +
+                    "       p.quantity,\n" +
                     "       p.resolution,\n" +
                     "       p.price,\n" +
                     "       p.speed_record                as speedRecord,\n" +
@@ -104,9 +110,17 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
                     "       i.url\n" +
                     "from product p\n" +
                     "         join category_product cp on cp.id_category = p.category_product_id_category\n" +
-                    "         join image i on p.image_id_image = i.id_image\n" +
+                    "         join image i on p.id_product = i.product_id_product\n" +
                     "where p.flag_delete = false\n" +
                     "   and p.id_product = :idProduct", nativeQuery = true)
     Optional<ProductView> finProDuctById(@Param("idProduct") String idProduct);
 
+    @Query(value = "SELECT LAST_INSERT_ID()",nativeQuery = true)
+    Long getLastInsertId();
+
+    @Transactional
+    @Modifying
+    @Query(value = "update product\n" +
+            "set flag_delete = true where id_product = :idProduct", nativeQuery = true)
+    void deleteByFlag(@Param("idProduct") Long idProduct);
 }

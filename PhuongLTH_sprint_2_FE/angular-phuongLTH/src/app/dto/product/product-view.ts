@@ -15,4 +15,5 @@ export interface ProductView {
   resolution: string;
   url: string;
   price: number;
+  quantity: number;
 }

@@ -6,6 +6,7 @@ import {finalize} from 'rxjs/operators';
 import {ProductService} from '../service/product.service';
 import {Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
+import {Category} from '../../dto/product/category';
 
 @Component({
   selector: 'app-product-create',
@@ -19,6 +20,7 @@ export class ProductCreateComponent implements OnInit {
   ref: AngularFireStorageReference | undefined;
   downloadURL: string | undefined;
   checkUpload = false;
+  categoryList: Category[] | undefined;
 
   constructor(
     private storage: AngularFireStorage,
@@ -26,23 +28,28 @@ export class ProductCreateComponent implements OnInit {
     private router: Router,
     private toast: ToastrService
   ) {
-  }
-
-  ngOnInit(): void {
     this.productForm = new FormGroup({
       autoWhiteBalanceFunction: new FormControl(),
       nameProduct: new FormControl(),
-      nameCategory: new FormControl(),
+      categoryProduct: new FormControl(),
       imageSensor: new FormControl(),
       infraredVision: new FormControl(),
       speedRecord: new FormControl(),
       description: new FormControl(),
       material: new FormControl(),
       memory: new FormControl(),
+      quantity: new FormControl(),
       resolution: new FormControl(),
       url: new FormControl(),
       price: new FormControl(),
     });
+    this.productService.getAllCategory().subscribe(data => {
+      console.log(data);
+      this.categoryList = data;
+    });
+  }
+
+  ngOnInit(): void {
   }
 
 
@@ -58,29 +65,16 @@ export class ProductCreateComponent implements OnInit {
           this.productService.createProduct(this.productForm.value).subscribe(data => {
             this.toast.success('Thêm mới thành công');
             this.productForm.reset();
+            this.checkUpload = false;
           }, error => {
             if (error.status === 400) {
-              this.toast.error('Thêm mới không thành công.')
+              this.checkUpload = false;
+              this.toast.error('Thêm mới không thành công.');
             }
           });
         });
       })
     ).subscribe();
-    // this.ref.put(this.selectedImage).then(snapshot => {
-    //   return snapshot.ref.getDownloadURL();
-    // }).then(downloadURL => {
-    //   this.downloadURL = downloadURL;
-    //   this.checkUpload = false;
-    //   return downloadURL;
-    // }).then(data => {
-    //     this.productService.createProduct(this.productForm.value).subscribe(form => {
-    //       this.toast.success('Thêm mới thành công');
-    //       this.router.navigateByUrl('');
-    //     });
-    //   }
-    // ).catch(error => {
-    //   this.toast.error('Thêm mới không thành công');
-    // });
   }
 
   showPreview($event: Event): void {

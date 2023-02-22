@@ -5,6 +5,7 @@ import {ProductView} from '../../dto/product/product-view';
 import {Title} from '@angular/platform-browser';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
+import {FormControl, FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-product-detail',
@@ -12,6 +13,14 @@ import {ToastrService} from 'ngx-toastr';
   styleUrls: ['./product-detail.component.css']
 })
 export class ProductDetailComponent implements OnInit {
+  cartForm: FormGroup = new FormGroup({
+    idProductOrder: new FormControl(),
+    quantityOrder: new FormControl(),
+    price: new FormControl(),
+    product: new FormControl()
+  });
+  productDetail: ProductView | undefined;
+  idProduct = 0;
 
   constructor(
     private productService: ProductService,
@@ -20,12 +29,14 @@ export class ProductDetailComponent implements OnInit {
     private router: Router,
     private toast: ToastrService
   ) {
+
     this.activatedRoute.paramMap.subscribe(param => {
       console.log(param.get('idProduct'));
       const idProduct = param.get('idProduct');
       if (idProduct !== null) {
         this.idProduct = Number(idProduct);
         this.productService.getProductById(this.idProduct).subscribe(data => {
+          this.cartForm.patchValue(data);
           this.productDetail = data;
           console.log(data);
         }, error => {
@@ -36,9 +47,6 @@ export class ProductDetailComponent implements OnInit {
       }
     });
   }
-
-  productDetail: ProductView | undefined;
-  idProduct = 0;
 
   @Input()
   max = 10;
@@ -51,7 +59,7 @@ export class ProductDetailComponent implements OnInit {
   rateChange = new EventEmitter<number>();
 
   ratingUnits: Array<RatingUnit> = [];
-  quantityShow = 1;
+  quantityOrder = 1;
   i = 1;
 
 
@@ -70,14 +78,14 @@ export class ProductDetailComponent implements OnInit {
   minus = () => {
     if (this.i !== 1) {
       this.i--;
-      this.quantityShow = this.i;
+      this.quantityOrder = this.i;
     }
   }
 
   plus = () => {
     if (this.i !== 100) {
       this.i++;
-      this.quantityShow = this.i;
+      this.quantityOrder = this.i;
     }
   }
 

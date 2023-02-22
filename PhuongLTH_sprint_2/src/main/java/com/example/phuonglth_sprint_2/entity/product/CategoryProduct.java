@@ -1,5 +1,6 @@
 package com.example.phuonglth_sprint_2.entity.product;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -14,6 +15,7 @@ public class CategoryProduct {
     private Long idCategory;
 
     private String nameCategory;
+
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "create_date")
@@ -25,6 +27,7 @@ public class CategoryProduct {
     private Date modifyDate;
 
     @OneToMany(mappedBy = "categoryProduct")
+    @JsonBackReference
     private Set<Product> products;
 
     public CategoryProduct() {

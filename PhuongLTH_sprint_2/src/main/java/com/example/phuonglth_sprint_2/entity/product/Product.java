@@ -22,18 +22,20 @@ public class Product {
     private String infraredVision; // tầm quan sát
     private String memory;
     private double price;
+    private int quantity;
     private String autoWhiteBalanceFunction; // tự động cân bằng sáng
     @Column(columnDefinition = "bit default false")
     private boolean flagDelete;
 
-    @OneToMany(mappedBy = "order")
-    private Set<OrderDetail> orderDetails;
+//    @ManyToOne
+//    private OrderDetail orderDetail;
 
     @ManyToOne
     private CategoryProduct categoryProduct;
 
-    @ManyToOne
-    private Image image;
+
+    @OneToMany(mappedBy = "product")
+    private Set<Image> images;
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "create_date")
@@ -47,7 +49,7 @@ public class Product {
     public Product() {
     }
 
-    public Product(Long idProduct, String nameProduct, String description, String imageSensor, String resolution, String material, String speedRecord, String infraredVision, String memory, double price, String autoWhiteBalanceFunction, boolean flagDelete, Set<OrderDetail> orderDetails, CategoryProduct categoryProduct, Image image, Date createDate, Date modifyDate) {
+    public Product(Long idProduct, String nameProduct, String description, String imageSensor, String resolution, String material, String speedRecord, String infraredVision, String memory, double price, int quantity, String autoWhiteBalanceFunction, boolean flagDelete, CategoryProduct categoryProduct, Set<Image> images, Date createDate, Date modifyDate) {
         this.idProduct = idProduct;
         this.nameProduct = nameProduct;
         this.description = description;
@@ -58,61 +60,13 @@ public class Product {
         this.infraredVision = infraredVision;
         this.memory = memory;
         this.price = price;
+        this.quantity = quantity;
         this.autoWhiteBalanceFunction = autoWhiteBalanceFunction;
         this.flagDelete = flagDelete;
-        this.orderDetails = orderDetails;
         this.categoryProduct = categoryProduct;
-        this.image = image;
+        this.images = images;
         this.createDate = createDate;
         this.modifyDate = modifyDate;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public Set<OrderDetail> getOrderDetails() {
-        return orderDetails;
-    }
-
-    public void setOrderDetails(Set<OrderDetail> orderDetails) {
-        this.orderDetails = orderDetails;
-    }
-
-    public Date getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
-
-    public Date getModifyDate() {
-        return modifyDate;
-    }
-
-    public void setModifyDate(Date modifyDate) {
-        this.modifyDate = modifyDate;
-    }
-
-    public boolean isFlagDelete() {
-        return flagDelete;
-    }
-
-    public void setFlagDelete(boolean flagDelete) {
-        this.flagDelete = flagDelete;
-    }
-
-    public String getMemory() {
-        return memory;
-    }
-
-    public void setMemory(String memory) {
-        this.memory = memory;
     }
 
     public Long getIdProduct() {
@@ -179,6 +133,30 @@ public class Product {
         this.infraredVision = infraredVision;
     }
 
+    public String getMemory() {
+        return memory;
+    }
+
+    public void setMemory(String memory) {
+        this.memory = memory;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
     public String getAutoWhiteBalanceFunction() {
         return autoWhiteBalanceFunction;
     }
@@ -187,12 +165,12 @@ public class Product {
         this.autoWhiteBalanceFunction = autoWhiteBalanceFunction;
     }
 
-    public Set<OrderDetail> getProductOrders() {
-        return orderDetails;
+    public boolean isFlagDelete() {
+        return flagDelete;
     }
 
-    public void setProductOrders(Set<OrderDetail> orderDetails) {
-        this.orderDetails = orderDetails;
+    public void setFlagDelete(boolean flagDelete) {
+        this.flagDelete = flagDelete;
     }
 
     public CategoryProduct getCategoryProduct() {
@@ -203,11 +181,27 @@ public class Product {
         this.categoryProduct = categoryProduct;
     }
 
-    public Image getImage() {
-        return image;
+    public Set<Image> getImages() {
+        return images;
     }
 
-    public void setImage(Image image) {
-        this.image = image;
+    public void setImages(Set<Image> images) {
+        this.images = images;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    public Date getModifyDate() {
+        return modifyDate;
+    }
+
+    public void setModifyDate(Date modifyDate) {
+        this.modifyDate = modifyDate;
     }
 }

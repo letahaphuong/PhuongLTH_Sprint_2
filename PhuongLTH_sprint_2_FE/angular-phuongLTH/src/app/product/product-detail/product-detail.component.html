@@ -20,6 +20,8 @@
             class="title-attr">{{productDetail?.resolution}}.</span></span></h6>
           <h6 class="title-attr" style="margin-top:15px;"><span>Tốc độ ghi hình : <span
             class="title-attr">{{productDetail?.speedRecord}}.</span></span></h6>
+          <h6 class="title-attr" style="margin-top:15px;"><span>Số lượng trong kho : <span
+            class="title-attr">{{productDetail?.quantity}} cái</span></span></h6>
           <h6 class="title-attr" style="margin-top:15px;"><span style="color: blue">Tư vấn mua hàng :</span> <span
             class="title-attr">0964 80 81 85</span></h6>
         </div>
@@ -27,7 +29,7 @@
           <h6 class="title-attr"><span>Số lượng</span></h6>
           <div>
             <div style="height: 27px" class="btn btn-minus"(click)="minus()"><p >-</p></div>
-            <input  style="height: 27px" [value]="quantityShow" style="width: 40px"/>
+            <input  style="height: 27px" formControlName="quantityOrder" [value]="quantityOrder" style="width: 40px"/>
             <div style="height: 27px" class="btn btn-plus" (click)="plus()"><p>+</p></div>
           </div>
         </div>
@@ -35,7 +37,7 @@
         <div class="section" style="padding-bottom:20px;">
           <button class="btn btn-success" style="border-radius: 10px" [routerLink]="['/product/cart/',productDetail?.idProduct]">
             <span style="margin-right:20px" class=" glyphicon glyphicon-shopping-cart"
-                  aria-hidden="true"></span>Thêm vào giỏ hàng
+                   aria-hidden="true"></span>Thêm vào giỏ hàng
           </button>
         </div>
         <div>

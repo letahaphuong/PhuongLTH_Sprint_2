@@ -5,6 +5,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 public class OrderDetail {
@@ -24,28 +25,24 @@ public class OrderDetail {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "modify_date")
     private Date modifyDate;
-    @ManyToOne
-    private Order order;
+//    @ManyToOne
+//    private Order order;
+    @OneToMany(mappedBy = "orderDetail")
+    private Set<Order> orders;
     @ManyToOne
     private Product product;
 
     public OrderDetail() {
     }
 
-    public OrderDetail(Long idProductOrder, int quantityOrder, double price, Order order, Product product) {
+    public OrderDetail(Long idProductOrder, int quantityOrder, double price, Date createDate, Date modifyDate, Set<Order> orders, Product product) {
         this.idProductOrder = idProductOrder;
         this.quantityOrder = quantityOrder;
         this.price = price;
-        this.order = order;
+        this.createDate = createDate;
+        this.modifyDate = modifyDate;
+        this.orders = orders;
         this.product = product;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
     }
 
     public Long getIdProductOrder() {
@@ -64,12 +61,36 @@ public class OrderDetail {
         this.quantityOrder = quantityOrder;
     }
 
-    public Order getOrder() {
-        return order;
+    public double getPrice() {
+        return price;
     }
 
-    public void setOrder(Order order) {
-        this.order = order;
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    public Date getModifyDate() {
+        return modifyDate;
+    }
+
+    public void setModifyDate(Date modifyDate) {
+        this.modifyDate = modifyDate;
+    }
+
+    public Set<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(Set<Order> orders) {
+        this.orders = orders;
     }
 
     public Product getProduct() {

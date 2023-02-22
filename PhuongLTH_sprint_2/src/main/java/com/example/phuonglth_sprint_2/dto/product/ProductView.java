@@ -12,6 +12,7 @@ public interface ProductView {
     String getDescription();
     String getMaterial();
     String getMemory();
+    String getQuantity();
     String getResolution();
     String getUrl();
     String getPrice();

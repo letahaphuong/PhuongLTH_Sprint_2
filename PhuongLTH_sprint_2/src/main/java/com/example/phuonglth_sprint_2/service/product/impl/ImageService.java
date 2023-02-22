@@ -15,4 +15,9 @@ public class ImageService implements IImageService {
     public void save(Image image) {
         iImageRepository.save(image);
     }
+
+    @Override
+    public void saveImage(String url, Long idProduct) {
+        iImageRepository.saveImage(url,idProduct);
+    }
 }

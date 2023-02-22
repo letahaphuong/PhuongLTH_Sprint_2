@@ -2,6 +2,7 @@ export const environment = {
   API_LOCAL: 'http://localhost:8080/api/public',
   API_CUSTOMER: 'http://localhost:8080/api/customer',
   API_PRODUCT: 'http://localhost:8080/api/product',
+  API_CATEGORY: 'http://localhost:8080/api/category',
   // For Firebase JS SDK v7.20.0 and later, measurementId is optional
   firebaseConfig: {
     apiKey: 'AIzaSyC8WuxeTauC8ZOwQ46IRnR-DQKrgfdXT3g',

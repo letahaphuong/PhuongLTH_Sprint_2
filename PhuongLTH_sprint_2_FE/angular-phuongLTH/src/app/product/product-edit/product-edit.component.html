@@ -1,8 +1,8 @@
 <div class="container pt-2 mb-5" style="background-color:#FFFFFF;">
-  <button class="btn" type="button" routerLink=""><i class="fa-solid fa-arrow-left"></i></button>
-  <p class="text-center p-title fw-bold">THÊM SẢN PHẨM</p>
+  <a href="/product" type="button"><i class="fa-solid fa-arrow-left"></i></a>
+  <p class="text-center p-title fw-bold">SỬA SẢN PHẨM</p>
   <hr>
-  <form [formGroup]="productForm" (ngSubmit)="createProduct()" >
+  <form [formGroup]="productEditForm" (ngSubmit)="editProduct()" >
     <div class="row mt-4 mx-3 mb-3">
       <div class="col-2"></div>
       <div class="col-2">
@@ -11,6 +11,7 @@
       </div>
       <div class="col-5">
         <input formControlName="nameProduct" class="form-control" type="text" id="nameProduct">
+        <input hidden formControlName="idProduct" class="form-control" type="text" >
       </div>
     </div>
     <div class="row mt-4 mx-3 mb-3">
@@ -100,10 +101,8 @@
           class="requirement-field">*</span>):</label>
       </div>
       <div class="col-5">
-        <select class="form-select" formControlName="categoryProduct"  id="categoryProduct">
-          <option [selected]="true" [value]="null">--Chọn hãng sản xuất--</option>
+        <select [compareWith]="compareWith" class="form-select" formControlName="categoryProduct"  id="categoryProduct">
           <option *ngFor="let item of categoryList" [ngValue]="item">{{item?.nameCategory}}</option>
-
         </select>
       </div>
     </div>
@@ -142,6 +141,7 @@
       </div>
       <div class="col-8">
         <input id="addImage"  type="file" class="form-control-file" (change)="showPreview($event)">
+        <img  [src]="url" alt="" style="width: 300px; height: 220px">
       </div>
     </div>
     <br>
@@ -157,24 +157,24 @@
         </button>
       </div>
     </div>
-<!--    <div class="row mx-3 mb-3">-->
-<!--      <div class="col-2"></div>-->
-<!--      <div class="col-2"></div>-->
-<!--      <div class="col-5">-->
-<!--        <div class="form-text" *ngIf="submitTimes<=0 && !isOverSizeImage && !isNotImage">-->
-<!--          Vui lòng thêm ảnh.-->
-<!--        </div>-->
-<!--        <div class="text-danger" *ngIf="(submitTimes>0 && (imageList.length == 0||nameImageList.length == 0))">-->
-<!--          Vui lòng thêm ảnh.-->
-<!--        </div>-->
-<!--        <div class="text-danger" *ngIf="(isNotImage)">-->
-<!--          File không hợp lệ, vui lòng chỉ chọn file ảnh.-->
-<!--        </div>-->
-<!--        <div class="text-danger" *ngIf="(isOverSizeImage)">-->
-<!--          File ảnh không được quá kích thước 5MB.-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
+    <!--    <div class="row mx-3 mb-3">-->
+    <!--      <div class="col-2"></div>-->
+    <!--      <div class="col-2"></div>-->
+    <!--      <div class="col-5">-->
+    <!--        <div class="form-text" *ngIf="submitTimes<=0 && !isOverSizeImage && !isNotImage">-->
+    <!--          Vui lòng thêm ảnh.-->
+    <!--        </div>-->
+    <!--        <div class="text-danger" *ngIf="(submitTimes>0 && (imageList.length == 0||nameImageList.length == 0))">-->
+    <!--          Vui lòng thêm ảnh.-->
+    <!--        </div>-->
+    <!--        <div class="text-danger" *ngIf="(isNotImage)">-->
+    <!--          File không hợp lệ, vui lòng chỉ chọn file ảnh.-->
+    <!--        </div>-->
+    <!--        <div class="text-danger" *ngIf="(isOverSizeImage)">-->
+    <!--          File ảnh không được quá kích thước 5MB.-->
+    <!--        </div>-->
+    <!--      </div>-->
+    <!--    </div>-->
   </form>
 </div>
 

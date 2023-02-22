@@ -70,6 +70,7 @@
           <th scope="col">Tầm quay</th>
           <th scope="col">Tốc độ ghi hình</th>
           <th scope="col">Ngày tạo sản phẩm</th>
+          <th scope="col">Chức năng</th>
         </tr>
         </thead>
         <tbody>
@@ -78,15 +79,18 @@
           <td>{{i + 1}}</td>
           <td>{{productView?.nameProduct}}</td>
           <td>{{productView?.nameCategory}}</td>
-          <td>{{productView?.price}}</td>
+          <td>{{productView?.price | number}}</td>
           <td>{{productView?.infraredVision}}</td>
           <td>{{productView?.speedRecord}}</td>
-          <td>{{productView?.createDateProduct}}</td>
+          <td>{{productView?.createDateProduct | date: 'dd/MM/yyyy, h:mm a'}}</td>
           <td>
-            <!--            <button (click)="tempMuon = congcu" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#muon">-->
-            <!--              mượn-->
-            <!--            </button>-->
-            <!--          </td>-->
+            <button (click)="temp = productView" class="btn btn-danger me-1" data-bs-toggle="modal"
+                    data-bs-target="#delete">
+              Xoá
+            </button>
+            <button [routerLink]="['/product/edit',productView.idProduct]" class="btn btn-primary">Sửa
+            </button>
+          </td>
         </tr>
         </tbody>
       </table>
@@ -155,3 +159,4 @@
   </div>
   <ng-template #elseBlockPagination style="color: red">Không có dữ liệu</ng-template>
 </div>
+<app-product-delete [productView]="temp" (eventDelete)="reload()"></app-product-delete>

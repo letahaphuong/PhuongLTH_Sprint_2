@@ -15,8 +15,9 @@ public class Image {
 
     private String url;
 
-    @OneToMany(mappedBy = "image")
-    private Set<Product> productsImage;
+    @ManyToOne
+    private Product product;
+
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
@@ -31,10 +32,12 @@ public class Image {
     public Image() {
     }
 
-    public Image(Long idImage, String url, Set<Product> productsImage) {
+    public Image(Long idImage, String url, Product product, Date createDate, Date modifyDate) {
         this.idImage = idImage;
         this.url = url;
-        this.productsImage = productsImage;
+        this.product = product;
+        this.createDate = createDate;
+        this.modifyDate = modifyDate;
     }
 
     public Long getIdImage() {
@@ -53,11 +56,27 @@ public class Image {
         this.url = url;
     }
 
-    public Set<Product> getProductsImage() {
-        return productsImage;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setProductsImage(Set<Product> productsImage) {
-        this.productsImage = productsImage;
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    public Date getModifyDate() {
+        return modifyDate;
+    }
+
+    public void setModifyDate(Date modifyDate) {
+        this.modifyDate = modifyDate;
     }
 }

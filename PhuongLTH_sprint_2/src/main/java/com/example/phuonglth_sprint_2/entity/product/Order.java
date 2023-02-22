@@ -33,13 +33,13 @@ public class Order {
     @OneToMany(mappedBy = "order")
     private Set<Customer> customers;
 
-    @OneToMany(mappedBy = "order")
-    private Set<OrderDetail> orderDetails;
+    @ManyToOne
+    private OrderDetail orderDetail;
 
     public Order() {
     }
 
-    public Order(Long idOrder, Long codeOrder, boolean orderStatus, boolean paymentStatus, String shippingAddress, String orderPhoneNumber, Date createDate, Date modifyDate, Set<Customer> customers, Set<OrderDetail> orderDetails) {
+    public Order(Long idOrder, Long codeOrder, boolean orderStatus, boolean paymentStatus, String shippingAddress, String orderPhoneNumber, Date createDate, Date modifyDate, Set<Customer> customers, OrderDetail orderDetail) {
         this.idOrder = idOrder;
         this.codeOrder = codeOrder;
         this.orderStatus = orderStatus;
@@ -49,7 +49,7 @@ public class Order {
         this.createDate = createDate;
         this.modifyDate = modifyDate;
         this.customers = customers;
-        this.orderDetails = orderDetails;
+        this.orderDetail = orderDetail;
     }
 
     public Long getIdOrder() {
@@ -124,11 +124,11 @@ public class Order {
         this.customers = customers;
     }
 
-    public Set<OrderDetail> getOrderDetails() {
-        return orderDetails;
+    public OrderDetail getOrderDetail() {
+        return orderDetail;
     }
 
-    public void setOrderDetails(Set<OrderDetail> orderDetails) {
-        this.orderDetails = orderDetails;
+    public void setOrderDetail(OrderDetail orderDetail) {
+        this.orderDetail = orderDetail;
     }
 }
