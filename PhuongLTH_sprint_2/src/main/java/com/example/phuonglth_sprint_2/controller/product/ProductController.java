@@ -1,9 +1,6 @@
 package com.example.phuonglth_sprint_2.controller.product;
 
-import com.example.phuonglth_sprint_2.dto.product.CartDto;
-import com.example.phuonglth_sprint_2.dto.product.CategoryDto;
-import com.example.phuonglth_sprint_2.dto.product.ProductDto;
-import com.example.phuonglth_sprint_2.dto.product.ProductView;
+import com.example.phuonglth_sprint_2.dto.product.*;
 import com.example.phuonglth_sprint_2.dto.response.ResponseMessage;
 import com.example.phuonglth_sprint_2.entity.product.CategoryProduct;
 import com.example.phuonglth_sprint_2.entity.product.Image;
@@ -134,7 +131,7 @@ public class ProductController {
     }
 
     @PatchMapping("{id}")
-    public ResponseEntity<?> editProduct(@Valid @RequestBody ProductDto productDto, BindingResult bindingResult, @PathVariable("id")Long idProduct) {
+    public ResponseEntity<?> editProduct(@Valid @RequestBody ProductDto productDto, BindingResult bindingResult, @PathVariable("id") Long idProduct) {
         Optional<Product> product = productService.finProDuctByIdToDelete(idProduct);
         if (!product.isPresent()) {
             return new ResponseEntity<>(new ResponseMessage("Sản phẩm không tồn tại"), HttpStatus.NOT_FOUND);
@@ -146,7 +143,16 @@ public class ProductController {
             productService.save(productCopy);
             return new ResponseEntity<>(new ResponseMessage("Sửa thành công"), HttpStatus.OK);
         }
+    }
 
+    @GetMapping("cart/object/{id}")
+    public ResponseEntity<?> getCardByIdCustomer(@PathVariable("id") Long idCustomer) {
+        Optional<CartView> cartView = orderDetailService.getCartByIdCustomer(idCustomer);
+        if (!cartView.isPresent()) {
+            return new ResponseEntity<>(new ResponseMessage("Nội dung không được tìm thấy hoặc"), HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(cartView, HttpStatus.OK);
+        }
     }
 
 }

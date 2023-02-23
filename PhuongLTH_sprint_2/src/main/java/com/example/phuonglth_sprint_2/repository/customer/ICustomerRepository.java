@@ -9,6 +9,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface ICustomerRepository extends JpaRepository<Customer, Long> {
     @Query(value = "select id_customer        as idCustomer,\n" +
@@ -47,4 +49,6 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
 
     @Query(value = "update customer set flag_delete = true where id_customer = :id",nativeQuery = true)
     void removeFlag(@Param("id") Long id);
+
+    Optional<Customer> findByEmail(String email);
 }

@@ -21,6 +21,7 @@ export class ProductEditComponent implements OnInit {
   url!: string;
   selectedImage: any = null;
   checkInputUpload = false;
+
   compareWith(o1: Category, o2: Category): boolean {
     return o1 && o2 ? o1.idCategory === o2.idCategory : o1 === o2;
   }
@@ -71,7 +72,7 @@ export class ProductEditComponent implements OnInit {
   }
 
   editProduct(): void {
-    if (this.checkInputUpload) {
+    if (this.checkInputUpload && this.selectedImage != null) {
       this.checkUpload = true;
       const nameImg = this.getCurrentDateTime() + this.selectedImage.name;
       const fileRef = this.storage.ref(nameImg);

@@ -1,12 +1,10 @@
 package com.example.phuonglth_sprint_2.entity.product;
 
-import com.example.phuonglth_sprint_2.entity.customer.Customer;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.Set;
 
 @Entity
 @Table(name = "orders")
@@ -30,16 +28,14 @@ public class Order {
     @Column(name = "modify_date")
     private Date modifyDate;
 
-    @OneToMany(mappedBy = "order")
-    private Set<Customer> customers;
-
     @ManyToOne
     private OrderDetail orderDetail;
+
 
     public Order() {
     }
 
-    public Order(Long idOrder, Long codeOrder, boolean orderStatus, boolean paymentStatus, String shippingAddress, String orderPhoneNumber, Date createDate, Date modifyDate, Set<Customer> customers, OrderDetail orderDetail) {
+    public Order(Long idOrder, Long codeOrder, boolean orderStatus, boolean paymentStatus, String shippingAddress, String orderPhoneNumber, Date createDate, Date modifyDate, OrderDetail orderDetail) {
         this.idOrder = idOrder;
         this.codeOrder = codeOrder;
         this.orderStatus = orderStatus;
@@ -48,7 +44,6 @@ public class Order {
         this.orderPhoneNumber = orderPhoneNumber;
         this.createDate = createDate;
         this.modifyDate = modifyDate;
-        this.customers = customers;
         this.orderDetail = orderDetail;
     }
 
@@ -114,14 +109,6 @@ public class Order {
 
     public void setModifyDate(Date modifyDate) {
         this.modifyDate = modifyDate;
-    }
-
-    public Set<Customer> getCustomers() {
-        return customers;
-    }
-
-    public void setCustomers(Set<Customer> customers) {
-        this.customers = customers;
     }
 
     public OrderDetail getOrderDetail() {

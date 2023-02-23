@@ -1,8 +1,15 @@
 
-2
-java:S1643
-"Use a StringBuilder instead.(›’ùÇ
 0
 java:S1220""Move this file to a named package.
-N	java:S106"9Replace this use of System.out or System.err by a logger.(Ş·Õ
-S	java:S106"9Replace this use of System.out or System.err by a logger.(®ıáëûÿÿÿÿ
+V
+java:S1854";Remove this useless assignment to local variable "scanner".(ù ƒ‘üÿÿÿÿ
+V	java:S125"<This block of commented-out lines of code should be removed.(»•ûÿÿÿÿ
+G
+java:S1481",Remove this unused "scanner" local variable.(ù ƒ‘üÿÿÿÿ
+?
+java:S1197"*Move the array designators [] to the type.(’ˆi
+>
+java:S1481")Remove this unused "str2" local variable.(’ˆi
+@
+java:S1197"*Move the array designators [] to the type.(ÜÈê„
+C	java:S108")Either remove or fill this block of code.(ô‘ı€üÿÿÿÿ

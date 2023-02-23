@@ -1,5 +1,6 @@
 package com.example.phuonglth_sprint_2.entity.product;
 
+import com.example.phuonglth_sprint_2.entity.customer.Customer;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -25,17 +26,19 @@ public class OrderDetail {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "modify_date")
     private Date modifyDate;
-//    @ManyToOne
-//    private Order order;
+
     @OneToMany(mappedBy = "orderDetail")
     private Set<Order> orders;
     @ManyToOne
     private Product product;
 
+    @ManyToOne
+    private Customer customer;
+
     public OrderDetail() {
     }
 
-    public OrderDetail(Long idProductOrder, int quantityOrder, double price, Date createDate, Date modifyDate, Set<Order> orders, Product product) {
+    public OrderDetail(Long idProductOrder, int quantityOrder, double price, Date createDate, Date modifyDate, Set<Order> orders, Product product, Customer customer) {
         this.idProductOrder = idProductOrder;
         this.quantityOrder = quantityOrder;
         this.price = price;
@@ -43,6 +46,7 @@ public class OrderDetail {
         this.modifyDate = modifyDate;
         this.orders = orders;
         this.product = product;
+        this.customer = customer;
     }
 
     public Long getIdProductOrder() {
@@ -99,5 +103,13 @@ public class OrderDetail {
 
     public void setProduct(Product product) {
         this.product = product;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 }

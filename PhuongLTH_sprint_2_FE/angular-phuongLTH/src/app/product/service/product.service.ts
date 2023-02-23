@@ -4,7 +4,7 @@ import {environment} from '../../../environments/environment.prod';
 import {Observable} from 'rxjs';
 import {ProductCreate} from '../../entity/product/ProductCreate';
 import {Category} from '../../dto/product/category';
-import {CartForm} from "../../dto/product/cart-form";
+import {CartForm} from '../../dto/product/cart-form';
 
 @Injectable({
   providedIn: 'root'
@@ -30,8 +30,12 @@ export class ProductService {
     return this.http.get<Category[]>(this.API_CATEGORY);
   }
 
-  createCart(cartForm: CartForm): Observable<CartForm> {
-    return this.http.post<CartForm>(this.API_PRODUCT + '/cart/create', cartForm);
+  createCart(cartForm: CartForm): Observable<any> {
+    return this.http.post<any>(this.API_PRODUCT + '/cart/create', cartForm);
+  }
+
+  getItemForCartByIdCustomer(id: any): Observable<any> {
+    return this.http.get(this.API_PRODUCT + '/cart/object/' + id);
   }
 
   deleteProduct(id: number): Observable<any> {

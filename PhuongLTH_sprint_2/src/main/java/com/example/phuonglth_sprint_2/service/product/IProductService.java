@@ -1,5 +1,6 @@
 package com.example.phuonglth_sprint_2.service.product;
 
+import com.example.phuonglth_sprint_2.dto.product.CartView;
 import com.example.phuonglth_sprint_2.dto.product.ProductView;
 import com.example.phuonglth_sprint_2.entity.product.Product;
 import org.springframework.data.domain.Page;
@@ -27,5 +28,7 @@ public interface IProductService {
     void removeFlag(Long id);
 
     Long getLastInsertId();
+
+
 
 }

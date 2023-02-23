@@ -1,27 +1,29 @@
 package com.example.phuonglth_sprint_2.dto.product;
 
+import com.example.phuonglth_sprint_2.entity.customer.Customer;
 import com.example.phuonglth_sprint_2.entity.product.Product;
 
-import javax.validation.constraints.NotBlank;
 
 public class CartDto {
     private Long idProductOrder;
 
-    @NotBlank
     private int quantityOrder;
 
     private double price;
-    @NotBlank
+
     private Product product;
+
+    private Customer customer;
 
     public CartDto() {
     }
 
-    public CartDto(Long idProductOrder, int quantityOrder, double price, Product product) {
+    public CartDto(Long idProductOrder, int quantityOrder, double price, Product product, Customer customer) {
         this.idProductOrder = idProductOrder;
         this.quantityOrder = quantityOrder;
         this.price = price;
         this.product = product;
+        this.customer = customer;
     }
 
     public Long getIdProductOrder() {
@@ -54,5 +56,13 @@ public class CartDto {
 
     public void setProduct(Product product) {
         this.product = product;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 }

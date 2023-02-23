@@ -26,4 +26,8 @@ export class CustomerService {
     console.log(url);
     return this.http.get<any>(url, {params});
   }
+
+  findCustomerById(id: any): Observable<any> {
+    return this.http.get<any>(this.API_CUSTOMER + '/' + id);
+  }
 }

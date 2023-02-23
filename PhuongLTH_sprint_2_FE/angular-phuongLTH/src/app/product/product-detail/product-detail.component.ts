@@ -6,6 +6,10 @@ import {Title} from '@angular/platform-browser';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
 import {FormControl, FormGroup} from '@angular/forms';
+import {ProductCreate} from '../../entity/product/ProductCreate';
+import {CustomerService} from '../../customer/service/customer.service';
+import {TokenService} from '../../security/service/token.service';
+import {Customer} from '../../entity/customer/customer';
 
 @Component({
   selector: 'app-product-detail',
@@ -13,23 +17,34 @@ import {FormControl, FormGroup} from '@angular/forms';
   styleUrls: ['./product-detail.component.css']
 })
 export class ProductDetailComponent implements OnInit {
-  cartForm: FormGroup = new FormGroup({
-    idProductOrder: new FormControl(),
-    quantityOrder: new FormControl(),
-    price: new FormControl(),
-    product: new FormControl()
-  });
+  cartForm: FormGroup = new FormGroup({});
   productDetail: ProductView | undefined;
   idProduct = 0;
+  getPrice: number | undefined;
+  product: ProductCreate | undefined;
+  idCustomer: string | null;
+  customer: Customer | undefined;
 
   constructor(
     private productService: ProductService,
     private title: Title,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private toast: ToastrService
+    private toast: ToastrService,
+    private customerService: CustomerService,
+    private tokenService: TokenService
   ) {
-
+    this.idCustomer = this.tokenService.getId();
+    this.customerService.findCustomerById(this.idCustomer).subscribe(data => {
+      this.customer = data;
+    });
+    this.cartForm = new FormGroup({
+      idProductOrder: new FormControl(),
+      quantityOrder: new FormControl(this.quantity),
+      price: new FormControl(),
+      product: new FormControl(),
+      customer: new FormControl()
+    });
     this.activatedRoute.paramMap.subscribe(param => {
       console.log(param.get('idProduct'));
       const idProduct = param.get('idProduct');
@@ -37,6 +52,8 @@ export class ProductDetailComponent implements OnInit {
         this.idProduct = Number(idProduct);
         this.productService.getProductById(this.idProduct).subscribe(data => {
           this.cartForm.patchValue(data);
+          this.getPrice = data.price;
+          this.product = data;
           this.productDetail = data;
           console.log(data);
         }, error => {
@@ -59,7 +76,7 @@ export class ProductDetailComponent implements OnInit {
   rateChange = new EventEmitter<number>();
 
   ratingUnits: Array<RatingUnit> = [];
-  quantityOrder = 1;
+  quantity = 1;
   i = 1;
 
 
@@ -78,14 +95,14 @@ export class ProductDetailComponent implements OnInit {
   minus = () => {
     if (this.i !== 1) {
       this.i--;
-      this.quantityOrder = this.i;
+      this.quantity = this.i;
     }
   }
 
   plus = () => {
     if (this.i !== 100) {
       this.i++;
-      this.quantityOrder = this.i;
+      this.quantity = this.i;
     }
   }
 
@@ -104,4 +121,20 @@ export class ProductDetailComponent implements OnInit {
     this.ratingUnits.forEach((item, idx) => item.active = idx < this.ratingValue);
   }
 
+  createCart(): void {
+    this.cartForm = new FormGroup({
+      idProductOrder: new FormControl(),
+      quantityOrder: new FormControl(this.quantity),
+      price: new FormControl(this.getPrice),
+      product: new FormControl(this.product),
+      customer: new FormControl(this.customer)
+    });
+    this.productService.createCart(this.cartForm.value).subscribe(data => {
+      this.toast.success('Thêm giỏ hàng thành công');
+    }, error => {
+      this.toast.error('Thêm giỏ hàng không thành công');
+    });
+    console.log(this.cartForm.value);
+    console.log('aaaaa', this.quantity);
+  }
 }

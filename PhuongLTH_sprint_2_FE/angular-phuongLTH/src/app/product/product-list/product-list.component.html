@@ -83,7 +83,7 @@
           <td>{{productView?.infraredVision}}</td>
           <td>{{productView?.speedRecord}}</td>
           <td>{{productView?.createDateProduct | date: 'dd/MM/yyyy, h:mm a'}}</td>
-          <td>
+          <td class="d-flex">
             <button (click)="temp = productView" class="btn btn-danger me-1" data-bs-toggle="modal"
                     data-bs-target="#delete">
               Xoá

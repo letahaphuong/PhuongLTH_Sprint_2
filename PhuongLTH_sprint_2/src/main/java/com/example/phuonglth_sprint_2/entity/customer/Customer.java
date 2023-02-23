@@ -2,6 +2,7 @@ package com.example.phuonglth_sprint_2.entity.customer;
 
 import com.example.phuonglth_sprint_2.entity.account.Account;
 import com.example.phuonglth_sprint_2.entity.product.Order;
+import com.example.phuonglth_sprint_2.entity.product.OrderDetail;
 import com.example.phuonglth_sprint_2.entity.product.Product;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -26,8 +27,6 @@ public class Customer {
     private boolean flagDelete;
     private String phone;
 
-    @ManyToOne
-    private Order order;
     @OneToOne
     private Account account;
 
@@ -44,7 +43,7 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(Long idCustomer, String name, String email, String address, String idCard, boolean gender, String dateOfBirth, boolean flagDelete, String phone, Order order, Account account) {
+    public Customer(Long idCustomer, String name, String email, String address, String idCard, boolean gender, String dateOfBirth, boolean flagDelete, String phone, Account account, Date createDate, Date modifyDate) {
         this.idCustomer = idCustomer;
         this.name = name;
         this.email = email;
@@ -54,8 +53,9 @@ public class Customer {
         this.dateOfBirth = dateOfBirth;
         this.flagDelete = flagDelete;
         this.phone = phone;
-        this.order = order;
         this.account = account;
+        this.createDate = createDate;
+        this.modifyDate = modifyDate;
     }
 
     public Long getIdCustomer() {
@@ -130,19 +130,27 @@ public class Customer {
         this.phone = phone;
     }
 
-    public Order getOrder() {
-        return order;
-    }
-
-    public void setOrder(Order order) {
-        this.order = order;
-    }
-
     public Account getAccount() {
         return account;
     }
 
     public void setAccount(Account account) {
         this.account = account;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    public Date getModifyDate() {
+        return modifyDate;
+    }
+
+    public void setModifyDate(Date modifyDate) {
+        this.modifyDate = modifyDate;
     }
 }

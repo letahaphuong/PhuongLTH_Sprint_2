@@ -5,6 +5,8 @@ import {SecurityService} from '../service/security.service';
 import {TokenService} from '../service/token.service';
 import {Router} from '@angular/router';
 import {Title} from '@angular/platform-browser';
+// @ts-ignore
+import * as CryptoJS from 'crypto-js';
 
 @Component({
   selector: 'app-login',
@@ -12,9 +14,6 @@ import {Title} from '@angular/platform-browser';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  statusRole: any[] = [];
-
-  signInForm: FormGroup = new FormGroup({});
 
   constructor(private securityService: SecurityService,
               private tokenService: TokenService,
@@ -24,6 +23,15 @@ export class LoginComponent implements OnInit {
               private title: Title) {
     this.title.setTitle('Trang đăng nhập');
   }
+  statusRole: any[] = [];
+
+  signInForm: FormGroup = new FormGroup({});
+  plainText?: string;
+  encryptText?: string;
+  encPassword?: '123123';
+  decPassword?: 'string';
+  conversionEncryptOutput?: string;
+  conversionDecryptOutput?: string;
 
   ngOnInit(): void {
     this.getFormLogin();
@@ -40,7 +48,6 @@ export class LoginComponent implements OnInit {
   future(): void {
     this.toast.info('Chức năng đăng đang được xây dựng.');
   }
-
   login(): void {
     const signInForm = this.signInForm?.value;
     console.log(this.signInForm);
@@ -75,7 +82,7 @@ export class LoginComponent implements OnInit {
         }
       }, error => {
         if (error.status === 403) {
-          this.toast.error('Đăng nhập thất bại, vui lòng nhập lại.', 'Thông báo')
+          this.toast.error('Đăng nhập thất bại, vui lòng nhập lại.', 'Thông báo');
         }
       }
     )

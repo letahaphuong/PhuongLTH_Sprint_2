@@ -51,7 +51,7 @@ public class CustomerController {
     @GetMapping("{id}")
     public ResponseEntity<Customer> findCustomerById(@PathVariable Long id){
         Optional<Customer> customer = customerService.findById(id);
-        if (customer.isPresent()){
+        if (!customer.isPresent()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }else {
             return new ResponseEntity<>(customer.get(),HttpStatus.OK);
