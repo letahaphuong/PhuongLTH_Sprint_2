@@ -2,14 +2,8 @@ package com.example.phuonglth_sprint_2.controller.product;
 
 import com.example.phuonglth_sprint_2.dto.product.*;
 import com.example.phuonglth_sprint_2.dto.response.ResponseMessage;
-import com.example.phuonglth_sprint_2.entity.product.CategoryProduct;
-import com.example.phuonglth_sprint_2.entity.product.Image;
-import com.example.phuonglth_sprint_2.entity.product.OrderDetail;
-import com.example.phuonglth_sprint_2.entity.product.Product;
-import com.example.phuonglth_sprint_2.service.product.ICategoryService;
-import com.example.phuonglth_sprint_2.service.product.IImageService;
-import com.example.phuonglth_sprint_2.service.product.IOrderDetailService;
-import com.example.phuonglth_sprint_2.service.product.IProductService;
+import com.example.phuonglth_sprint_2.entity.product.*;
+import com.example.phuonglth_sprint_2.service.product.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -23,6 +17,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -41,6 +36,9 @@ public class ProductController {
 
     @Autowired
     IOrderDetailService orderDetailService;
+
+    @Autowired
+    IOrderService orderService;
 
     @PostMapping("category")
     public ResponseEntity<CategoryDto> saveCategory(@Valid @RequestBody CategoryDto categoryDto, BindingResult bindingResult) {
@@ -104,6 +102,13 @@ public class ProductController {
 
     @PostMapping("cart/create")
     public ResponseEntity<?> createCart(@Valid @RequestBody CartDto cartDto, BindingResult bindingResult) {
+        Boolean checkProduct = orderDetailService.existsByProduct(cartDto.getProduct());
+        if (checkProduct) {
+            OrderDetail orderDetail1 = orderDetailService.findOrderDetailByProduct(cartDto.getProduct());
+            orderDetail1.setQuantityOrder(orderDetail1.getQuantityOrder() + cartDto.getQuantityOrder());
+            orderDetailService.save(orderDetail1);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        }
         try {
             if (bindingResult.hasErrors()) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -118,6 +123,18 @@ public class ProductController {
             return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
         }
     }
+
+    @DeleteMapping("cart/{id}")
+    public ResponseEntity<?> deleteCart(@PathVariable("id") Long id) {
+        OrderDetail orderDetail = orderDetailService.findByIdProductOrder(id);
+        if (orderDetail == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            orderDetailService.delete(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+    }
+
 
     @DeleteMapping("delete/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") Long idProduct) {
@@ -147,12 +164,37 @@ public class ProductController {
 
     @GetMapping("cart/object/{id}")
     public ResponseEntity<?> getCardByIdCustomer(@PathVariable("id") Long idCustomer) {
-        Optional<CartView> cartView = orderDetailService.getCartByIdCustomer(idCustomer);
-        if (!cartView.isPresent()) {
+        List<CartView> cartView = orderDetailService.getCartByIdCustomer(idCustomer);
+        if (cartView == null) {
             return new ResponseEntity<>(new ResponseMessage("Nội dung không được tìm thấy hoặc"), HttpStatus.NOT_FOUND);
         } else {
             return new ResponseEntity<>(cartView, HttpStatus.OK);
         }
+    }
+
+    @GetMapping("cart/total-price/{id}")
+    public ResponseEntity<?> getCartTotalPrice(@PathVariable("id") Long idCustomer) {
+        Optional<?> getCartTotalPrice = orderDetailService.getCartTotalPrice(idCustomer);
+        if (!getCartTotalPrice.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(getCartTotalPrice, HttpStatus.OK);
+        }
+    }
+
+    @PostMapping("order/create")
+    public ResponseEntity<?> saveOrder(@Valid @RequestBody OrderDto orderDto, BindingResult bindingResult) {
+        if (orderDto == null) {
+            return new ResponseEntity<>(new ResponseMessage("Đơn hàng rổng"), HttpStatus.NOT_FOUND);
+        }
+        if (bindingResult.hasErrors()) {
+            return new ResponseEntity<>(new ResponseMessage("Đơn hàng INVALID"), HttpStatus.BAD_REQUEST);
+        }
+        Order order = new Order();
+        BeanUtils.copyProperties(orderDto, order);
+        order.setCodeOrder(orderService.randomCodeOrder());
+        orderService.saveOrder(order);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
 }

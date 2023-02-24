@@ -1,6 +1,7 @@
 package com.example.phuonglth_sprint_2.jwt.userprincal;
 
 import com.example.phuonglth_sprint_2.entity.account.Account;
+import com.example.phuonglth_sprint_2.entity.customer.Customer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

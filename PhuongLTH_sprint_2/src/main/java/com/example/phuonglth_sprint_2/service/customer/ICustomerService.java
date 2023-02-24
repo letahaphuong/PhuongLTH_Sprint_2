@@ -1,6 +1,7 @@
 package com.example.phuonglth_sprint_2.service.customer;
 
 import com.example.phuonglth_sprint_2.dto.customer.CustomerView;
+import com.example.phuonglth_sprint_2.dto.customer.GetIdCustomerView;
 import com.example.phuonglth_sprint_2.entity.account.Account;
 import com.example.phuonglth_sprint_2.entity.customer.Customer;
 import org.springframework.data.domain.Page;
@@ -17,5 +18,8 @@ public interface ICustomerService {
     void removeFlag( Long id);
 
     Optional<Customer> findById(Long id);
+
+    Optional<Customer> findByEmail(String email);
+    Optional<GetIdCustomerView> getIdCustomerByIdAccount(Long idAccount);
 
 }

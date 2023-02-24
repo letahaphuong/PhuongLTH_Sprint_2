@@ -1,7 +1,10 @@
 package com.example.phuonglth_sprint_2.jwt.userprincal;
 
 import com.example.phuonglth_sprint_2.entity.account.Account;
+import com.example.phuonglth_sprint_2.entity.customer.Customer;
 import com.example.phuonglth_sprint_2.repository.account.IAccountRepository;
+import com.example.phuonglth_sprint_2.repository.customer.ICustomerRepository;
+import com.example.phuonglth_sprint_2.service.customer.ICustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -13,6 +16,8 @@ public class AccountDetailService implements UserDetailsService {
 
     @Autowired
     IAccountRepository accountRepository;
+    @Autowired
+    ICustomerService customerService;
 
     @Override// tìm account có tồn tại trong DB không
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

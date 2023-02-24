@@ -22,67 +22,27 @@
           </tr>
           </thead>
           <tbody>
-
-          <tr>
+          <tr *ngFor="let cart of cartList">
             <td class="p-4">
               <div class="media align-items-center">
-                <img src="../../../assets/images/items/yoosee-3.jpg"
+                <img [src]="cart.url"
                      class="d-block ui-w-40 ui-bordered mr-4" alt=""/>
                 <div class="media-body">
-                  <a href="#" class="d-block text-dark">Camera IP Hồng Ngoại Không Dây 3.0 Megapixel YOOSEE 316S</a>
+                  <a class="d-block text-dark">{{cart.nameProduct}}</a>
                   <small>
-                    <span class="text-muted">Size: </span> EU 37 &nbsp;
-                    <span class="text-muted">Ships from: </span> China
+                    <span class="text-muted">Hãng sản xuất: </span> {{cart.nameCategory}} &nbsp;
+                    <span class="text-muted">Bộ nhớ: </span> {{cart.memory}}
                   </small>
                 </div>
               </div>
             </td>
-            <td class="text-right font-weight-semibold align-middle p-4">800,000</td>
-            <td class="align-middle p-4"><input type="text" class="form-control text-center" value="2"></td>
-            <td class="text-right font-weight-semibold align-middle p-4">1,600,000</td>
-            <td class="text-center align-middle px-0"><a href="#" class="shop-tooltip close float-none text-danger"
-                                                         title="" data-original-title="Remove">×</a></td>
-          </tr>
-
-          <tr>
-            <td class="p-4">
-              <div class="media align-items-center">
-                <img
-                  src="../../../assets/images/items/vantech-1.jpg" class="d-block ui-w-40 ui-bordered mr-4" alt=""/>
-                <div class="media-body">
-                  <a href="#" class="d-block text-dark">Camera IP Robot hồng ngoại VT-6300C</a>
-                  <small>
-                    <span class="text-muted">Storage: </span> 32GB &nbsp;
-                    <span class="text-muted">Warranty: </span> Standard - 1 year &nbsp;
-                    <span class="text-muted">Ships from: </span> China
-                  </small>
-                </div>
-              </div>
-            </td>
-            <td class="text-right font-weight-semibold align-middle p-4">1,700,000</td>
-            <td class="align-middle p-4"><input type="text" class="form-control text-center" value="1"></td>
-            <td class="text-right font-weight-semibold align-middle p-4">1,700,000</td>
-            <td class="text-center align-middle px-0"><a href="#" class="shop-tooltip close float-none text-danger"
-                                                         title="" data-original-title="Remove">×</a></td>
-          </tr>
-
-          <tr>
-            <td class="p-4">
-              <div class="media align-items-center">
-                <img src="../../../assets/images/items/yoosee-3.jpg" class="d-block ui-w-40 ui-bordered mr-4" alt=""/>
-                <div class="media-body">
-                  <a href="#" class="d-block text-dark">Camera IP Robot hồng ngoại VT-6300C</a>
-                  <small>
-                    <span class="text-muted">Ships from: </span> Germany
-                  </small>
-                </div>
-              </div>
-            </td>
-            <td class="text-right font-weight-semibold align-middle p-4">840,000</td>
-            <td class="align-middle p-4"><input type="text" class="form-control text-center" value="1"></td>
-            <td class="text-right font-weight-semibold align-middle p-4">840,000</td>
-            <td class="text-center align-middle px-0"><a href="#" class="shop-tooltip close float-none text-danger"
-                                                         title="" data-original-title="Remove">×</a></td>
+            <td class="text-right font-weight-semibold align-middle p-4">{{cart.price| number}}</td>
+            <td class="align-middle p-4"><input type="text" class="form-control text-center" [value]="cart.quantity"></td>
+            <td class="text-right font-weight-semibold align-middle p-4">{{cart.price * cart.quantity | number}}</td>
+            <td class="text-center align-middle px-0">
+              <a (click)="temp = cart" class="shop-tooltip close float-none text-danger"
+                 data-bs-toggle="modal" data-bs-target="#deleteCart"
+                 title="" data-original-title="Remove">×</a></td>
           </tr>
 
           </tbody>
@@ -96,11 +56,11 @@
         <div class="d-flex">
           <div class="text-right mt-4 mr-5">
             <label class="text-muted font-weight-normal m-0">Giảm giá</label>
-            <div class="text-large"><strong>140,000</strong></div>
+            <div class="text-large"><strong>đ</strong></div>
           </div>
           <div class="text-right mt-4">
             <label class="text-muted font-weight-normal m-0">Tổng tiền</label>
-            <div class="text-large"><strong>4,000,000</strong></div>
+            <div class="text-large"><strong>{{getCartTotalPrice?.cartTotalPrice | number}} đ</strong></div>
           </div>
         </div>
       </div>
@@ -113,3 +73,4 @@
     </div>
   </div>
 </div>
+<app-product-cart-delete [cartView]="temp" (eventCartDelete)="reload()"></app-product-cart-delete>

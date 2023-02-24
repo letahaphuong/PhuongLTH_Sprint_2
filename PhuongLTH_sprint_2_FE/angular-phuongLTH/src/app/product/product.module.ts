@@ -10,10 +10,11 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {SecurityModule} from '../security/security.module';
 import { ProductDeleteComponent } from './product-delete/product-delete.component';
 import { ProductEditComponent } from './product-edit/product-edit.component';
+import { ProductCartDeleteComponent } from './product-cart-delete/product-cart-delete.component';
 
 
 @NgModule({
-  declarations: [ProductDetailComponent, ProductCartComponent, ProductListComponent, ProductCreateComponent, ProductDeleteComponent, ProductEditComponent],
+  declarations: [ProductDetailComponent, ProductCartComponent, ProductListComponent, ProductCreateComponent, ProductDeleteComponent, ProductEditComponent, ProductCartDeleteComponent],
   imports: [
     CommonModule,
     ProductRoutingModule,

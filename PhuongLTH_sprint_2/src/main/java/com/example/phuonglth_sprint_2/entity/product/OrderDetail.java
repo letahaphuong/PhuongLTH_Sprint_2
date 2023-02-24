@@ -27,8 +27,8 @@ public class OrderDetail {
     @Column(name = "modify_date")
     private Date modifyDate;
 
-    @OneToMany(mappedBy = "orderDetail")
-    private Set<Order> orders;
+//    @OneToMany(mappedBy = "orderDetail")
+//    private Set<Order> orders;
     @ManyToOne
     private Product product;
 
@@ -38,13 +38,12 @@ public class OrderDetail {
     public OrderDetail() {
     }
 
-    public OrderDetail(Long idProductOrder, int quantityOrder, double price, Date createDate, Date modifyDate, Set<Order> orders, Product product, Customer customer) {
+    public OrderDetail(Long idProductOrder, int quantityOrder, double price, Date createDate, Date modifyDate, Product product, Customer customer) {
         this.idProductOrder = idProductOrder;
         this.quantityOrder = quantityOrder;
         this.price = price;
         this.createDate = createDate;
         this.modifyDate = modifyDate;
-        this.orders = orders;
         this.product = product;
         this.customer = customer;
     }
@@ -87,14 +86,6 @@ public class OrderDetail {
 
     public void setModifyDate(Date modifyDate) {
         this.modifyDate = modifyDate;
-    }
-
-    public Set<Order> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(Set<Order> orders) {
-        this.orders = orders;
     }
 
     public Product getProduct() {

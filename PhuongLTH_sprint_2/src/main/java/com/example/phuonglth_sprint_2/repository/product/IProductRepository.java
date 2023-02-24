@@ -41,7 +41,7 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
             "   and cp.name_category LIKE CONCAT('%', :nameCategory, '%')\n" +
             "   and p.name_product LIKE CONCAT('%', :nameProduct, '%')\n" +
             "   and p.price LIKE CONCAT('%', :price, '%')\n" +
-            "order by p.create_date",
+            "order by p.create_date desc ",
             countQuery = "select p.id_product                  as idProduct,\n" +
                     "       p.auto_white_balance_function as autoWhiteBalanceFunction,\n" +
                     "       p.create_date                 as createDateProduct,\n" +
@@ -66,7 +66,7 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
                     "   and cp.name_category LIKE CONCAT('%', :nameCategory, '%')\n" +
                     "   and p.name_product LIKE CONCAT('%', :nameProduct, '%')\n" +
                     "   and p.price LIKE CONCAT('%', :price, '%')\n" +
-                    "order by p.create_date", nativeQuery = true)
+                    "order by p.create_date desc ", nativeQuery = true)
     Page<ProductView> getAllProduct(@Param("nameCategory") String nameCategory, @Param("nameProduct") String nameProduct, @Param("price") String price, Pageable pageable);
 
     @Query(value = "select p.id_product                  as idProduct,\n" +

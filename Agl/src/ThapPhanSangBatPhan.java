@@ -1,4 +1,4 @@
-import java.util.Scanner;
+import java.util.*;
 
 public class ThapPhanSangBatPhan {
     //    public static void main(String[] args) {
@@ -16,12 +16,25 @@ public class ThapPhanSangBatPhan {
 //    }
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        String str = "aabbdhc";
-        String str2[];
-        String str1[] = str.split("");
-        for (int i = 0; i < str1.length; i++) {
-            for (int j = 1; j < str1.length; j++) {
+        System.out.println("Nhập thông tin: ");
+        String str = scanner.nextLine();
+        str = str.toUpperCase();
+        System.out.println(str);
 
+        String[] str1 = str.split("");
+        System.out.println(Arrays.toString(str1));
+
+        Stack<String> temp = new Stack<>();
+        for (int i = 0; i < str1.length; i++) {
+            temp.push(str1[i]);
+        }
+
+        Map<String, Integer> map = new TreeMap<>();
+        for (int i = 0; i < temp.size(); i++) {
+            if (!map.containsKey(temp.get(i))) {
+                map.put(temp.get(i), 1);
+            } else {
+                map.put(temp.get(i), map.get(temp.get(i)) + 1);
             }
         }
     }

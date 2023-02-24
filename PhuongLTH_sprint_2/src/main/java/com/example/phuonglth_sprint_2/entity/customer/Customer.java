@@ -9,6 +9,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 
 @Entity
@@ -29,6 +30,9 @@ public class Customer {
 
     @OneToOne
     private Account account;
+
+    @OneToMany(mappedBy = "customer")
+    private Set<Order> orders;
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)

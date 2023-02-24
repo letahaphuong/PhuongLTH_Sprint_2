@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ProductView} from '../../dto/product/product-view';
-import {ProductService} from "../service/product.service";
-import {ToastrService} from "ngx-toastr";
+import {ProductService} from '../service/product.service';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-product-delete',

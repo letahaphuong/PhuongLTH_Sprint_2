@@ -1,6 +1,7 @@
 package com.example.phuonglth_sprint_2.service.customer.impl;
 
 import com.example.phuonglth_sprint_2.dto.customer.CustomerView;
+import com.example.phuonglth_sprint_2.dto.customer.GetIdCustomerView;
 import com.example.phuonglth_sprint_2.entity.customer.Customer;
 import com.example.phuonglth_sprint_2.repository.customer.ICustomerRepository;
 import com.example.phuonglth_sprint_2.service.customer.ICustomerService;
@@ -34,5 +35,15 @@ public class CustomerService implements ICustomerService {
     @Override
     public Optional<Customer> findById(Long id) {
         return customerRepository.findById(id);
+    }
+
+    @Override
+    public Optional<Customer> findByEmail(String email) {
+        return customerRepository.findByEmail(email);
+    }
+
+    @Override
+    public Optional<GetIdCustomerView> getIdCustomerByIdAccount(Long idAccount) {
+        return customerRepository.getIdCustomerByIdAccount(idAccount);
     }
 }

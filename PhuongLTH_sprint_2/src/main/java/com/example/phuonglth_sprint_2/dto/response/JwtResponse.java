@@ -11,6 +11,7 @@ public class JwtResponse {
     private String name;
     private String avatar;
     private String email;
+    private Long idCustomer;
     private Collection<? extends GrantedAuthority> roles;
 
     public JwtResponse() {
@@ -34,6 +35,7 @@ public class JwtResponse {
         this.email = email;
         this.avatar = avatar;
     }
+
 
     public Long getId() {
         return id;

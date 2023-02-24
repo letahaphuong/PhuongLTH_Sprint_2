@@ -2,6 +2,8 @@ package com.example.phuonglth_sprint_2.controller.customer;
 
 import com.example.phuonglth_sprint_2.dto.customer.CustomerDto;
 import com.example.phuonglth_sprint_2.dto.customer.CustomerView;
+import com.example.phuonglth_sprint_2.dto.customer.GetIdCustomerView;
+import com.example.phuonglth_sprint_2.dto.response.ResponseMessage;
 import com.example.phuonglth_sprint_2.entity.customer.Customer;
 import com.example.phuonglth_sprint_2.service.customer.ICustomerService;
 import org.springframework.beans.BeanUtils;
@@ -49,12 +51,12 @@ public class CustomerController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Customer> findCustomerById(@PathVariable Long id){
+    public ResponseEntity<Customer> findCustomerById(@PathVariable Long id) {
         Optional<Customer> customer = customerService.findById(id);
-        if (!customer.isPresent()){
+        if (!customer.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }else {
-            return new ResponseEntity<>(customer.get(),HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(customer.get(), HttpStatus.OK);
         }
     }
 
@@ -70,5 +72,15 @@ public class CustomerController {
         BeanUtils.copyProperties(customerDto, customer);
         customerService.save(customer);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("id-customer/{id}")
+    public ResponseEntity<?> getIdCustomerByIdAccount(@PathVariable("id") Long idAccount) {
+        Optional<?> getIdCustomerViewOptional = customerService.getIdCustomerByIdAccount(idAccount);
+        if (!getIdCustomerViewOptional.isPresent()) {
+            return new ResponseEntity<>(new ResponseMessage("Không tồn tại"),HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(getIdCustomerViewOptional, HttpStatus.OK);
+        }
     }
 }

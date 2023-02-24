@@ -13,12 +13,12 @@ export class HeaderComponent implements OnInit {
   name: string | null = '';
   roles: string[] = [];
   avatar: string | null = '';
-  idCustomer: any;
+  idAccount: any;
 
   constructor(private toast: ToastrService,
               private router: Router,
               private tokenService: TokenService) {
-    this.idCustomer = this.tokenService.getId();
+    this.idAccount = this.tokenService.getId();
   }
 
   ngOnInit(): void {

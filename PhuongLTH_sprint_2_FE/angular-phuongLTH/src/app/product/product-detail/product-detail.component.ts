@@ -22,7 +22,8 @@ export class ProductDetailComponent implements OnInit {
   idProduct = 0;
   getPrice: number | undefined;
   product: ProductCreate | undefined;
-  idCustomer: string | null;
+  idAccount: string | null;
+  idCustomer: string | null | undefined;
   customer: Customer | undefined;
 
   constructor(
@@ -34,13 +35,16 @@ export class ProductDetailComponent implements OnInit {
     private customerService: CustomerService,
     private tokenService: TokenService
   ) {
-    this.idCustomer = this.tokenService.getId();
-    this.customerService.findCustomerById(this.idCustomer).subscribe(data => {
+    this.idAccount = this.tokenService.getId();
+    this.customerService.findIdCustomerByIdAccount(this.idAccount).subscribe(data => {
       this.customer = data;
     });
+    // this.customerService.findCustomerById(this.idCustomer).subscribe(data => {
+    //   this.customer = data;
+    // });
     this.cartForm = new FormGroup({
       idProductOrder: new FormControl(),
-      quantityOrder: new FormControl(this.quantity),
+      quantityOrder: new FormControl(),
       price: new FormControl(),
       product: new FormControl(),
       customer: new FormControl()

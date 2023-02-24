@@ -30,4 +30,8 @@ export class CustomerService {
   findCustomerById(id: any): Observable<any> {
     return this.http.get<any>(this.API_CUSTOMER + '/' + id);
   }
+
+  findIdCustomerByIdAccount(id: any): Observable<any> {
+    return this.http.get<any>(this.API_CUSTOMER + '/id-customer/' + id);
+  }
 }
