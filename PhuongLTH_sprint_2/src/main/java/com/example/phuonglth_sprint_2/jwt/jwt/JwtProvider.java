@@ -13,7 +13,7 @@ import java.util.Date;
 public class JwtProvider {
     private static final Logger logger = LoggerFactory.getLogger(JwtProvider.class);// ghi log trong class jwtprovider
     private String jwtSecret = "letahaphuong@gmail.com"; // chữ ký của token
-    private final int jwtExpiration = 86400; // thời gian sống token 1 ngày
+    private final int jwtExpiration = 60 * 60 * 24; // thời gian sống token 1 ngày
 
     public String createToken(Authentication authentication) {
         AccountPrinciple accountPrinciple = (AccountPrinciple) authentication.getPrincipal();
@@ -21,8 +21,8 @@ public class JwtProvider {
         return Jwts.builder()
                 .setSubject(accountPrinciple.getUsername())// thêm vào
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(new Date().getTime() + jwtExpiration * 1000L))
-                .signWith(SignatureAlgorithm.HS512, jwtSecret)
+                .setExpiration(new Date(new Date().getTime() + jwtExpiration))
+                .signWith(SignatureAlgorithm.HS384, jwtSecret)
                 .compact();
     }
 
@@ -42,12 +42,12 @@ public class JwtProvider {
         } catch (IllegalArgumentException e) {
             logger.error("JWT claims string is empty -> Message: {Token có khoảng trắng}", e);
         } catch (ExpiredJwtException e) {
-            logger.error("Expired JWT token -> Message: {thời gian sống}", e);
+            logger.error("Expired JWT token -> Message: {Token hết hạn}", e);
         }
         return false;
     }
 
-    public String getUserNameFromToken(String token){
+    public String getUserNameFromToken(String token) {
         String username = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject(); // lấy ra
         return username;
     }

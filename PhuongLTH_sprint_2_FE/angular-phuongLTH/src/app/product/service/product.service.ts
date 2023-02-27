@@ -25,7 +25,7 @@ export class ProductService {
 
   createProduct(productForm: ProductCreate): Observable<ProductCreate> {
     console.log('aaa', productForm.url);
-    return this.http.post<ProductCreate>(this.API_PRODUCT, productForm);
+    return this.http.post<ProductCreate>(this.API_PRODUCT + '/create/product', productForm);
   }
 
   getAllCategory(): Observable<Category[]> {

@@ -27,6 +27,11 @@ export class HeaderComponent implements OnInit {
       this.name = this.tokenService.getName();
       this.roles = this.tokenService.getRole();
       this.avatar = this.tokenService.getAvatar();
+    }else if (this.tokenService.getTokenSession()){
+      this.checkLogin = true;
+      this.name = this.tokenService.getNameSession();
+      this.roles = this.tokenService.getRoleSession();
+      this.avatar = this.tokenService.getAvatarSession();
     }
   }
 
@@ -39,5 +44,9 @@ export class HeaderComponent implements OnInit {
       timeOut: 3000,
       extendedTimeOut: 1500
     });
+  }
+
+  feature(): void {
+    this.toast.info('Hiện tại chức năng đang update.');
   }
 }

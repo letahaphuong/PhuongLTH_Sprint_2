@@ -1,8 +1,10 @@
 package com.example.phuonglth_sprint_2.dto.response;
 
+import com.example.phuonglth_sprint_2.entity.customer.Customer;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;
+import java.util.Optional;
 
 public class JwtResponse {
     private Long id;
@@ -11,7 +13,7 @@ public class JwtResponse {
     private String name;
     private String avatar;
     private String email;
-    private Long idCustomer;
+    private Optional<Customer> customer;
     private Collection<? extends GrantedAuthority> roles;
 
     public JwtResponse() {
@@ -27,15 +29,24 @@ public class JwtResponse {
         this.roles = roles;
     }
 
-    public JwtResponse(String token, String name, Collection<? extends GrantedAuthority> authorities, Long id, String email, String avatar) {
+    public JwtResponse(String token, String name, Collection<? extends GrantedAuthority> authorities, Long id, String email, String avatar,Optional<Customer> customer) {
         this.token = token;
         this.name = name;
         this.roles = authorities;
         this.id = id;
         this.email = email;
         this.avatar = avatar;
+        this.customer = customer;
     }
 
+
+    public Optional<Customer> getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Optional<Customer> customer) {
+        this.customer = customer;
+    }
 
     public Long getId() {
         return id;

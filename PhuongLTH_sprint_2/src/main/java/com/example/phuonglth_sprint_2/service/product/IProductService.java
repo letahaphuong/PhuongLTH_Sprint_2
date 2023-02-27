@@ -29,6 +29,7 @@ public interface IProductService {
 
     Long getLastInsertId();
 
+    Page<ProductView> getAllProductHome( String search ,Pageable pageable);
 
 
 }

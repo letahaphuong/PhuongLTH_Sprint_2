@@ -23,6 +23,7 @@ export class LoginComponent implements OnInit {
               private title: Title) {
     this.title.setTitle('Trang đăng nhập');
   }
+
   statusRole: any[] = [];
 
   signInForm: FormGroup = new FormGroup({});
@@ -48,17 +49,18 @@ export class LoginComponent implements OnInit {
   future(): void {
     this.toast.info('Chức năng đăng đang được xây dựng.');
   }
+
   login(): void {
     const signInForm = this.signInForm?.value;
     console.log(this.signInForm);
     this.securityService.signIn(signInForm).subscribe(data => {
         if (data.token !== undefined) {
           if (this.signInForm?.value.rememberMe) {
-            this.tokenService.rememberMe(data.roles, data.name, data.token);
+            this.tokenService.rememberMe(data.roles, data.name, data.token, data.avatar, data.email, data.id);            location.href = 'http://localhost:4200/home';
+            location.href = 'http://localhost:4200/home';
             this.toast.info('Đăng nhập thành công.', 'Thông báo', {
               timeOut: 3000
             });
-            location.href = 'http://localhost:4200/home';
           } else {
             this.tokenService.setToken(data.token);
             this.tokenService.setName(data.name);

@@ -69,6 +69,21 @@ public class ProductController {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
+    @GetMapping("/home")
+    public ResponseEntity<Page<ProductView>> getAllProductHome(
+            @RequestParam(defaultValue = "") String searchs,
+            @PageableDefault(size = 8) Pageable pageable
+    ) {
+        if (searchs != null) {
+            Page<ProductView> productViews = productService.getAllProductHome(searchs, pageable);
+            if (productViews != null && productViews.hasContent()) {
+                return new ResponseEntity<>(productViews, HttpStatus.OK);
+            }
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
     @GetMapping("{id}")
     public ResponseEntity<ProductView> findProductById(@PathVariable("id") String idProduct) {
         Optional<ProductView> productView = productService.finProDuctById(idProduct);
@@ -80,7 +95,7 @@ public class ProductController {
 
     }
 
-    @PostMapping("")
+    @PostMapping("create/product")
     public ResponseEntity<?> saveProduct(@Valid @RequestBody ProductDto productDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

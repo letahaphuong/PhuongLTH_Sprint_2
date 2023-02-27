@@ -16,9 +16,7 @@ export class HomeComponent implements OnInit {
   request = {page: 0, size: 8};
   pageNumber = 0;
   totalPages = 0;
-  nameCategory = '';
-  nameProduct = '';
-  price = '';
+  searchs = '';
 
   constructor(
     private homeService: HomeService,
@@ -29,7 +27,7 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.search(this.nameCategory, this.nameProduct, this.price, true);
+    this.search(this.searchs, true);
   }
 
   getAll(request: { page: number, size: number }): void {
@@ -58,19 +56,15 @@ export class HomeComponent implements OnInit {
     this.getAll(this.request);
   }
 
-  search(nameCategory: string, nameProduct: string, price: string, flag: boolean): void {
+  search(searchs: string, flag: boolean): void {
     console.log(1);
     if (!flag) {
       this.request.page = 0;
     }
-    this.nameCategory = nameCategory;
-    this.nameProduct = nameProduct;
-    this.price = price;
+    this.searchs = searchs;
     console.log(name);
-    this.homeService.search(
-      nameCategory.trim(),
-      nameProduct.trim(),
-      price.trim(),
+    this.homeService.searchs(
+      searchs.trim(),
       this.request).subscribe(data => {
       console.log(data);
       this.productViewList = data;
@@ -81,13 +75,11 @@ export class HomeComponent implements OnInit {
       this.totalPages = data.totalPages;
       // @ts-ignore
       this.pageNumber = data.pageable.pageNumber;
-      if ((nameCategory !== '' || nameProduct !== '' || price !== '') && !flag) {
+      if ((searchs !== '') && !flag) {
         this.toast.success('Tim kiếm thành công.');
       }
     }, error => {
-      this.nameCategory = '';
-      this.nameProduct = '';
-      this.price = '';
+      this.searchs = '';
       flag = true;
       if (error.status === 400) {
         this.toast.error('Không có kết quả.', 'Thông báo');

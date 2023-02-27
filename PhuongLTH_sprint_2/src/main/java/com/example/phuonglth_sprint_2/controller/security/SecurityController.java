@@ -18,9 +18,11 @@ import com.example.phuonglth_sprint_2.service.account.IAccountService;
 import com.example.phuonglth_sprint_2.service.customer.ICustomerService;
 import com.example.phuonglth_sprint_2.service.account.IRoleService;
 import com.example.phuonglth_sprint_2.service.employee.IEmployeeService;
+import com.example.phuonglth_sprint_2.service.send_mail.SendMail;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -30,9 +32,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 @RestController
@@ -58,8 +62,9 @@ public class SecurityController {
     JwtTokenFilter jwtTokenFilter;
     private final ICustomerService customerService;
     private final IEmployeeService employeeService;
+    private final SendMail sendMail;
 
-    public SecurityController(IAccountService accountService, IRoleService roleService, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, JwtProvider jwtProvider, JwtTokenFilter jwtTokenFilter, ICustomerService customerService,IEmployeeService employeeService) {
+    public SecurityController(SendMail sendMail, IAccountService accountService, IRoleService roleService, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, JwtProvider jwtProvider, JwtTokenFilter jwtTokenFilter, ICustomerService customerService, IEmployeeService employeeService) {
         this.accountService = accountService;
         this.roleService = roleService;
         this.passwordEncoder = passwordEncoder;
@@ -68,6 +73,7 @@ public class SecurityController {
         this.jwtTokenFilter = jwtTokenFilter;
         this.customerService = customerService;
         this.employeeService = employeeService;
+        this.sendMail = sendMail;
     }
 
     @PostMapping(value = "/signup")
@@ -77,27 +83,33 @@ public class SecurityController {
             return new ResponseEntity<>(bindingResult.getFieldErrors(),
                     HttpStatus.BAD_REQUEST);
         }
-        if (accountService.existsByEmail(customerDto.getEmail())) {
-            return new ResponseEntity<>(new ResponseMessage("Email đã được đăng ký."), HttpStatus.CONFLICT);
-        }
-        Customer customer = new Customer();
-        BeanUtils.copyProperties(customerDto, customer);
-        Account account = new Account();
-        account.setName(customerDto.getName());
-        account.setEmail(customerDto.getEmail());
-        if (customerDto.getAvatar() == null || customerDto.getAvatar().trim().isEmpty()) {
-            account.setAvatar("https://scontent.fdad1-2.fna.fbcdn.net/v/t39.30808-6/192275406_2914709508745440_8981882595411494044_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=9zAXeOiPSG0AX--Zoj9&_nc_ht=scontent.fdad1-2.fna&oh=00_AfCWcgq7aOxNzbyKJGkuzqVSUGoLykco7Mv8XThFV22ElA&oe=63F5DC03");
+//        if (accountService.existsByEmail(customerDto.getEmail())) {
+//            return new ResponseEntity<>(new ResponseMessage("Email đã được đăng ký."), HttpStatus.CONFLICT);
+//        }
+        if (!customerService.checkMail(customerDto.getEmail())){
+            Customer customer = new Customer();
+            BeanUtils.copyProperties(customerDto, customer);
+            Account account = new Account();
+            account.setName(customerDto.getName());
+            account.setEmail(customerDto.getEmail());
+            if (customerDto.getAvatar() == null || customerDto.getAvatar().trim().isEmpty()) {
+                account.setAvatar("https://scontent.fdad1-2.fna.fbcdn.net/v/t39.30808-6/192275406_2914709508745440_8981882595411494044_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=9zAXeOiPSG0AX--Zoj9&_nc_ht=scontent.fdad1-2.fna&oh=00_AfCWcgq7aOxNzbyKJGkuzqVSUGoLykco7Mv8XThFV22ElA&oe=63F5DC03");
 
+            }
+            account.setEncryptPassword(passwordEncoder.encode(customerDto.getEncryptPassword()));
+            Set<Role> roles = new HashSet<>();
+            Role customerRole = roleService.findByName(RoleName.USER).orElse(new Role());
+            roles.add(customerRole);
+            account.setRoles(roles);
+            accountService.save(account);
+            customer.setAccount(account);
+            customerService.save(customer);
+            sendMail.SendEmailToCustomer(customerDto);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        account.setEncryptPassword(passwordEncoder.encode(customerDto.getEncryptPassword()));
-        Set<Role> roles = new HashSet<>();
-        Role customerRole = roleService.findByName(RoleName.USER).orElse(new Role());
-        roles.add(customerRole);
-        account.setRoles(roles);
-        accountService.save(account);
-        customer.setAccount(account);
-        customerService.save(customer);
-        return new ResponseEntity<>(HttpStatus.OK);
+
     }
 
     @PostMapping("/signin")
@@ -109,12 +121,14 @@ public class SecurityController {
 
         String token = jwtProvider.createToken(authentication);
         AccountPrinciple accountPrinciple = (AccountPrinciple) authentication.getPrincipal();
+        Optional<Customer> customer = customerService.findByEmail(signInForm.getEmail());
         return ResponseEntity.ok(new JwtResponse(token,
                 accountPrinciple.getName(),
                 accountPrinciple.getAuthorities(),
                 accountPrinciple.getId(),
                 accountPrinciple.getEmail(),
-                accountPrinciple.getAvatar()));
+                accountPrinciple.getAvatar(),
+                customer));
     }
 
     @PutMapping("/change-avatar")

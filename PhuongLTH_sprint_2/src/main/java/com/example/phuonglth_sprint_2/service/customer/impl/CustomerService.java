@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -45,5 +46,15 @@ public class CustomerService implements ICustomerService {
     @Override
     public Optional<GetIdCustomerView> getIdCustomerByIdAccount(Long idAccount) {
         return customerRepository.getIdCustomerByIdAccount(idAccount);
+    }
+
+    @Override
+    public Boolean checkMail(String email) {
+        return customerRepository.existsByEmail(email);
+    }
+
+    @Override
+    public List<String> getAllEmailCustomer() {
+        return customerRepository.getAllEmailCustomer();
     }
 }

@@ -8,18 +8,23 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface ICustomerService {
     Customer save(Customer customer);
 
-    Page<CustomerView> getAllCustomer( String name, String email, Pageable pageable);
+    Page<CustomerView> getAllCustomer(String name, String email, Pageable pageable);
 
-    void removeFlag( Long id);
+    void removeFlag(Long id);
 
     Optional<Customer> findById(Long id);
 
     Optional<Customer> findByEmail(String email);
+
     Optional<GetIdCustomerView> getIdCustomerByIdAccount(Long idAccount);
+
+    Boolean checkMail(String email);
+    List<String> getAllEmailCustomer();
 
 }

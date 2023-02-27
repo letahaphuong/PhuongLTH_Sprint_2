@@ -64,4 +64,9 @@ public class ProductService implements IProductService {
         return productRepository.getLastInsertId();
     }
 
+    @Override
+    public Page<ProductView> getAllProductHome(String searchs, Pageable pageable) {
+        return productRepository.getAllProductHome(searchs,searchs,searchs,pageable);
+    }
+
 }

@@ -80,9 +80,74 @@ export class TokenService {
     return this.roles;
   }
 
-  public rememberMe(roles: string[], name: string, token: string): void {
-    this.setRole(roles);
-    this.setName(name);
-    this.setToken(token);
+  public rememberMe(roles: string[], name: string, token: string, avatar: string, email: string, id: string): void {
+    this.setRoleSession(roles);
+    this.setNameSession(name);
+    this.setTokenSession(token);
+    this.setAvatarSession(avatar);
+    this.setEmailSession(email);
+    this.setIdSession(id);
+  }
+
+  public getRoleSession(): string[] {
+    this.roles = [];
+    if (this.getToken()) {
+      // @ts-ignore
+      JSON.parse(sessionStorage.getItem(ROLE_KEY)).forEach(role => {
+        // @ts-ignore
+        this.roles.push(role.authority);
+      });
+    }
+    return this.roles;
+  }
+
+  public setRoleSession(roles: string[]): void {
+    sessionStorage.removeItem(ROLE_KEY);
+    sessionStorage.setItem(ROLE_KEY, JSON.stringify(roles));
+  }
+
+  public setNameSession(name: string): void {
+    sessionStorage.removeItem(NAME_KEY);
+    sessionStorage.setItem(NAME_KEY, name);
+  }
+
+  public getNameSession(): string | null {
+    return sessionStorage.getItem(NAME_KEY);
+  }
+
+  public setAvatarSession(avatar: string): void {
+    sessionStorage.removeItem(AVATAR_KEY);
+    sessionStorage.setItem(AVATAR_KEY, avatar);
+  }
+
+  public getAvatarSession(): string | null {
+    return sessionStorage.getItem(AVATAR_KEY);
+  }
+
+  public setEmailSession(email: string): void {
+    sessionStorage.removeItem(EMAIL_KEY);
+    sessionStorage.setItem(EMAIL_KEY, email);
+  }
+
+  public getEmailSession(): string | null {
+    return sessionStorage.getItem(EMAIL_KEY);
+  }
+
+  public setIdSession(id: string): void {
+    sessionStorage.removeItem(ID_KEY);
+    sessionStorage.setItem(ID_KEY, id);
+  }
+
+  public getIdSession(): string | null {
+    return sessionStorage.getItem(ID_KEY);
+  }
+
+  public setTokenSession(token: string): void {
+    sessionStorage.removeItem(TOKEN_KEY);
+    sessionStorage.setItem(TOKEN_KEY, token);
+  }
+
+  public getTokenSession(): string | null {
+    return sessionStorage.getItem(TOKEN_KEY);
   }
 }

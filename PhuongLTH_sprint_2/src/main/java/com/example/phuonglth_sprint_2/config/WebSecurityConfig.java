@@ -41,11 +41,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationManager authenticationManager() throws Exception {
         return super.authenticationManager();
     }
+
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
+
+        httpSecurity.authorizeRequests().antMatchers("api/customer/**", "api/category/**", "api/product/**").access("hasRole('ADMIN')");
+        httpSecurity.authorizeRequests().antMatchers("api/change-avatar").access("hasAnyRole('ADMIN','USER')");
         httpSecurity.cors().and().csrf().disable()// huỷ CrossOrigin
                 .authorizeRequests()
-                .antMatchers("/**") // cho tất cả các role vào
+                .antMatchers("/api/**", "api/public") // cho tất cả các role vào
                 .permitAll()
                 .anyRequest()
                 .authenticated()// khi có account đăng nhập

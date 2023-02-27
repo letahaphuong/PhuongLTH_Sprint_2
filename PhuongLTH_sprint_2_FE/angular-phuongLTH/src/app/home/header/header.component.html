@@ -40,8 +40,9 @@
                    tabindex="0" aria-disabled="false" ><span class="mat-button-wrapper">
                    <img alt="angular" style="border-radius: 50%"  class=" mb-2" [src]=avatar ></span>
                 </a>
-                <ul class="dropdown-menu dropdown-menu-end">
+                <ul class="dropdown-menu dropdown-menu-end" *ngIf="checkLogin">
                   <li><a class="dropdown-item" routerLink="/security/change-avatar">Trang cá nhân</a></li>
+                  <li><a class="dropdown-item" routerLink="/product/create" *ngIf="roles[0]=='ADMIN'">Thêm mới sản phẩm</a></li>
                   <li><a class="dropdown-item" routerLink="/customer" *ngIf="roles[0]=='ADMIN'">Quản lý khách hàng</a></li>
                   <li><a class="dropdown-item" routerLink="/product" *ngIf="roles[0]=='ADMIN'">Quản lý sản phẩm</a></li>
                   <li><a class="dropdown-item" routerLink="/#" *ngIf="roles[0]=='ADMIN'">Quản lý danh mục sản phẩm</a></li>
@@ -75,19 +76,19 @@
             <a class="nav-link" routerLink="">Trang chủ</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="">Giới thiệu</a>
+            <a class="nav-link" (click)="feature()">Giới thiệu</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="">HIKVISION</a>
+            <a class="nav-link" routerLink="/category/hikivision">HIKVISION</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="">KBVISION</a>
+            <a class="nav-link" routerLink="/category/kbvision">KBVISION</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="">VANTECH</a>
+            <a class="nav-link" routerLink="/category/vantech">VANTECH</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="">YOOSEE</a>
+            <a class="nav-link" routerLink="/category/yoosee">YOOSEE</a>
           </li>
           <li class="nav-item dropdown" *ngIf="roles[0]=='ADMIN' && checkLogin">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"> Danh Mục</a>

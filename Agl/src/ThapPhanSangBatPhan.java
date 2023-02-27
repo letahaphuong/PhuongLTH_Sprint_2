@@ -15,27 +15,29 @@ public class ThapPhanSangBatPhan {
 //
 //    }
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Nhập thông tin: ");
-        String str = scanner.nextLine();
-        str = str.toUpperCase();
-        System.out.println(str);
-
-        String[] str1 = str.split("");
-        System.out.println(Arrays.toString(str1));
-
-        Stack<String> temp = new Stack<>();
-        for (int i = 0; i < str1.length; i++) {
-            temp.push(str1[i]);
+        int count;
+        String temp;
+        Scanner scan = new Scanner(System.in);
+        System.out.print("Nhập vào số chuỗi mà bạn muốn sắp xếp theo Alphabet  :");
+        count =  scan.nextInt();
+        String str[] = new String[count];
+        Scanner scan2 = new Scanner(System.in);
+        System.out.println("Nhập giá trị cho từng chuỗi:");
+        for (int i = 0; i < count; i++) {
+            str[i] = scan2.nextLine();
         }
-
-        Map<String, Integer> map = new TreeMap<>();
-        for (int i = 0; i < temp.size(); i++) {
-            if (!map.containsKey(temp.get(i))) {
-                map.put(temp.get(i), 1);
-            } else {
-                map.put(temp.get(i), map.get(temp.get(i)) + 1);
+        for (int i = 0; i < count; i++) {
+            for (int j = i + 1; j < count; j++) {
+                if (str[i].compareTo(str[j]) > 0) {
+                    temp = str[i];
+                    str[i] = str[j];
+                    str[j] = temp;
+                }
             }
+        }
+        System.out.print("Các chuỗi sau khi sắp xếp là:");
+        for (int i = 0; i <= count - 1; i++) {
+            System.out.print(str[i] + ", ");
         }
     }
 }

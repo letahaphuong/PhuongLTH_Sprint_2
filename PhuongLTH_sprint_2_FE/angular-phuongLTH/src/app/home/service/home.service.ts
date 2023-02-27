@@ -30,4 +30,12 @@ export class HomeService {
     console.log(url);
     return this.http.get<any>(url, {params});
   }
+
+  searchs(searchs: string, request: any): Observable<any> {
+    const params = request;
+    const url = this.API_PRODUCT_LIST + '/home' +
+      '?searchs=' + searchs;
+    console.log(url);
+    return this.http.get<any>(url, {params});
+  }
 }

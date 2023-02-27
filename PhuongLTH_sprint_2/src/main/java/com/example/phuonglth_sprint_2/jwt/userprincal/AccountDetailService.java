@@ -15,9 +15,9 @@ import org.springframework.stereotype.Service;
 public class AccountDetailService implements UserDetailsService {
 
     @Autowired
-    IAccountRepository accountRepository;
-    @Autowired
-    ICustomerService customerService;
+    private IAccountRepository accountRepository;
+//    @Autowired
+//    ICustomerService customerService;
 
     @Override// tìm account có tồn tại trong DB không
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

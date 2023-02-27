@@ -20,13 +20,14 @@
     "@angular/platform-browser": "~11.0.9",
     "@angular/platform-browser-dynamic": "~11.0.9",
     "@angular/router": "~11.0.9",
+    "creditcardpayments": "^1.0.3",
+    "crypto-js": "^4.1.1",
+    "date-fns": "^2.29.3",
+    "firebase": "^8.8.0",
     "ngx-toastr": "^13.2.1",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
-    "zone.js": "~0.10.2",
-    "firebase": "^8.8.0",
-    "date-fns": "^2.29.3",
-    "crypto-js": "^4.1.1"
+    "zone.js": "~0.10.2"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.1100.7",

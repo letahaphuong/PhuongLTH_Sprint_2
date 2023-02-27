@@ -11,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import javax.swing.text.html.Option;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -23,7 +24,6 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
             "       `name`,\n" +
             "       phone,\n" +
             "       account_id_account as accountId,\n" +
-            "       order_id_order     as orderId,\n" +
             "       create_date        as createDate,\n" +
             "       modify_date        as modifyDate,\n" +
             "       address\n" +
@@ -39,7 +39,6 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
                     "       `name`,\n" +
                     "       phone,\n" +
                     "       account_id_account as accountId,\n" +
-                    "       order_id_order     as orderId,\n" +
                     "       create_date        as createDate,\n" +
                     "       modify_date        as modifyDate,\n" +
                     "       address\n" +
@@ -63,4 +62,9 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
                     "         join customer c on a.id_account = c.account_id_account\n" +
                     "where id_account = :id", nativeQuery = true)
     Optional<GetIdCustomerView> getIdCustomerByIdAccount(@Param("id") Long idAccount);
+
+    Boolean existsByEmail(String email);
+
+    @Query(value = "select email from customer",nativeQuery = true)
+    List<String> getAllEmailCustomer();
 }

@@ -5,7 +5,25 @@
     <div class="row">
       <div class="col-md-12">
         <article class="banner-wrap">
+          <div class="row d-flex justify-content-center text-center">
+            <div class="col-lg-6 col-sm-12 absolute">
+              <form action="#" class="search">
+                <div class="input-group w-100">
+                  <input type="text" name="search" #searchs class="form-control" placeholder="Tìm kiếm">
+                  <div class="input-group-append">
+                    <button class="btn btn-primary" (click)="search(searchs.value, false)" type="button">
+                      <i class="fa fa-search"></i>
+                    </button>
+                    <button class="btn btn-primary-light" (click)="reload()" type="reset">
+                      <i class="fa-solid fa-arrows-rotate"></i>
+                    </button>
+                  </div>
+                </div>
+              </form> <!-- search-wrap .end// -->
+            </div>
+          </div>
           <img src="../../../assets/images/2.jpg" height="320" width="100%"/>
+
         </article>
       </div> <!-- col.// -->
     </div> <!-- row.// -->
@@ -29,7 +47,8 @@
           </a>
           <figcaption class="info-wrap">
             <a [routerLink]="['/product/detail/',item.idProduct]" class="title">{{item.nameProduct}}</a>
-           <a *ngIf="item.quantity > 0" class="title" >Tình trạng: <span style="color: #1d37fd">Còn hàng</span></a>
+            <p class="title" >Hãng sản xuất: <span style="color: #1d37fd">{{item.nameCategory}}</span></p>
+            <a *ngIf="item.quantity > 0" class="title" >Tình trạng: <span style="color: #1d37fd">Còn hàng</span></a>
             <a *ngIf="item.quantity == 0" class="title">Tình trạng:<span style="color: #1d37fd">Hết hàng</span></a>
             <div class="price mt-1">{{item.price | number}} đ</div>
           </figcaption>
