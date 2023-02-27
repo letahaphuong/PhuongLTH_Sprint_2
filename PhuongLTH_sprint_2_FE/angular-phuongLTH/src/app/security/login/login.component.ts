@@ -5,6 +5,7 @@ import {SecurityService} from '../service/security.service';
 import {TokenService} from '../service/token.service';
 import {Router} from '@angular/router';
 import {Title} from '@angular/platform-browser';
+import {EncryInforService} from '../service/encry-infor.service';
 // @ts-ignore
 import * as CryptoJS from 'crypto-js';
 
@@ -20,17 +21,18 @@ export class LoginComponent implements OnInit {
               private router: Router,
               private toast: ToastrService,
               private formBuilder: FormBuilder,
-              private title: Title) {
+              private title: Title,
+              private encryInforService: EncryInforService
+  ) {
     this.title.setTitle('Trang đăng nhập');
   }
 
   statusRole: any[] = [];
 
   signInForm: FormGroup = new FormGroup({});
-  plainText?: string;
-  encryptText?: string;
-  encPassword?: '123123';
-  decPassword?: 'string';
+
+  encPassword = '123123';
+  decPassword = '123123';
   conversionEncryptOutput?: string;
   conversionDecryptOutput?: string;
 
@@ -56,17 +58,20 @@ export class LoginComponent implements OnInit {
     this.securityService.signIn(signInForm).subscribe(data => {
         if (data.token !== undefined) {
           if (this.signInForm?.value.rememberMe) {
-            this.tokenService.rememberMe(data.roles, data.name, data.token, data.avatar, data.email, data.id);            location.href = 'http://localhost:4200/home';
+            this.tokenService.rememberMe(data.roles, data.name, data.token, data.avatar, data.email, data.id);
+            location.href = 'http://localhost:4200/home';
             location.href = 'http://localhost:4200/home';
             this.toast.info('Đăng nhập thành công.', 'Thông báo', {
               timeOut: 3000
             });
           } else {
+            this.tokenService.setName(CryptoJS.AES.encrypt(data.name.trim(), this.encPassword?.trim()).toString());
             this.tokenService.setToken(data.token);
-            this.tokenService.setName(data.name);
+            // this.tokenService.setName(data.name);
             this.tokenService.setRole(data.roles);
             this.statusRole = data.roles;
-            this.tokenService.setEmail(data.email);
+            this.tokenService.setEmail(CryptoJS.AES.encrypt(data.email.trim(), this.encPassword?.trim()).toString());
+            this.tokenService.setAnony(CryptoJS.AES.encrypt(data.anony.trim(), this.encPassword?.trim()).toString());
             this.tokenService.setId(data.id);
             this.tokenService.setAvatar(data.avatar);
             location.href = 'http://localhost:4200/home';

@@ -27,6 +27,8 @@ public class Customer {
     @Column(columnDefinition = "bit default false")
     private boolean flagDelete;
     private String phone;
+    @Column(columnDefinition = "int default 1")
+    private int anony;
 
     @OneToOne
     private Account account;
@@ -47,7 +49,7 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(Long idCustomer, String name, String email, String address, String idCard, boolean gender, String dateOfBirth, boolean flagDelete, String phone, Account account, Date createDate, Date modifyDate) {
+    public Customer(Long idCustomer, String name, String email, String address, String idCard, boolean gender, String dateOfBirth, boolean flagDelete, String phone, int anony, Account account, Set<Order> orders, Date createDate, Date modifyDate) {
         this.idCustomer = idCustomer;
         this.name = name;
         this.email = email;
@@ -57,7 +59,9 @@ public class Customer {
         this.dateOfBirth = dateOfBirth;
         this.flagDelete = flagDelete;
         this.phone = phone;
+        this.anony = anony;
         this.account = account;
+        this.orders = orders;
         this.createDate = createDate;
         this.modifyDate = modifyDate;
     }
@@ -134,12 +138,28 @@ public class Customer {
         this.phone = phone;
     }
 
+    public int getAnony() {
+        return anony;
+    }
+
+    public void setAnony(int anony) {
+        this.anony = anony;
+    }
+
     public Account getAccount() {
         return account;
     }
 
     public void setAccount(Account account) {
         this.account = account;
+    }
+
+    public Set<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(Set<Order> orders) {
+        this.orders = orders;
     }
 
     public Date getCreateDate() {

@@ -13,6 +13,7 @@ public class JwtResponse {
     private String name;
     private String avatar;
     private String email;
+    private String anony;
     private Optional<Customer> customer;
     private Collection<? extends GrantedAuthority> roles;
 
@@ -29,7 +30,7 @@ public class JwtResponse {
         this.roles = roles;
     }
 
-    public JwtResponse(String token, String name, Collection<? extends GrantedAuthority> authorities, Long id, String email, String avatar,Optional<Customer> customer) {
+    public JwtResponse(String token, String name, Collection<? extends GrantedAuthority> authorities, Long id, String email, String avatar, Optional<Customer> customer, String anony) {
         this.token = token;
         this.name = name;
         this.roles = authorities;
@@ -37,8 +38,16 @@ public class JwtResponse {
         this.email = email;
         this.avatar = avatar;
         this.customer = customer;
+        this.anony = anony;
     }
 
+    public String getAnony() {
+        return anony;
+    }
+
+    public void setAnony(String anony) {
+        this.anony = anony;
+    }
 
     public Optional<Customer> getCustomer() {
         return customer;

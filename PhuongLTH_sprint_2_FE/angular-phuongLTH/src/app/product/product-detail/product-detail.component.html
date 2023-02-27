@@ -2,8 +2,8 @@
 <!--<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>-->
 
 <div class="container">
-    <div class="row">
-      <form [formGroup]="cartForm" (ngSubmit)="createCart()">
+  <div class="row">
+    <form [formGroup]="cartForm" (ngSubmit)="createCart()">
       <div class="container d-flex justify-content-between">
         <div class="col-xs-5 item-photo me-5">
           <img [src]="productDetail?.url" style="max-width:100%;width: 675px; height: 540px"/>
@@ -36,9 +36,14 @@
           </div>
 
           <div class="section" style="padding-bottom:20px;">
-            <button class="btn btn-success" type="submit" style="border-radius: 10px"
+            <button *ngIf="checkRoles[0] == 'USER'" class="btn btn-success" type="submit" style="border-radius: 10px"
             >
             <span style="margin-right:20px" class=" glyphicon glyphicon-shopping-cart"
+                  aria-hidden="true"></span>Thêm vào giỏ hàng
+            </button>
+            <button [disabled]="checkRoles[0] == 'ADMIN'" *ngIf="checkRoles[0] == 'ADMIN'"  class="btn btn-success" style="border-radius: 10px"
+            >
+            <span (click)="cantAcctive()"  style="margin-right:20px" class=" glyphicon glyphicon-shopping-cart"
                   aria-hidden="true"></span>Thêm vào giỏ hàng
             </button>
           </div>
@@ -60,19 +65,19 @@
         </div>
         <div class="col-xs-1"></div>
       </div>
-      </form>
-      <div class="container">
-        <div class="col-xs-12">
-          <ul class="menu-items">
-            <li class="active1">Chi tiết sản phẩm</li>
-          </ul>
-          <div style="width:100%;border-top:1px solid silver">
-            <p style="padding:15px;">
+    </form>
+    <div class="container">
+      <div class="col-xs-12">
+        <ul class="menu-items">
+          <li class="active1">Chi tiết sản phẩm</li>
+        </ul>
+        <div style="width:100%;border-top:1px solid silver">
+          <p style="padding:15px;">
           <span>
             {{productDetail?.description}}
           </span>
-            </p>
-            <span>
+          </p>
+          <span>
           <ul>
             <li>Cảm biến hình ảnh: {{productDetail?.imageSensor}}.</li>
             <li>Độ phân giải: {{productDetail?.resolution}}.</li>
@@ -85,9 +90,9 @@
             <li>Ngày tạo: {{productDetail?.createDateProduct}}</li>
           </ul>
         </span>
-          </div>
         </div>
       </div>
     </div>
+  </div>
 </div>
 

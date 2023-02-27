@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {ToastrService} from 'ngx-toastr';
 import {Router} from '@angular/router';
 import {TokenService} from '../../security/service/token.service';
+// @ts-ignore
+import * as CryptoJS from 'crypto-js';
 
 @Component({
   selector: 'app-header',
@@ -14,6 +16,8 @@ export class HeaderComponent implements OnInit {
   roles: string[] = [];
   avatar: string | null = '';
   idAccount: any;
+  encPassword = '123123';
+  decPassword = '123123';
 
   constructor(private toast: ToastrService,
               private router: Router,
@@ -24,10 +28,11 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     if (this.tokenService.getToken()) {
       this.checkLogin = true;
-      this.name = this.tokenService.getName();
+      // @ts-ignore
+      this.name = CryptoJS.AES.decrypt(this.tokenService.getName().toString(), this.decPassword?.trim()).toString(CryptoJS.enc.Utf8);
       this.roles = this.tokenService.getRole();
       this.avatar = this.tokenService.getAvatar();
-    }else if (this.tokenService.getTokenSession()){
+    } else if (this.tokenService.getTokenSession()) {
       this.checkLogin = true;
       this.name = this.tokenService.getNameSession();
       this.roles = this.tokenService.getRoleSession();
@@ -37,6 +42,7 @@ export class HeaderComponent implements OnInit {
 
   logOut(): void {
     window.localStorage.clear();
+    window.sessionStorage.clear();
     this.router.navigateByUrl('/').then(() => {
       location.reload();
     });

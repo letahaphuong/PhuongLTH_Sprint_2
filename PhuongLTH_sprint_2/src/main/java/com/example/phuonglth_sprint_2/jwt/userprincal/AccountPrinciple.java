@@ -18,6 +18,7 @@ public class AccountPrinciple implements UserDetails {
     @JsonIgnore
     private String encryptPassword;
     private String avatar;
+    private String anony;
 
     private Collection<? extends GrantedAuthority> roles;
 
@@ -29,13 +30,14 @@ public class AccountPrinciple implements UserDetails {
     public AccountPrinciple() {
     }
 
-    public AccountPrinciple(Long id, String name, String email, String encryptPassword, String avatar, Collection<? extends GrantedAuthority> roles) {
+    public AccountPrinciple(Long id, String name, String email, String encryptPassword, String avatar, Collection<? extends GrantedAuthority> roles, String anony) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.encryptPassword = encryptPassword;
         this.avatar = avatar;
         this.roles = roles;
+        this.anony = anony;
     }
 
     public static AccountPrinciple build(Account account) {// build account trên hệ thống
@@ -47,8 +49,17 @@ public class AccountPrinciple implements UserDetails {
                 account.getEmail(),
                 account.getEncryptPassword(),
                 account.getAvatar(),
-                authorities
+                authorities,
+                account.getAnony()
         );
+    }
+
+    public String getAnony() {
+        return anony;
+    }
+
+    public void setAnony(String anony) {
+        this.anony = anony;
     }
 
     public Long getId() {

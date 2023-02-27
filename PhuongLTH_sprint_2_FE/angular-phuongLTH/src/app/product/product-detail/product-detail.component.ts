@@ -22,9 +22,10 @@ export class ProductDetailComponent implements OnInit {
   idProduct = 0;
   getPrice: number | undefined;
   product: ProductCreate | undefined;
-  idAccount: string | null;
+  idAccount: string | null | undefined;
   idCustomer: string | null | undefined;
   customer: Customer | undefined;
+  checkRoles: string[] = [];
 
   constructor(
     private productService: ProductService,
@@ -35,10 +36,24 @@ export class ProductDetailComponent implements OnInit {
     private customerService: CustomerService,
     private tokenService: TokenService
   ) {
-    this.idAccount = this.tokenService.getId();
-    this.customerService.findIdCustomerByIdAccount(this.idAccount).subscribe(data => {
-      this.customer = data;
-    });
+    if (this.tokenService.getToken()) {
+      this.checkRoles = this.tokenService.getRole();
+    } else if (this.tokenService.getRoleSession()) {
+      this.checkRoles = this.tokenService.getRoleSession();
+    }
+    if (this.tokenService.getId() != null) {
+      this.idAccount = this.tokenService.getId();
+      console.log('abc', this.idAccount);
+      this.customerService.findIdCustomerByIdAccount(this.idAccount).subscribe(data => {
+        this.customer = data;
+      });
+    } else if (this.tokenService.getIdSession() != null) {
+      this.idAccount = this.tokenService.getIdSession();
+      console.log('abc', this.idAccount);
+      this.customerService.findIdCustomerByIdAccount(this.idAccount).subscribe(data => {
+        this.customer = data;
+      });
+    }
     // this.customerService.findCustomerById(this.idCustomer).subscribe(data => {
     //   this.customer = data;
     // });
@@ -133,6 +148,7 @@ export class ProductDetailComponent implements OnInit {
       product: new FormControl(this.product),
       customer: new FormControl(this.customer)
     });
+    console.log(this.cartForm.value);
     this.productService.createCart(this.cartForm.value).subscribe(data => {
       this.toast.success('Thêm giỏ hàng thành công');
     }, error => {
@@ -140,5 +156,9 @@ export class ProductDetailComponent implements OnInit {
     });
     console.log(this.cartForm.value);
     console.log('aaaaa', this.quantity);
+  }
+
+  cantAcctive(): void {
+    this.toast.warning('Không được dùng tài khoản ADMIN đặt hàng');
   }
 }

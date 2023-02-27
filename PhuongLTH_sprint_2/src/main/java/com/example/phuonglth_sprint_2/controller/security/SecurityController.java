@@ -92,6 +92,7 @@ public class SecurityController {
             Account account = new Account();
             account.setName(customerDto.getName());
             account.setEmail(customerDto.getEmail());
+            account.setAnony("1");
             if (customerDto.getAvatar() == null || customerDto.getAvatar().trim().isEmpty()) {
                 account.setAvatar("https://scontent.fdad1-2.fna.fbcdn.net/v/t39.30808-6/192275406_2914709508745440_8981882595411494044_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=9zAXeOiPSG0AX--Zoj9&_nc_ht=scontent.fdad1-2.fna&oh=00_AfCWcgq7aOxNzbyKJGkuzqVSUGoLykco7Mv8XThFV22ElA&oe=63F5DC03");
 
@@ -128,7 +129,8 @@ public class SecurityController {
                 accountPrinciple.getId(),
                 accountPrinciple.getEmail(),
                 accountPrinciple.getAvatar(),
-                customer));
+                customer,
+                accountPrinciple.getAnony()));
     }
 
     @PutMapping("/change-avatar")
@@ -166,6 +168,7 @@ public class SecurityController {
         Account account = new Account();
         account.setName(employeeDto.getName());
         account.setEmail(employeeDto.getEmail());
+        account.setAnony("2");
         if (employeeDto.getAvatar() == null || employeeDto.getAvatar().trim().isEmpty()) {
             account.setAvatar("https://scontent.fdad1-2.fna.fbcdn.net/v/t39.30808-6/192275406_2914709508745440_8981882595411494044_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=9zAXeOiPSG0AX--Zoj9&_nc_ht=scontent.fdad1-2.fna&oh=00_AfCWcgq7aOxNzbyKJGkuzqVSUGoLykco7Mv8XThFV22ElA&oe=63F5DC03");
 

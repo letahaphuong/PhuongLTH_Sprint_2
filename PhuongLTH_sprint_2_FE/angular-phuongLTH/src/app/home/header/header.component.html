@@ -93,13 +93,15 @@
           <li class="nav-item dropdown" *ngIf="roles[0]=='ADMIN' && checkLogin">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"> Danh Mục</a>
             <div class="dropdown-menu">
-              <a class="dropdown-item" href="#">Foods and Drink</a>
-              <a class="dropdown-item" href="#">Home interior</a>
+              <a class="dropdown-item" >
+                Quản lý nhân sự
+              </a>
+              <a class="dropdown-item" >Quản lý danh mục sản phẩm</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">HIKVISION</a>
-              <a class="dropdown-item" href="#">KBVISION</a>
-              <a class="dropdown-item" href="#">VANTECH </a>
-              <a class="dropdown-item" href="#">YOOSEE </a>
+              <a class="dropdown-item"  routerLink="/category/hikivision">HIKVISION</a>
+              <a class="dropdown-item" routerLink="/category/kbvision">KBVISION</a>
+              <a class="dropdown-item" routerLink="/category/kbvision">VANTECH </a>
+              <a class="dropdown-item" routerLink="/category/yoosee">YOOSEE </a>
             </div>
           </li>
         </ul>

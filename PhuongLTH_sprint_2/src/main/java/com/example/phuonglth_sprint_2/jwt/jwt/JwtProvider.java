@@ -21,7 +21,7 @@ public class JwtProvider {
         return Jwts.builder()
                 .setSubject(accountPrinciple.getUsername())// thêm vào
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(new Date().getTime() + jwtExpiration))
+                .setExpiration(new Date(new Date().getTime() + jwtExpiration * 1000L))
                 .signWith(SignatureAlgorithm.HS384, jwtSecret)
                 .compact();
     }

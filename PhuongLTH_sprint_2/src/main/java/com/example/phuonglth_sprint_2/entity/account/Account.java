@@ -30,6 +30,7 @@ public class Account {
     private String email;
 
     private String encryptPassword;
+    private String anony;
 
     @Column(columnDefinition = "bit default false")
     private boolean flagDelete;
@@ -49,28 +50,25 @@ public class Account {
     public Account() {
     }
 
-    public Account(Long idAccount, String name, String email,String avatar, String encryptPassword, boolean flagDelete, Set<Role> roles) {
+    public Account(Long idAccount, String name, String avatar, String email, String encryptPassword, String anony, boolean flagDelete, Set<Role> roles, Date createDate, Date modifyDate) {
         this.idAccount = idAccount;
         this.name = name;
         this.avatar = avatar;
         this.email = email;
         this.encryptPassword = encryptPassword;
+        this.anony = anony;
         this.flagDelete = flagDelete;
         this.roles = roles;
+        this.createDate = createDate;
+        this.modifyDate = modifyDate;
     }
 
-    public Account(String name, String email, String encode) {
-        this.name = name;
-        this.email = email;
-        this.encryptPassword = encode;
+    public String getAnony() {
+        return anony;
     }
 
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
+    public void setAnony(String anony) {
+        this.anony = anony;
     }
 
     public Long getIdAccount() {
@@ -89,6 +87,14 @@ public class Account {
         this.name = name;
     }
 
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -105,6 +111,7 @@ public class Account {
         this.encryptPassword = encryptPassword;
     }
 
+
     public boolean isFlagDelete() {
         return flagDelete;
     }
@@ -119,5 +126,21 @@ public class Account {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    public Date getModifyDate() {
+        return modifyDate;
+    }
+
+    public void setModifyDate(Date modifyDate) {
+        this.modifyDate = modifyDate;
     }
 }

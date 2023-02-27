@@ -26,7 +26,8 @@ public class Employee {
     private String dateOfBirth;
     @Column(columnDefinition = "bit default false")
     private boolean flagDelete;
-
+    @Column(columnDefinition = "int default 2")
+    private int anony;
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "create_date")
@@ -40,7 +41,7 @@ public class Employee {
     public Employee() {
     }
 
-    public Employee(Long idEmployee, String name, String address, String phone, String email, String idCard, boolean gender, Account account, String dateOfBirth, boolean flagDelete, Date createDate, Date modifyDate) {
+    public Employee(Long idEmployee, String name, String address, String phone, String email, String idCard, boolean gender, Account account, String dateOfBirth, boolean flagDelete, int anony, Date createDate, Date modifyDate) {
         this.idEmployee = idEmployee;
         this.name = name;
         this.address = address;
@@ -51,16 +52,9 @@ public class Employee {
         this.account = account;
         this.dateOfBirth = dateOfBirth;
         this.flagDelete = flagDelete;
+        this.anony = anony;
         this.createDate = createDate;
         this.modifyDate = modifyDate;
-    }
-
-    public boolean isGender() {
-        return gender;
-    }
-
-    public void setGender(boolean gender) {
-        this.gender = gender;
     }
 
     public Long getIdEmployee() {
@@ -111,6 +105,14 @@ public class Employee {
         this.idCard = idCard;
     }
 
+    public boolean isGender() {
+        return gender;
+    }
+
+    public void setGender(boolean gender) {
+        this.gender = gender;
+    }
+
     public Account getAccount() {
         return account;
     }
@@ -133,5 +135,29 @@ public class Employee {
 
     public void setFlagDelete(boolean flagDelete) {
         this.flagDelete = flagDelete;
+    }
+
+    public int getAnony() {
+        return anony;
+    }
+
+    public void setAnony(int anony) {
+        this.anony = anony;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    public Date getModifyDate() {
+        return modifyDate;
+    }
+
+    public void setModifyDate(Date modifyDate) {
+        this.modifyDate = modifyDate;
     }
 }

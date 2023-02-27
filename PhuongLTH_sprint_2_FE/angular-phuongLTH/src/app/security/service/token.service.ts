@@ -6,6 +6,7 @@ const ROLE_KEY = 'Role_key';
 const ID_KEY = 'Id_key';
 const EMAIL_KEY = 'Email_key';
 const AVATAR_KEY = 'Avatar_key';
+const ANONY_KEY = 'Anony_key';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,14 @@ export class TokenService {
 
   constructor() {
   }
+  public setAnony(anony: string): void {
+    localStorage.removeItem(ANONY_KEY);
+    localStorage.setItem(ANONY_KEY, anony);
+  }
 
+  public getAnony(): string | null {
+    return localStorage.getItem(ANONY_KEY);
+  }
   public setAvatar(avatar: string): void {
     localStorage.removeItem(AVATAR_KEY);
     localStorage.setItem(AVATAR_KEY, avatar);
@@ -105,7 +113,14 @@ export class TokenService {
     sessionStorage.removeItem(ROLE_KEY);
     sessionStorage.setItem(ROLE_KEY, JSON.stringify(roles));
   }
+  public setAnonySession(anony: string): void {
+    sessionStorage.removeItem(ANONY_KEY);
+    sessionStorage.setItem(ANONY_KEY, anony);
+  }
 
+  public getAnonySession(): string | null {
+    return sessionStorage.getItem(ANONY_KEY);
+  }
   public setNameSession(name: string): void {
     sessionStorage.removeItem(NAME_KEY);
     sessionStorage.setItem(NAME_KEY, name);
