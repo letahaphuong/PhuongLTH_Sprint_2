@@ -1,3 +1,3 @@
 export interface GetCartTotalPrice {
-  cartTotalPrice: number;
+  cartTotalPrice?: number;
 }

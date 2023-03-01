@@ -6,21 +6,15 @@ import com.example.phuonglth_sprint_2.service.customer.ICustomerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.annotation.EnableAsync;
-import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import java.nio.charset.StandardCharsets;
 
 @Service
 public class SendMail {
@@ -31,12 +25,13 @@ public class SendMail {
     @Autowired
     ICustomerService customerService;
 
+    @Async
     public void SendEmailToCustomer(CustomerDto customerDto) {
         try {
             //        SimpleMailMessage message = new SimpleMailMessage();
-
+            Thread.sleep(3000L);
             MimeMessage message = mailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(message);
+            MimeMessageHelper helper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED, StandardCharsets.UTF_8.name());
 
             helper.setFrom(MyConstants.MY_EMAIL);
             helper.setTo(customerDto.getEmail());
@@ -53,25 +48,31 @@ public class SendMail {
             helper.setText(mailContent, true);
 
             mailSender.send(message);
-        } catch (MessagingException e) {
+        } catch (MessagingException | IllegalArgumentException | InterruptedException e) {
             logger.error(e.getMessage());
         }
     }
 
-
+    @Async
     public void SendEmailToAdmin() {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom(MyConstants.MY_EMAIL);
-        message.setTo(MyConstants.MY_EMAIL);
-        String mailSubject = MyConstants.mailSubjectToAdmin;
-        String mailContent = "Người gửi: " + "Camera Store" + "\n";
-        mailContent += "Sender E-mail: " + "camerastore@gmail.com" + "\n";
-        mailContent += "Content: " + "Đơn đặt hàng từ khách hàng" + "\n";
+        try {
+            Thread.sleep(3000L);
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setFrom(MyConstants.MY_EMAIL);
+            message.setTo(MyConstants.MY_EMAIL);
+            String mailSubject = MyConstants.mailSubjectToAdmin;
+            String mailContent = "Người gửi: " + "Camera Store" + "\n";
+            mailContent += "Sender E-mail: " + "camerastore@gmail.com" + "\n";
+            mailContent += "Content: " + "Đơn đặt hàng từ khách hàng" + "\n";
 //        mailContent += "Tên đăng nhập: " + customerDto.getEmail() + "\n";
 //        mailContent += "Mật khẩu: " + customerDto.getEncryptPassword() + "\n";
 //        mailContent += "Content: " + "Vui lòng đăng nhập để tiếp tục." + "\n";
-        message.setSubject(mailSubject);
-        message.setText(mailContent);
-        mailSender.send(message);
+            message.setSubject(mailSubject);
+            message.setText(mailContent);
+            mailSender.send(message);
+        }catch (IllegalArgumentException | InterruptedException e){
+            logger.error(e.getMessage());
+        }
+
     }
 }

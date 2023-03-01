@@ -3,7 +3,10 @@ import {ProductService} from '../service/product.service';
 import {CartView} from '../../dto/product/cart-view';
 import {TokenService} from '../../security/service/token.service';
 import {CustomerService} from '../../customer/service/customer.service';
-import {GetCartTotalPrice} from "../../dto/product/get-cart-total-price";
+import {GetCartTotalPrice} from '../../dto/product/get-cart-total-price';
+import {MessageService} from '../service/message.service';
+import {ProductView} from '../../dto/product/product-view';
+import {CartItemVT} from '../../entity/product/CartItemVT';
 
 
 @Component({
@@ -18,15 +21,31 @@ export class ProductCartComponent implements OnInit {
   idCustomer: number | undefined;
   temp: CartView | undefined;
   getCartTotalPrice: GetCartTotalPrice | undefined;
+  checkLogin = false;
+
+  cartItemVT: CartItemVT[] = [];
 
   constructor(
     private productService: ProductService,
     private tokenService: TokenService,
-    private customerService: CustomerService
+    private customerService: CustomerService,
+    private messageService: MessageService
   ) {
+    if (this.tokenService.getToken()) {
+      this.checkLogin = true;
+    }
+  }
+
+  getItem(): void {
+    this.messageService.getMessage().subscribe((productView: ProductView) => {
+      const cartItem = new CartItemVT(productView);
+      // @ts-ignore
+      this.cartItemVT.push(cartItem);
+    });
   }
 
   ngOnInit(): void {
+    this.getItem();
     this.idAccount = this.tokenService.getId();
     this.customerService.findIdCustomerByIdAccount(this.idAccount).subscribe(data => {
       console.log('id nè', data);

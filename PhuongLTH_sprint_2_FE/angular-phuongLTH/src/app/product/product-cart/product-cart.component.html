@@ -4,7 +4,74 @@
     <div class="card-header">
       <h2 class="fw-bold">Giỏ hàng</h2>
     </div>
-    <div class="card-body">
+<!--    <div *ngIf="!checkLogin" class="card-body">-->
+<!--      <div class="table-responsive">-->
+<!--        <table class="table table-bordered m-0">-->
+<!--          <thead>-->
+<!--          <tr>-->
+<!--            &lt;!&ndash; Set columns width &ndash;&gt;-->
+<!--            <th class="text-center py-3 px-4" style="min-width: 400px;">Tên sản phẩm và thông tin chi tiết</th>-->
+<!--            <th class="text-right py-3 px-4" style="width: 100px;">Đơn giá</th>-->
+<!--            <th class="text-center py-3 px-4" style="width: 120px;">Số lượng</th>-->
+<!--            <th class="text-center py-3 px-4" style="width: 120px;">Thành tiền</th>-->
+<!--            <th class="text-center align-middle py-3 px-0" style="width: 40px;"><a href="#"-->
+<!--                                                                                   class="shop-tooltip float-none text-light"-->
+<!--                                                                                   title=""-->
+<!--                                                                                   data-original-title="Clear cart"><i-->
+<!--              class="ino ion-md-trash"></i></a></th>-->
+<!--          </tr>-->
+<!--          </thead>-->
+<!--          <tbody>-->
+<!--          <tr *ngFor="let cart of cartItemVT">-->
+<!--            <td class="p-4">-->
+<!--              <div class="media align-items-center">-->
+<!--                <img [src]="cart.productUrl"-->
+<!--                     class="d-block ui-w-40 ui-bordered mr-4" alt=""/>-->
+<!--                <div class="media-body">-->
+<!--                  <a class="d-block text-dark">{{cart.productName}}</a>-->
+<!--                  <small>-->
+<!--                    <span class="text-muted">Hãng sản xuất: </span> {{cart.productNameCategory}} &nbsp;-->
+<!--                    <span class="text-muted">Bộ nhớ: </span> {{cart.productMemory}}-->
+<!--                  </small>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </td>-->
+<!--            <td class="text-right font-weight-semibold align-middle p-4">{{cart.productPrice| number}}</td>-->
+<!--            <td class="align-middle p-4"><input type="text" class="form-control text-center" [value]="cart.qty"></td>-->
+<!--            <td class="text-right font-weight-semibold align-middle p-4">{{cart.productPrice * cart.qty | number}}</td>-->
+<!--            <td class="text-center align-middle px-0">-->
+<!--              <a class="shop-tooltip close float-none text-danger"-->
+<!--                 data-bs-toggle="modal" data-bs-target="#deleteCart"-->
+<!--                 title="" data-original-title="Remove">×</a></td>-->
+<!--          </tr>-->
+
+<!--          </tbody>-->
+<!--        </table>-->
+<!--      </div>-->
+<!--      &lt;!&ndash; / Shopping cart table &ndash;&gt;-->
+
+<!--      <div class="d-flex flex-wrap justify-content-between align-items-center pb-4">-->
+<!--        <div class="mt-4">-->
+<!--        </div>-->
+<!--        <div class="d-flex">-->
+<!--          <div class="text-right mt-4 mr-5">-->
+<!--            <label class="text-muted font-weight-normal m-0">Giảm giá</label>-->
+<!--            <div class="text-large"><strong>đ</strong></div>-->
+<!--          </div>-->
+<!--          <div class="text-right mt-4">-->
+<!--            <label class="text-muted font-weight-normal m-0">Tổng tiền</label>-->
+<!--            <div class="text-large"><strong>{{getCartTotalPrice?.cartTotalPrice | number}} đ</strong></div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+
+<!--      <div class="float-right">-->
+<!--        <button type="button" class="btn btn-lg btn-light mt-2 mr-3" routerLink="">Trở lại cửa hàng</button>-->
+<!--        <button type="button" class="btn btn-lg btn-primary mt-2" routerLink="/security/payment">Thanh toán</button>-->
+<!--      </div>-->
+
+<!--    </div>-->
+    <div *ngIf="checkLogin" class="card-body">
       <div class="table-responsive">
         <table class="table table-bordered m-0">
           <thead>

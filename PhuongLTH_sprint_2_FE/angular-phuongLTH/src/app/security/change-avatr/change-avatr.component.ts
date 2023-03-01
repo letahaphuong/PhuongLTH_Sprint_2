@@ -4,14 +4,16 @@ import {SecurityService} from '../service/security.service';
 import {TokenService} from '../service/token.service';
 import {Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
-
+// @ts-ignore
+import * as CryptoJS from 'crypto-js';
 @Component({
   selector: 'app-change-avatr',
   templateUrl: './change-avatr.component.html',
   styleUrls: ['./change-avatr.component.css']
 })
 export class ChangeAvatrComponent implements OnInit {
-
+  encPassword = '123123';
+  decPassword = '123123';
   form: any = {};
   changeAvatar: ChangeAvatar | undefined;
   error: any = {
@@ -38,12 +40,13 @@ export class ChangeAvatrComponent implements OnInit {
     private toast: ToastrService
   ) {
     this.avatar_get = this.tokenService.getAvatar();
-    this.name_get = this.tokenService.getName();
-    this.email_get = this.tokenService.getEmail();
+    // @ts-ignore
+    this.name_get = CryptoJS.AES.decrypt(this.tokenService.getName().toString(), this.decPassword?.trim()).toString(CryptoJS.enc.Utf8);
+    // @ts-ignore
+    this.email_get = CryptoJS.AES.decrypt(this.tokenService.getEmail().toString(), this.decPassword?.trim()).toString(CryptoJS.enc.Utf8);
   }
 
   ngOnInit(): void {
-
   }
 
   onSubmit(): void {

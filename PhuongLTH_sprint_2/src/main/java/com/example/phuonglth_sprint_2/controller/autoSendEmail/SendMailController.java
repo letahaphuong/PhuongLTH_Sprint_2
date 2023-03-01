@@ -24,7 +24,6 @@ public class SendMailController {
         List<String> customerList = customerService.getAllEmailCustomer();
         if (!(customerList.size() == 0)) {
             String[] array = customerList.toArray(new String[0]);
-            // Create a Simple MailMessage.
             SimpleMailMessage message = new SimpleMailMessage();
 
             message.setFrom("letahaphuong@gmail.com");
@@ -35,7 +34,6 @@ public class SendMailController {
                     + "Áp dụng cho 20 đơn hàng đầu tiên trong ngày. Hình thừ online và trực tiếp tại cửa hàng" +
                     "\n Giờ mở cửa:  Sáng: 07:30–11:00, Chiều: 13:30–16:30");
 
-            // Send Message!
             this.mailSender.send(message);
         } else {
             log.error("Không có mail để gửi");

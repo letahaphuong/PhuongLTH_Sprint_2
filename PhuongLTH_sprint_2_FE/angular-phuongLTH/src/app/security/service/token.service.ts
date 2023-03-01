@@ -70,23 +70,23 @@ export class TokenService {
   }
 
 
-  public setRole(roles: string[]): void {
-    localStorage.removeItem(ROLE_KEY);
-    localStorage.setItem(ROLE_KEY, JSON.stringify(roles));
-  }
-
-
-  public getRole(): string[] {
-    this.roles = [];
-    if (this.getToken()) {
-      // @ts-ignore
-      JSON.parse(localStorage.getItem(ROLE_KEY)).forEach(role => {
-        // @ts-ignore
-        this.roles.push(role.authority);
-      });
-    }
-    return this.roles;
-  }
+  // public setRole(roles: string[]): void {
+  //   localStorage.removeItem(ROLE_KEY);
+  //   localStorage.setItem(ROLE_KEY, JSON.stringify(roles));
+  // }
+  //
+  //
+  // public getRole(): string[] {
+  //   this.roles = [];
+  //   if (this.getToken()) {
+  //     // @ts-ignore
+  //     JSON.parse(localStorage.getItem(ROLE_KEY)).forEach(role => {
+  //       // @ts-ignore
+  //       this.roles.push(role.authority);
+  //     });
+  //   }
+  //   return this.roles;
+  // }
 
   public rememberMe(roles: string[], name: string, token: string, avatar: string, email: string, id: string): void {
     this.setRoleSession(roles);

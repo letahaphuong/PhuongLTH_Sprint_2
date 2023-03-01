@@ -10,6 +10,9 @@ import {ProductCreate} from '../../entity/product/ProductCreate';
 import {CustomerService} from '../../customer/service/customer.service';
 import {TokenService} from '../../security/service/token.service';
 import {Customer} from '../../entity/customer/customer';
+// @ts-ignore
+import * as CryptoJS from 'crypto-js';
+import {MessageService} from '../service/message.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -25,7 +28,10 @@ export class ProductDetailComponent implements OnInit {
   idAccount: string | null | undefined;
   idCustomer: string | null | undefined;
   customer: Customer | undefined;
-  checkRoles: string[] = [];
+  checkRoles: string | null | undefined;
+  encPassword = '123123';
+  decPassword = '123123';
+  checkLogin = false;
 
   constructor(
     private productService: ProductService,
@@ -34,12 +40,13 @@ export class ProductDetailComponent implements OnInit {
     private router: Router,
     private toast: ToastrService,
     private customerService: CustomerService,
-    private tokenService: TokenService
+    private tokenService: TokenService,
+    private messageService: MessageService
   ) {
     if (this.tokenService.getToken()) {
-      this.checkRoles = this.tokenService.getRole();
-    } else if (this.tokenService.getRoleSession()) {
-      this.checkRoles = this.tokenService.getRoleSession();
+      this.checkLogin = true;
+      // @ts-ignore
+      this.checkRoles = CryptoJS.AES.decrypt(this.tokenService.getAnony().toString(), this.decPassword?.trim()).toString(CryptoJS.enc.Utf8);
     }
     if (this.tokenService.getId() != null) {
       this.idAccount = this.tokenService.getId();
@@ -98,7 +105,6 @@ export class ProductDetailComponent implements OnInit {
   quantity = 1;
   i = 1;
 
-
   calculate(max: number, ratingValue: number): void {
     this.ratingUnits = Array.from({length: max},
       (_, index) => ({
@@ -124,6 +130,7 @@ export class ProductDetailComponent implements OnInit {
       this.quantity = this.i;
     }
   }
+
 
   select(index: number): void {
     this.toast.success('Cảm ơn bạn đã đánh giá.');
@@ -160,5 +167,13 @@ export class ProductDetailComponent implements OnInit {
 
   cantAcctive(): void {
     this.toast.warning('Không được dùng tài khoản ADMIN đặt hàng');
+  }
+
+  addCart(): void {
+    if (this.productDetail) {
+      this.messageService.sendMessage(this.productDetail);
+    }
+    console.log('loadinggg......');
+    console.log(this.cartForm.value);
   }
 }

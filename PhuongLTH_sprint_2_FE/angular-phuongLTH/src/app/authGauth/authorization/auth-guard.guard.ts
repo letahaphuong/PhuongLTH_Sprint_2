@@ -21,7 +21,7 @@ export class AuthGuardGuard implements CanActivate {
     const expectedRole = route.data.expctedRole;
     console.log(expectedRole);
     const token = this.tokenService.getToken();
-    if (this.tokenService.getToken()) {
+    if (token) {
       return true;
     } else {
       this.toast.warning('Vui lòng đăng nhập để sử dụng chức năng.');

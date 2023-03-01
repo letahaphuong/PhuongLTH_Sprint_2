@@ -60,7 +60,6 @@ export class LoginComponent implements OnInit {
           if (this.signInForm?.value.rememberMe) {
             this.tokenService.rememberMe(data.roles, data.name, data.token, data.avatar, data.email, data.id);
             location.href = 'http://localhost:4200/home';
-            location.href = 'http://localhost:4200/home';
             this.toast.info('Đăng nhập thành công.', 'Thông báo', {
               timeOut: 3000
             });
@@ -68,8 +67,8 @@ export class LoginComponent implements OnInit {
             this.tokenService.setName(CryptoJS.AES.encrypt(data.name.trim(), this.encPassword?.trim()).toString());
             this.tokenService.setToken(data.token);
             // this.tokenService.setName(data.name);
-            this.tokenService.setRole(data.roles);
-            this.statusRole = data.roles;
+            // this.tokenService.setRole(data.roles);
+            // this.statusRole = data.roles;
             this.tokenService.setEmail(CryptoJS.AES.encrypt(data.email.trim(), this.encPassword?.trim()).toString());
             this.tokenService.setAnony(CryptoJS.AES.encrypt(data.anony.trim(), this.encPassword?.trim()).toString());
             this.tokenService.setId(data.id);

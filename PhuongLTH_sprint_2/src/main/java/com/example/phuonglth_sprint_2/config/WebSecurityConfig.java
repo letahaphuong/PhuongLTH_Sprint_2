@@ -46,7 +46,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception {
 
         httpSecurity.authorizeRequests().antMatchers("api/customer/**", "api/category/**", "api/product/**").access("hasRole('ADMIN')");
-        httpSecurity.authorizeRequests().antMatchers("api/change-avatar").access("hasAnyRole('ADMIN','USER')");
+        httpSecurity.authorizeRequests().antMatchers("api/change-avatar", "api/product/**").access("hasAnyRole('ADMIN','USER')");
         httpSecurity.cors().and().csrf().disable()// huỷ CrossOrigin
                 .authorizeRequests()
                 .antMatchers("/api/**", "api/public") // cho tất cả các role vào
