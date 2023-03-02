@@ -1,14 +1,16 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {ProductView} from '../../dto/product/product-view';
 import {ProductViewInfoJson} from '../../dto/product/product-view-info-json';
 import {ToastrService} from 'ngx-toastr';
 import {Title} from '@angular/platform-browser';
 import {HomeService} from '../service/home.service';
+import {MessageService} from '../../product/service/message.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css'],
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class HomeComponent implements OnInit {
   productViewInfo: ProductView[] = [];
@@ -17,17 +19,23 @@ export class HomeComponent implements OnInit {
   pageNumber = 0;
   totalPages = 0;
   searchs = '';
+  checkSearch = '';
 
   constructor(
     private homeService: HomeService,
     private toast: ToastrService,
-    private title: Title
+    private title: Title,
+    private messageService: MessageService
   ) {
     this.title.setTitle('Trang chủ');
   }
 
   ngOnInit(): void {
-    this.search(this.searchs, true);
+    this.messageService.getMessageSearch().subscribe(data => {
+      this.searchs = data;
+      this.search(this.searchs, true);
+      console.log('loading .....', this.searchs);
+    });
   }
 
   getAll(request: { page: number, size: number }): void {
@@ -65,7 +73,8 @@ export class HomeComponent implements OnInit {
     console.log(name);
     this.homeService.searchs(
       searchs.trim(),
-      this.request).subscribe(data => {
+      this.request
+    ).subscribe(data => {
       console.log(data);
       this.productViewList = data;
       // @ts-ignore

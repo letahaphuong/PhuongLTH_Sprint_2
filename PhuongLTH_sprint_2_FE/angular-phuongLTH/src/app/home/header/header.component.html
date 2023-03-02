@@ -10,7 +10,7 @@
                 <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
               </svg>
             </a>
-            <span style="font-size: 13px" >
+            <span style="font-size: 13px">
               : 66 - Nguyễn Tất Thành, Tp-Hội An, Tỉnh Quảng Nam
             </span>
           </div>
@@ -27,23 +27,27 @@
         <div class="col-lg-4 col-sm-6 col-12">
           <div class="widgets-wrap float-md-right">
             <div class="widget-header  mr-3">
-              <a [routerLink]="['/product/cart',idAccount]" class="icon icon-sm rounded-circle border"><i class="fa fa-shopping-cart"></i></a>
+              <a [routerLink]="['/product/cart',idAccount]" class="icon icon-sm rounded-circle border"><i
+                class="fa fa-shopping-cart"></i></a>
               <span class="badge badge-pill badge-danger notify">0</span>
             </div>
             <div class="widget-header icontext ">
               <div class="dropdown">
-                <a class="icon icon-sm rounded-circle border" *ngIf="!checkLogin" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <a class="icon icon-sm rounded-circle border" *ngIf="!checkLogin" type="button"
+                   data-bs-toggle="dropdown" aria-expanded="false">
                   <i class="fa fa-user"></i>
                 </a>
-                <a class="image rounded-circle icon-sm icon border" type="button" *ngIf="checkLogin" data-bs-toggle="dropdown" aria-expanded="false" style="color: springgreen; text-decoration: none;"
+                <a class="image rounded-circle icon-sm icon border" type="button" *ngIf="checkLogin"
+                   data-bs-toggle="dropdown" aria-expanded="false" style="color: springgreen; text-decoration: none;"
                    aria-label="Angular Audio Player"
-                   tabindex="0" aria-disabled="false" ><span class="mat-button-wrapper">
-                   <img alt="angular" style="border-radius: 50%"  class=" mb-2" [src]="avatar" ></span>
+                   tabindex="0" aria-disabled="false"><span class="mat-button-wrapper">
+                   <img alt="angular" style="border-radius: 50%" class=" mb-2" [src]="avatar"></span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end" *ngIf="checkLogin">
                   <li><a class="dropdown-item" routerLink="/security/change-avatar">Trang cá nhân</a></li>
                   <li><a class="dropdown-item" *ngIf="anony == '1'">Lịch sử giao dịch</a></li>
-                  <li><a class="dropdown-item" routerLink="/product/create" *ngIf="anony=='2'">Thêm mới sản phẩm</a></li>
+                  <li><a class="dropdown-item" routerLink="/product/create" *ngIf="anony=='2'">Thêm mới sản phẩm</a>
+                  </li>
                   <li><a class="dropdown-item" routerLink="/customer" *ngIf="anony=='2'">Quản lý khách hàng</a></li>
                   <li><a class="dropdown-item" routerLink="/product" *ngIf="anony=='2'">Quản lý sản phẩm</a></li>
                   <li><a class="dropdown-item" routerLink="/#" *ngIf="anony=='2'">Quản lý danh mục sản phẩm</a></li>
@@ -67,39 +71,40 @@
   <nav class="navbar navbar-main navbar-expand-lg navbar-light border-bottom">
     <div class="container">
 
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main_nav" aria-controls="main_nav" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main_nav"
+              aria-controls="main_nav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
 
       <div class="collapse navbar-collapse" id="main_nav">
         <ul class="navbar-nav">
           <li class="nav-item dropdown">
-            <a class="nav-link" routerLink="">Trang chủ</a>
+            <a class="nav-link" routerLink="" (click)="seach('')">Trang chủ</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" (click)="feature()">Giới thiệu</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/category/hikivision">HIKVISION</a>
+            <a class="nav-link" routerLink="" (click)="seach('HIKVISION')">HIKVISION</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/category/kbvision">KBVISION</a>
+            <a class="nav-link" routerLink="" (click)="seach('KBVISION')">KBVISION</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/category/vantech">VANTECH</a>
+            <a class="nav-link" routerLink="" (click)="seach('VANTECH')">VANTECH</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/category/yoosee">YOOSEE</a>
+            <a class="nav-link" routerLink="" (click)="seach('YOOSEE')">YOOSEE</a>
           </li>
           <li class="nav-item dropdown" *ngIf="anony=='2' && checkLogin">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"> Danh Mục</a>
             <div class="dropdown-menu">
-              <a class="dropdown-item" >
+              <a class="dropdown-item">
                 Quản lý nhân sự
               </a>
-              <a class="dropdown-item" >Quản lý danh mục sản phẩm</a>
+              <a class="dropdown-item">Quản lý danh mục sản phẩm</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item"  routerLink="/category/hikivision">HIKVISION</a>
+              <a class="dropdown-item" routerLink="/category/hikivision">HIKVISION</a>
               <a class="dropdown-item" routerLink="/category/kbvision">KBVISION</a>
               <a class="dropdown-item" routerLink="/category/kbvision">VANTECH </a>
               <a class="dropdown-item" routerLink="/category/yoosee">YOOSEE </a>

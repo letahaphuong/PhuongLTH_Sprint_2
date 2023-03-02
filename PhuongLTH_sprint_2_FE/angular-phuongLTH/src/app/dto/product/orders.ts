@@ -1,4 +1,5 @@
 import {Customer} from '../../entity/customer/customer';
+import {CartForm} from './cart-form';
 
 export interface Orders {
   idOrder: number;
@@ -7,5 +8,5 @@ export interface Orders {
   shippingAddress: string; // địa chỉ giao hàng
   orderPhoneNumber: string; // số điện thoại giao hàng
   customer: Customer;
-
+  orderDetail: CartForm;
 }

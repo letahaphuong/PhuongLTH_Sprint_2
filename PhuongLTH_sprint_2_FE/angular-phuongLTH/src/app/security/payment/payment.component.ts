@@ -35,7 +35,6 @@ export class PaymentComponent implements OnInit {
 
   ngOnInit(): void {
     this.idAccount = this.tokenService.getId();
-    console.log(this.tokenService.getId(), 'aaaaaaaaaaa');
     this.customerService.findIdCustomerByIdAccount(this.idAccount).subscribe(data => {
       console.log('id nè', data);
       this.idCustomer = data.idCustomer;
@@ -52,6 +51,7 @@ export class PaymentComponent implements OnInit {
               currency: 'VNĐ',
               value: value1,
               onApprove: (details) => {
+                console.log(details);
                 if (details.error) {
                   this.toast.error('Thanh toán không thành công');
                 }
@@ -62,16 +62,6 @@ export class PaymentComponent implements OnInit {
         });
       }
     });
-    // render(
-    //   {
-    //     id: '#myPaypalButtons',
-    //     currency: 'VNĐ',
-    //     value: '',
-    //     onApprove: (details) => {
-    //       this.toast.success('Thanh toán thành công.');
-    //     }
-    //   }
-    // );
   }
 
 }

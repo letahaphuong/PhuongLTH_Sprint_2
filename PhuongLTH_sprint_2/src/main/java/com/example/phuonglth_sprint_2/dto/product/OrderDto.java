@@ -1,6 +1,8 @@
 package com.example.phuonglth_sprint_2.dto.product;
 
 import com.example.phuonglth_sprint_2.entity.customer.Customer;
+import com.example.phuonglth_sprint_2.entity.product.Order;
+import com.example.phuonglth_sprint_2.entity.product.OrderDetail;
 
 public class OrderDto {
 
@@ -12,17 +14,19 @@ public class OrderDto {
     private String orderPhoneNumber;// số điện thoại giao hàng
 
     private Customer customer;
+    private OrderDetail orderDetail;
 
     public OrderDto() {
     }
 
-    public OrderDto(Long idOrder, String codeOrder, boolean paymentStatus, String shippingAddress, String orderPhoneNumber, Customer customer) {
+    public OrderDto(Long idOrder, String codeOrder, boolean paymentStatus, String shippingAddress, String orderPhoneNumber, Customer customer, OrderDetail orderDetail) {
         this.idOrder = idOrder;
         this.codeOrder = codeOrder;
         this.paymentStatus = paymentStatus;
         this.shippingAddress = shippingAddress;
         this.orderPhoneNumber = orderPhoneNumber;
         this.customer = customer;
+        this.orderDetail = orderDetail;
     }
 
     public Long getIdOrder() {
@@ -71,5 +75,13 @@ public class OrderDto {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    public OrderDetail getOrderDetail() {
+        return orderDetail;
+    }
+
+    public void setOrderDetail(OrderDetail orderDetail) {
+        this.orderDetail = orderDetail;
     }
 }

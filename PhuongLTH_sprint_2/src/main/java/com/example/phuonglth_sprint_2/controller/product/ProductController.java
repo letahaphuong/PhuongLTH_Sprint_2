@@ -205,10 +205,13 @@ public class ProductController {
         if (bindingResult.hasErrors()) {
             return new ResponseEntity<>(new ResponseMessage("Đơn hàng INVALID"), HttpStatus.BAD_REQUEST);
         }
+        Product product = productService.findIdProduct(orderDto.getOrderDetail().getIdProductOrder());
+        product.setQuantity(product.getQuantity() - orderDto.getOrderDetail().getQuantityOrder());
         Order order = new Order();
         BeanUtils.copyProperties(orderDto, order);
         order.setCodeOrder(orderService.randomCodeOrder());
         orderService.saveOrder(order);
+        productService.save(product);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

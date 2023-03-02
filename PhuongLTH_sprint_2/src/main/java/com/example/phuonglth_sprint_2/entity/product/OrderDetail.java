@@ -27,8 +27,8 @@ public class OrderDetail {
     @Column(name = "modify_date")
     private Date modifyDate;
 
-//    @OneToMany(mappedBy = "orderDetail")
-//    private Set<Order> orders;
+    @OneToMany(mappedBy = "orderDetail")
+    private Set<Order> orders;
     @ManyToOne
     private Product product;
 

@@ -2,6 +2,7 @@ package com.example.phuonglth_sprint_2.service.product.impl;
 
 
 import com.example.phuonglth_sprint_2.dto.product.ProductView;
+import com.example.phuonglth_sprint_2.dto.response.ResponseMessage;
 import com.example.phuonglth_sprint_2.entity.product.Product;
 import com.example.phuonglth_sprint_2.repository.product.IProductRepository;
 import com.example.phuonglth_sprint_2.service.product.IProductService;
@@ -66,7 +67,12 @@ public class ProductService implements IProductService {
 
     @Override
     public Page<ProductView> getAllProductHome(String searchs, Pageable pageable) {
-        return productRepository.getAllProductHome(searchs,searchs,searchs,pageable);
+        return productRepository.getAllProductHome(searchs, searchs, searchs, pageable);
+    }
+
+    @Override
+    public Product findIdProduct(Long id) {
+        return productRepository.findById(id).orElse(null);
     }
 
 }

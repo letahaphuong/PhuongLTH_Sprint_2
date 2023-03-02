@@ -3,7 +3,8 @@ import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Route
 import {Observable} from 'rxjs';
 import {TokenService} from '../../security/service/token.service';
 import {ToastrService} from 'ngx-toastr';
-
+// @ts-ignore
+import * as CryptoJS from 'crypto-js';
 @Injectable({
   providedIn: 'root'
 })

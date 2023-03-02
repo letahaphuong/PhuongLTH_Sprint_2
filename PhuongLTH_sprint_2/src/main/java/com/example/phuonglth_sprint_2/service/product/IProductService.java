@@ -31,5 +31,5 @@ public interface IProductService {
 
     Page<ProductView> getAllProductHome( String search ,Pageable pageable);
 
-
+    Product findIdProduct(Long id);
 }

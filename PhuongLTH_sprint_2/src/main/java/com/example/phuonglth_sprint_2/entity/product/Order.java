@@ -30,6 +30,8 @@ public class Order {
 
     @ManyToOne
     private Customer customer;
+    @ManyToOne
+    private OrderDetail orderDetail;
 
 
     public Order() {

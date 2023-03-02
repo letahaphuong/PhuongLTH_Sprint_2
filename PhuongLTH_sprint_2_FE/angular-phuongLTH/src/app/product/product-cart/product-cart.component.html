@@ -1,76 +1,76 @@
-<div class="container px-3 my-5 clearfix">
+<div *ngIf="cartList?.length != 0" class="container px-3 my-5 clearfix">
   <!-- Shopping cart table -->
   <div class="card">
     <div class="card-header">
       <h2 class="fw-bold">Giỏ hàng</h2>
     </div>
-<!--    <div *ngIf="!checkLogin" class="card-body">-->
-<!--      <div class="table-responsive">-->
-<!--        <table class="table table-bordered m-0">-->
-<!--          <thead>-->
-<!--          <tr>-->
-<!--            &lt;!&ndash; Set columns width &ndash;&gt;-->
-<!--            <th class="text-center py-3 px-4" style="min-width: 400px;">Tên sản phẩm và thông tin chi tiết</th>-->
-<!--            <th class="text-right py-3 px-4" style="width: 100px;">Đơn giá</th>-->
-<!--            <th class="text-center py-3 px-4" style="width: 120px;">Số lượng</th>-->
-<!--            <th class="text-center py-3 px-4" style="width: 120px;">Thành tiền</th>-->
-<!--            <th class="text-center align-middle py-3 px-0" style="width: 40px;"><a href="#"-->
-<!--                                                                                   class="shop-tooltip float-none text-light"-->
-<!--                                                                                   title=""-->
-<!--                                                                                   data-original-title="Clear cart"><i-->
-<!--              class="ino ion-md-trash"></i></a></th>-->
-<!--          </tr>-->
-<!--          </thead>-->
-<!--          <tbody>-->
-<!--          <tr *ngFor="let cart of cartItemVT">-->
-<!--            <td class="p-4">-->
-<!--              <div class="media align-items-center">-->
-<!--                <img [src]="cart.productUrl"-->
-<!--                     class="d-block ui-w-40 ui-bordered mr-4" alt=""/>-->
-<!--                <div class="media-body">-->
-<!--                  <a class="d-block text-dark">{{cart.productName}}</a>-->
-<!--                  <small>-->
-<!--                    <span class="text-muted">Hãng sản xuất: </span> {{cart.productNameCategory}} &nbsp;-->
-<!--                    <span class="text-muted">Bộ nhớ: </span> {{cart.productMemory}}-->
-<!--                  </small>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </td>-->
-<!--            <td class="text-right font-weight-semibold align-middle p-4">{{cart.productPrice| number}}</td>-->
-<!--            <td class="align-middle p-4"><input type="text" class="form-control text-center" [value]="cart.qty"></td>-->
-<!--            <td class="text-right font-weight-semibold align-middle p-4">{{cart.productPrice * cart.qty | number}}</td>-->
-<!--            <td class="text-center align-middle px-0">-->
-<!--              <a class="shop-tooltip close float-none text-danger"-->
-<!--                 data-bs-toggle="modal" data-bs-target="#deleteCart"-->
-<!--                 title="" data-original-title="Remove">×</a></td>-->
-<!--          </tr>-->
+    <!--    <div *ngIf="!checkLogin" class="card-body">-->
+    <!--      <div class="table-responsive">-->
+    <!--        <table class="table table-bordered m-0">-->
+    <!--          <thead>-->
+    <!--          <tr>-->
+    <!--            &lt;!&ndash; Set columns width &ndash;&gt;-->
+    <!--            <th class="text-center py-3 px-4" style="min-width: 400px;">Tên sản phẩm và thông tin chi tiết</th>-->
+    <!--            <th class="text-right py-3 px-4" style="width: 100px;">Đơn giá</th>-->
+    <!--            <th class="text-center py-3 px-4" style="width: 120px;">Số lượng</th>-->
+    <!--            <th class="text-center py-3 px-4" style="width: 120px;">Thành tiền</th>-->
+    <!--            <th class="text-center align-middle py-3 px-0" style="width: 40px;"><a href="#"-->
+    <!--                                                                                   class="shop-tooltip float-none text-light"-->
+    <!--                                                                                   title=""-->
+    <!--                                                                                   data-original-title="Clear cart"><i-->
+    <!--              class="ino ion-md-trash"></i></a></th>-->
+    <!--          </tr>-->
+    <!--          </thead>-->
+    <!--          <tbody>-->
+    <!--          <tr *ngFor="let cart of cartItemVT">-->
+    <!--            <td class="p-4">-->
+    <!--              <div class="media align-items-center">-->
+    <!--                <img [src]="cart.productUrl"-->
+    <!--                     class="d-block ui-w-40 ui-bordered mr-4" alt=""/>-->
+    <!--                <div class="media-body">-->
+    <!--                  <a class="d-block text-dark">{{cart.productName}}</a>-->
+    <!--                  <small>-->
+    <!--                    <span class="text-muted">Hãng sản xuất: </span> {{cart.productNameCategory}} &nbsp;-->
+    <!--                    <span class="text-muted">Bộ nhớ: </span> {{cart.productMemory}}-->
+    <!--                  </small>-->
+    <!--                </div>-->
+    <!--              </div>-->
+    <!--            </td>-->
+    <!--            <td class="text-right font-weight-semibold align-middle p-4">{{cart.productPrice| number}}</td>-->
+    <!--            <td class="align-middle p-4"><input type="text" class="form-control text-center" [value]="cart.qty"></td>-->
+    <!--            <td class="text-right font-weight-semibold align-middle p-4">{{cart.productPrice * cart.qty | number}}</td>-->
+    <!--            <td class="text-center align-middle px-0">-->
+    <!--              <a class="shop-tooltip close float-none text-danger"-->
+    <!--                 data-bs-toggle="modal" data-bs-target="#deleteCart"-->
+    <!--                 title="" data-original-title="Remove">×</a></td>-->
+    <!--          </tr>-->
 
-<!--          </tbody>-->
-<!--        </table>-->
-<!--      </div>-->
-<!--      &lt;!&ndash; / Shopping cart table &ndash;&gt;-->
+    <!--          </tbody>-->
+    <!--        </table>-->
+    <!--      </div>-->
+    <!--      &lt;!&ndash; / Shopping cart table &ndash;&gt;-->
 
-<!--      <div class="d-flex flex-wrap justify-content-between align-items-center pb-4">-->
-<!--        <div class="mt-4">-->
-<!--        </div>-->
-<!--        <div class="d-flex">-->
-<!--          <div class="text-right mt-4 mr-5">-->
-<!--            <label class="text-muted font-weight-normal m-0">Giảm giá</label>-->
-<!--            <div class="text-large"><strong>đ</strong></div>-->
-<!--          </div>-->
-<!--          <div class="text-right mt-4">-->
-<!--            <label class="text-muted font-weight-normal m-0">Tổng tiền</label>-->
-<!--            <div class="text-large"><strong>{{getCartTotalPrice?.cartTotalPrice | number}} đ</strong></div>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
+    <!--      <div class="d-flex flex-wrap justify-content-between align-items-center pb-4">-->
+    <!--        <div class="mt-4">-->
+    <!--        </div>-->
+    <!--        <div class="d-flex">-->
+    <!--          <div class="text-right mt-4 mr-5">-->
+    <!--            <label class="text-muted font-weight-normal m-0">Giảm giá</label>-->
+    <!--            <div class="text-large"><strong>đ</strong></div>-->
+    <!--          </div>-->
+    <!--          <div class="text-right mt-4">-->
+    <!--            <label class="text-muted font-weight-normal m-0">Tổng tiền</label>-->
+    <!--            <div class="text-large"><strong>{{getCartTotalPrice?.cartTotalPrice | number}} đ</strong></div>-->
+    <!--          </div>-->
+    <!--        </div>-->
+    <!--      </div>-->
 
-<!--      <div class="float-right">-->
-<!--        <button type="button" class="btn btn-lg btn-light mt-2 mr-3" routerLink="">Trở lại cửa hàng</button>-->
-<!--        <button type="button" class="btn btn-lg btn-primary mt-2" routerLink="/security/payment">Thanh toán</button>-->
-<!--      </div>-->
+    <!--      <div class="float-right">-->
+    <!--        <button type="button" class="btn btn-lg btn-light mt-2 mr-3" routerLink="">Trở lại cửa hàng</button>-->
+    <!--        <button type="button" class="btn btn-lg btn-primary mt-2" routerLink="/security/payment">Thanh toán</button>-->
+    <!--      </div>-->
 
-<!--    </div>-->
+    <!--    </div>-->
     <div *ngIf="checkLogin" class="card-body">
       <div class="table-responsive">
         <table class="table table-bordered m-0">
@@ -104,7 +104,8 @@
               </div>
             </td>
             <td class="text-right font-weight-semibold align-middle p-4">{{cart.price| number}}</td>
-            <td class="align-middle p-4"><input type="text" class="form-control text-center" [value]="cart.quantity"></td>
+            <td class="align-middle p-4"><input type="text" class="form-control text-center" [value]="cart.quantity">
+            </td>
             <td class="text-right font-weight-semibold align-middle p-4">{{cart.price * cart.quantity | number}}</td>
             <td class="text-center align-middle px-0">
               <a (click)="temp = cart" class="shop-tooltip close float-none text-danger"
@@ -134,10 +135,42 @@
 
       <div class="float-right">
         <button type="button" class="btn btn-lg btn-light mt-2 mr-3" routerLink="">Trở lại cửa hàng</button>
-        <button type="button" class="btn btn-lg btn-primary mt-2" routerLink="/security/payment">Thanh toán</button>
+        <button type="button" class="btn btn-lg btn-primary mt-2" data-bs-toggle="modal"
+                data-bs-target="#order">Thanh toán
+        </button>
       </div>
 
     </div>
   </div>
 </div>
+<div class="container px-3 my-5 clearfix text-center h1" style="min-height: 30vh" *ngIf="cartList?.length==0">Giỏ hàng trống!</div>
 <app-product-cart-delete [cartView]="temp" (eventCartDelete)="reload()"></app-product-cart-delete>
+<div class="modal fade" id="order" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog ">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Thông tin khách hàng</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="name" class="col-form-label">Tên người nhận:</label>
+            <input type="text" class="form-control" id="name">
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Sô điện thoại người nhận:</label>
+            <input type="text" class="form-control" id="recipient-name">
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Địa chỉ nhận hàng:</label>
+            <textarea class="form-control" id="message-text"></textarea>
+          </div>
+        </form>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Trở lại</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Xóa</button>
+      </div>
+    </div>
+  </div>
+</div>

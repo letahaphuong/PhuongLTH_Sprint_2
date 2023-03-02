@@ -10,13 +10,9 @@ const routes: Routes = [
   {path: 'security', loadChildren: () => import('./security/security.module').then(module => module.SecurityModule)},
   {path: 'product', loadChildren: () => import('./product/product.module').then(module => module.ProductModule)},
   {
-    path: 'category',
-    loadChildren: () => import('./category-list/category-list.module').then(module => module.CategoryListModule)
-  },
-  {
     path: 'customer',
     loadChildren: () => import('./customer/customer.module').then(module => module.CustomerModule),
-    canActivate: [AuthGuardGuard] && [ADMINUSERGuard]
+    canActivate: [AuthGuardGuard]
   },
   {path: '**', component: NotFoundComponent}
 ];

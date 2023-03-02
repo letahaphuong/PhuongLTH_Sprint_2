@@ -12,46 +12,47 @@
 </div>
 <div class=" m-0 row">
   <div class="col-2"></div>
-  <div class="col-10">  <form>
-    <div class="row container-fluid justify-content-around">
-      <div class="row mt-2 mb-2 align-items-center ">
-        <div class="col-md-4 col-sm-12 align-items-center" style="float: left">
-          <div class="row">
-            <label class="col-md-6 col-sm-12 text-center mt-1" for="codeEmployee"><span>Hãng Sản Xuất</span></label>
-            <input class="col-md-6 col-sm-12 form-control text-center" type="search" id="codeEmployee"
-                   name="nameCategory" #nameCategory placeholder="Hãng sản xuất">
+  <div class="col-10">
+    <form>
+      <div class="row container-fluid justify-content-around">
+        <div class="row mt-2 mb-2 align-items-center ">
+          <div class="col-md-4 col-sm-12 align-items-center" style="float: left">
+            <div class="row">
+              <label class="col-md-6 col-sm-12 text-center mt-1" for="codeEmployee"><span>Hãng Sản Xuất</span></label>
+              <input class="col-md-6 col-sm-12 form-control text-center" type="search" id="codeEmployee"
+                     name="nameCategory" #nameCategory placeholder="Hãng sản xuất">
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-12 align-items-center ">
+            <div class="row me-1">
+              <label class="col-md-6 text-center mt-1" for="nameEmployee"><span>Tên Sản Phẩm</span></label>
+              <input class="col-md-6 form-control " type="search" id="nameEmployee"
+                     name="nameProduct" #nameProduct placeholder="Tên sản phẩm">
+            </div>
+          </div>
+          <div class="col-md-4  col-sm-12 align-items-center">
+            <div class="row me-1">
+              <label class="col-md-6 text-center mt-1" for="nameEmployee"><span>Giá Sản Phẩm</span></label>
+              <input class="col-md-6 form-control " type="search" id="price"
+                     name="price" #price placeholder="Giá">
+            </div>
           </div>
         </div>
-        <div class="col-md-4 col-sm-12 align-items-center " >
-          <div class="row me-1">
-            <label class="col-md-6 text-center mt-1" for="nameEmployee"><span>Tên Sản Phẩm</span></label>
-            <input class="col-md-6 form-control " type="search" id="nameEmployee"
-                   name="nameProduct" #nameProduct placeholder="Tên sản phẩm">
-          </div>
-        </div>
-        <div class="col-md-4  col-sm-12 align-items-center">
-          <div class="row me-1">
-            <label class="col-md-6 text-center mt-1" for="nameEmployee"><span>Giá Sản Phẩm</span></label>
-            <input class="col-md-6 form-control " type="search" id="price"
-                   name="price" #price placeholder="Giá">
+        <div class="row">
+          <div class="col-md-2 col-sm-12 d-flex">
+            <button class="btn button-css btn-outline-secondary buttonReset" type="reset" (click)="reload()">
+              <i class="fa-solid fa-arrows-rotate"></i>
+              Làm mới
+            </button>
+            <button class="btn button-css btn-outline-danger buttonSearch ms-4" type="button"
+                    (click)="search(nameCategory.value, nameProduct.value,price.value, false)">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              Tìm kiếm
+            </button>
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-2 col-sm-12 d-flex">
-          <button class="btn button-css btn-outline-secondary buttonReset" type="reset" (click)="reload()">
-            <i class="fa-solid fa-arrows-rotate"></i>
-            Làm mới
-          </button>
-          <button class="btn button-css btn-outline-danger buttonSearch ms-4" type="button"
-                  (click)="search(nameCategory.value, nameProduct.value,price.value, false)">
-            <i class="fa-solid fa-magnifying-glass"></i>
-            Tìm kiếm
-          </button>
-        </div>
-      </div>
-    </div>
-  </form>
+    </form>
   </div>
 </div>
 <div><br></div>

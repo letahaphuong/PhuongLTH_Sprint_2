@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import {TokenService} from '../../security/service/token.service';
 // @ts-ignore
 import * as CryptoJS from 'crypto-js';
+import {MessageService} from "../../product/service/message.service";
 
 @Component({
   selector: 'app-header',
@@ -14,15 +15,19 @@ export class HeaderComponent implements OnInit {
   checkLogin = false;
   name: string | null = '';
   roles: string[] = [];
-  avatar: string | null | undefined ;
+  avatar: string | null | undefined;
   idAccount: any;
   anony: string | null | undefined;
   encPassword = '123123';
   decPassword = '123123';
+  searchValue = '';
+  checkSearch = false;
 
   constructor(private toast: ToastrService,
               private router: Router,
-              private tokenService: TokenService) {
+              private tokenService: TokenService,
+              private messageService: MessageService
+  ) {
     this.idAccount = this.tokenService.getId();
   }
 
@@ -57,5 +62,9 @@ export class HeaderComponent implements OnInit {
 
   feature(): void {
     this.toast.info('Hiện tại chức năng đang update.');
+  }
+
+  seach(search: string): void {
+    this.messageService.setMessageSearch(search);
   }
 }
