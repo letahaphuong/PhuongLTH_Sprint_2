@@ -39,6 +39,11 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
+    public Customer findByIdCus(Long id) {
+        return customerRepository.findById(id).orElse(null);
+    }
+
+    @Override
     public Optional<Customer> findByEmail(String email) {
         return customerRepository.findByEmail(email);
     }

@@ -9,12 +9,16 @@ export class MessageService {
 
   message = new Subject();
   private resultSearch: BehaviorSubject<any> = new BehaviorSubject<any>('');
+  private numberCart: BehaviorSubject<any> = new BehaviorSubject<any>('');
 
   constructor() {
   }
+  setMessageNumber(value: string): void {
+    this.numberCart.next(value);
+  }
 
-  sendMessage(productView: ProductView): void {
-    this.message.next(productView);
+  getMessageNumber(): Observable<any> {
+    return this.numberCart.asObservable();
   }
 
   setMessageSearch(value: string): void {
@@ -23,6 +27,9 @@ export class MessageService {
 
   getMessageSearch(): Observable<any> {
     return this.resultSearch.asObservable();
+  }
+  sendMessage(productView: ProductView): void {
+    this.message.next(productView);
   }
 
   getMessage(): Observable<any> {

@@ -33,9 +33,6 @@ public class Customer {
     @OneToOne
     private Account account;
 
-    @OneToMany(mappedBy = "customer")
-    private Set<Order> orders;
-
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "create_date")
@@ -49,7 +46,7 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(Long idCustomer, String name, String email, String address, String idCard, boolean gender, String dateOfBirth, boolean flagDelete, String phone, int anony, Account account, Set<Order> orders, Date createDate, Date modifyDate) {
+    public Customer(Long idCustomer, String name, String email, String address, String idCard, boolean gender, String dateOfBirth, boolean flagDelete, String phone, int anony, Account account, Date createDate, Date modifyDate) {
         this.idCustomer = idCustomer;
         this.name = name;
         this.email = email;
@@ -61,7 +58,6 @@ public class Customer {
         this.phone = phone;
         this.anony = anony;
         this.account = account;
-        this.orders = orders;
         this.createDate = createDate;
         this.modifyDate = modifyDate;
     }
@@ -152,14 +148,6 @@ public class Customer {
 
     public void setAccount(Account account) {
         this.account = account;
-    }
-
-    public Set<Order> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(Set<Order> orders) {
-        this.orders = orders;
     }
 
     public Date getCreateDate() {

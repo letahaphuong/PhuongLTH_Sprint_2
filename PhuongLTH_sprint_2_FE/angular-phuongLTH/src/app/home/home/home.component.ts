@@ -5,6 +5,12 @@ import {ToastrService} from 'ngx-toastr';
 import {Title} from '@angular/platform-browser';
 import {HomeService} from '../service/home.service';
 import {MessageService} from '../../product/service/message.service';
+import {CartView} from "../../dto/product/cart-view";
+import {GetCartTotalPrice} from "../../dto/product/get-cart-total-price";
+import {CartItemVT} from "../../entity/product/CartItemVT";
+import {CustomerService} from "../../customer/service/customer.service";
+import {ProductService} from "../../product/service/product.service";
+import {TokenService} from "../../security/service/token.service";
 
 @Component({
   selector: 'app-home',
@@ -20,12 +26,21 @@ export class HomeComponent implements OnInit {
   totalPages = 0;
   searchs = '';
   checkSearch = '';
+  cartList: CartView[] | undefined;
+  idAccount: string | null | undefined;
+  idCustomer: number | undefined;
+  temp: CartView | undefined;
+  getCartTotalPrice: GetCartTotalPrice | undefined;
+
 
   constructor(
     private homeService: HomeService,
     private toast: ToastrService,
     private title: Title,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private customerService: CustomerService,
+    private productService: ProductService,
+    private tokenService: TokenService
   ) {
     this.title.setTitle('Trang chủ');
   }
@@ -35,6 +50,19 @@ export class HomeComponent implements OnInit {
       this.searchs = data;
       this.search(this.searchs, true);
       console.log('loading .....', this.searchs);
+    });
+    this.idAccount = this.tokenService.getId();
+    this.customerService.findIdCustomerByIdAccount(this.idAccount).subscribe(data => {
+      this.idCustomer = data.idCustomer;
+      this.productService.getItemForCartByIdCustomer(this.idCustomer).subscribe(next => {
+        this.cartList = next;
+        this.messageService.setMessageNumber(String(this.cartList.length));
+      });
+      if (this.idCustomer != null) {
+        this.productService.getCartTotalPrice(this.idCustomer).subscribe(total => {
+          this.getCartTotalPrice = total;
+        });
+      }
     });
   }
 

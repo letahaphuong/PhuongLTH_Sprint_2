@@ -1,8 +1,10 @@
 package com.example.phuonglth_sprint_2.jwt.userprincal;
 
 import com.example.phuonglth_sprint_2.entity.account.Account;
-import com.example.phuonglth_sprint_2.entity.customer.Customer;
+import com.example.phuonglth_sprint_2.jwt.jwt.JwtProvider;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.jsonwebtoken.ExpiredJwtException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,6 +14,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class AccountPrinciple implements UserDetails {
+    @Autowired
+    JwtProvider jwtProvider;
     private Long id;
     private String name;
     private String email;
@@ -25,9 +29,6 @@ public class AccountPrinciple implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles;
-    }
-
-    public AccountPrinciple() {
     }
 
     public AccountPrinciple(Long id, String name, String email, String encryptPassword, String avatar, Collection<? extends GrantedAuthority> roles, String anony) {

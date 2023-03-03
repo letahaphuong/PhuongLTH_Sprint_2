@@ -19,7 +19,7 @@ public class SendMailController {
     @Autowired
     ICustomerService customerService;
 
-    @Scheduled(cron = "0 12 15 * * ?") // "s m h "
+    @Scheduled(cron = "0 12 15 * * MON-FRI") // "s m h "
     public void sendEmail() {
         List<String> customerList = customerService.getAllEmailCustomer();
         if (!(customerList.size() == 0)) {
@@ -30,7 +30,7 @@ public class SendMailController {
             message.setTo(array);
             message.setSubject("Chương trình khuyến mãi");
             message.setText("Chào bạn \n"
-                    + "CameraStore xin gửi bạn chương trình khuyến mãi giảm 20% tên 1 đơn hàng."
+                    + "CameraStore xin gửi bạn chương trình khuyến mãi giảm 20% trên 1 đơn hàng."
                     + "Áp dụng cho 20 đơn hàng đầu tiên trong ngày. Hình thừ online và trực tiếp tại cửa hàng" +
                     "\n Giờ mở cửa:  Sáng: 07:30–11:00, Chiều: 13:30–16:30");
 

@@ -117,25 +117,22 @@ public class ProductController {
 
     @PostMapping("cart/create")
     public ResponseEntity<?> createCart(@Valid @RequestBody CartDto cartDto, BindingResult bindingResult) {
-        Boolean checkProduct = orderDetailService.existsByProduct(cartDto.getProduct());
-        if (checkProduct) {
-            OrderDetail orderDetail1 = orderDetailService.findOrderDetailByProduct(cartDto.getProduct());
+        Boolean checkProduct = orderDetailService.existsByProductAndCustomer(cartDto.getProduct(), cartDto.getCustomer());
+        if (bindingResult.hasErrors()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        if (!checkProduct) {
+            OrderDetail orderDetail = new OrderDetail();
+            BeanUtils.copyProperties(cartDto, orderDetail);
+            orderDetailService.save(orderDetail);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+
+        } else {
+            OrderDetail orderDetail1 = orderDetailService.findOrderDetailByProductAndCustomer(cartDto.getProduct(), cartDto.getCustomer());
             orderDetail1.setQuantityOrder(orderDetail1.getQuantityOrder() + cartDto.getQuantityOrder());
             orderDetailService.save(orderDetail1);
             return new ResponseEntity<>(HttpStatus.CREATED);
-        }
-        try {
-            if (bindingResult.hasErrors()) {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-            } else {
-                OrderDetail orderDetail = new OrderDetail();
-                BeanUtils.copyProperties(cartDto, orderDetail);
-                orderDetailService.save(orderDetail);
-                return new ResponseEntity<>(HttpStatus.CREATED);
-            }
-        } catch (Exception e) {
-            logger.error("Không tạo được giỏ hàng", e);
-            return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
         }
     }
 
@@ -199,20 +196,23 @@ public class ProductController {
 
     @PostMapping("order/create")
     public ResponseEntity<?> saveOrder(@Valid @RequestBody OrderDto orderDto, BindingResult bindingResult) {
-        if (orderDto == null) {
-            return new ResponseEntity<>(new ResponseMessage("Đơn hàng rổng"), HttpStatus.NOT_FOUND);
-        }
+
         if (bindingResult.hasErrors()) {
             return new ResponseEntity<>(new ResponseMessage("Đơn hàng INVALID"), HttpStatus.BAD_REQUEST);
         }
-        Product product = productService.findIdProduct(orderDto.getOrderDetail().getIdProductOrder());
-        product.setQuantity(product.getQuantity() - orderDto.getOrderDetail().getQuantityOrder());
-        Order order = new Order();
-        BeanUtils.copyProperties(orderDto, order);
-        order.setCodeOrder(orderService.randomCodeOrder());
-        orderService.saveOrder(order);
-        productService.save(product);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+
+        if (orderDto == null) {
+            return new ResponseEntity<>(new ResponseMessage("Đơn hàng rổng"), HttpStatus.NOT_FOUND);
+        } else {
+            Product product = productService.findIdProduct(orderDto.getOrderDetail().getIdProductOrder());
+//        product.setQuantity(product.getQuantity() - orderDto.getOrderDetail().getQuantityOrder());
+            Order order = new Order();
+            BeanUtils.copyProperties(orderDto, order);
+            order.setCodeOrder(orderService.randomCodeOrder());
+            orderService.saveOrder(order);
+            productService.save(product);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        }
     }
 
 }

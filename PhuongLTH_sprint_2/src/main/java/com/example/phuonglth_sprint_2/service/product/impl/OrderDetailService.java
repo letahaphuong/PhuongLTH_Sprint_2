@@ -2,6 +2,7 @@ package com.example.phuonglth_sprint_2.service.product.impl;
 
 import com.example.phuonglth_sprint_2.dto.product.CartTotalPrice;
 import com.example.phuonglth_sprint_2.dto.product.CartView;
+import com.example.phuonglth_sprint_2.entity.customer.Customer;
 import com.example.phuonglth_sprint_2.entity.product.OrderDetail;
 import com.example.phuonglth_sprint_2.entity.product.Product;
 import com.example.phuonglth_sprint_2.repository.product.IOrderDetailRepository;
@@ -29,13 +30,13 @@ public class OrderDetailService implements IOrderDetailService {
     }
 
     @Override
-    public Boolean existsByProduct(Product product) {
-        return orderDetailRepository.existsByProduct(product);
+    public Boolean existsByProductAndCustomer(Product product, Customer customer) {
+        return orderDetailRepository.existsByProductAndCustomer(product, customer);
     }
 
     @Override
-    public OrderDetail findOrderDetailByProduct(Product product) {
-        return orderDetailRepository.findOrderDetailByProduct(product);
+    public OrderDetail findOrderDetailByProductAndCustomer(Product product, Customer customer) {
+        return orderDetailRepository.findOrderDetailByProductAndCustomer(product,customer);
     }
 
     @Override
@@ -52,6 +53,5 @@ public class OrderDetailService implements IOrderDetailService {
     public Optional<CartTotalPrice> getCartTotalPrice(Long idCustomer) {
         return orderDetailRepository.getCartTotalPrice(idCustomer);
     }
-
 
 }

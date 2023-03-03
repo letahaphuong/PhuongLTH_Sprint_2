@@ -38,6 +38,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.getFormLogin();
+
   }
 
   getFormLogin(): void {

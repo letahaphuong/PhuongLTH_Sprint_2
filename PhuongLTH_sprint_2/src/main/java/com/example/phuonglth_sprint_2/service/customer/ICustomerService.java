@@ -19,12 +19,14 @@ public interface ICustomerService {
     void removeFlag(Long id);
 
     Optional<Customer> findById(Long id);
+    Customer findByIdCus(Long id);
 
     Optional<Customer> findByEmail(String email);
 
     Optional<GetIdCustomerView> getIdCustomerByIdAccount(Long idAccount);
 
     Boolean checkMail(String email);
+
     List<String> getAllEmailCustomer();
 
 }

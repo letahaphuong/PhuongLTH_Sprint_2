@@ -29,9 +29,8 @@ export class ProductDetailComponent implements OnInit {
   idCustomer: string | null | undefined;
   customer: Customer | undefined;
   checkRoles: string | null | undefined;
-  encPassword = '123123';
   decPassword = '123123';
-  checkLogin = false;
+  checkLogin = false;;
 
   constructor(
     private productService: ProductService,
@@ -50,13 +49,12 @@ export class ProductDetailComponent implements OnInit {
     }
     if (this.tokenService.getId() != null) {
       this.idAccount = this.tokenService.getId();
-      console.log('abc', this.idAccount);
       this.customerService.findIdCustomerByIdAccount(this.idAccount).subscribe(data => {
         this.customer = data;
+        console.log(this.customer, 'loadding....');
       });
     } else if (this.tokenService.getIdSession() != null) {
       this.idAccount = this.tokenService.getIdSession();
-      console.log('abc', this.idAccount);
       this.customerService.findIdCustomerByIdAccount(this.idAccount).subscribe(data => {
         this.customer = data;
       });
@@ -72,7 +70,6 @@ export class ProductDetailComponent implements OnInit {
       customer: new FormControl()
     });
     this.activatedRoute.paramMap.subscribe(param => {
-      console.log(param.get('idProduct'));
       const idProduct = param.get('idProduct');
       if (idProduct !== null) {
         this.idProduct = Number(idProduct);
@@ -161,8 +158,6 @@ export class ProductDetailComponent implements OnInit {
     }, error => {
       this.toast.error('Thêm giỏ hàng không thành công');
     });
-    console.log(this.cartForm.value);
-    console.log('aaaaa', this.quantity);
   }
 
   cantAcctive(): void {
@@ -173,7 +168,5 @@ export class ProductDetailComponent implements OnInit {
     if (this.productDetail) {
       this.messageService.sendMessage(this.productDetail);
     }
-    console.log('loadinggg......');
-    console.log(this.cartForm.value);
   }
 }

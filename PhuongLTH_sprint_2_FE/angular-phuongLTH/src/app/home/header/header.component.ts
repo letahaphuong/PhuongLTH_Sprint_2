@@ -4,7 +4,7 @@ import {Router} from '@angular/router';
 import {TokenService} from '../../security/service/token.service';
 // @ts-ignore
 import * as CryptoJS from 'crypto-js';
-import {MessageService} from "../../product/service/message.service";
+import {MessageService} from '../../product/service/message.service';
 
 @Component({
   selector: 'app-header',
@@ -21,16 +21,17 @@ export class HeaderComponent implements OnInit {
   encPassword = '123123';
   decPassword = '123123';
   searchValue = '';
-  checkSearch = false;
-
+  number = '';
   constructor(private toast: ToastrService,
               private router: Router,
               private tokenService: TokenService,
               private messageService: MessageService
   ) {
     this.idAccount = this.tokenService.getId();
+    this.messageService.getMessageNumber().subscribe(data => {
+      this.number = data;
+    });
   }
-
   ngOnInit(): void {
     if (this.tokenService.getToken()) {
       this.checkLogin = true;

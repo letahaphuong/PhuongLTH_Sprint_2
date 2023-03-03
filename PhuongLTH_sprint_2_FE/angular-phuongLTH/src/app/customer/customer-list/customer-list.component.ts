@@ -77,7 +77,7 @@ export class CustomerListComponent implements OnInit {
       // @ts-ignore
       this.pageNumber = data.pageable.pageNumber;
       if ((name !== '' || email !== '') && !flag) {
-        this.toast.success('Tim kiếm thành công');
+        // this.toast.success('Tim kiếm thành công');
       }
     }, error => {
       this.name = '';

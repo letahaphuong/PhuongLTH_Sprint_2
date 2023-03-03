@@ -29,15 +29,13 @@ public class Order {
     private Date modifyDate;
 
     @ManyToOne
-    private Customer customer;
-    @ManyToOne
     private OrderDetail orderDetail;
 
 
     public Order() {
     }
 
-    public Order(Long idOrder, String codeOrder, boolean paymentStatus, String shippingAddress, String orderPhoneNumber, Date createDate, Date modifyDate, Customer customer) {
+    public Order(Long idOrder, String codeOrder, boolean paymentStatus, String shippingAddress, String orderPhoneNumber, Date createDate, Date modifyDate, OrderDetail orderDetail) {
         this.idOrder = idOrder;
         this.codeOrder = codeOrder;
         this.paymentStatus = paymentStatus;
@@ -45,7 +43,7 @@ public class Order {
         this.orderPhoneNumber = orderPhoneNumber;
         this.createDate = createDate;
         this.modifyDate = modifyDate;
-        this.customer = customer;
+        this.orderDetail = orderDetail;
     }
 
     public Long getIdOrder() {
@@ -104,11 +102,11 @@ public class Order {
         this.modifyDate = modifyDate;
     }
 
-    public Customer getCustomer() {
-        return customer;
+    public OrderDetail getOrderDetail() {
+        return orderDetail;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
+    public void setOrderDetail(OrderDetail orderDetail) {
+        this.orderDetail = orderDetail;
     }
 }

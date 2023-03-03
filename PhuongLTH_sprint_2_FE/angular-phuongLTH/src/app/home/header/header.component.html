@@ -29,7 +29,8 @@
             <div class="widget-header  mr-3">
               <a [routerLink]="['/product/cart',idAccount]" class="icon icon-sm rounded-circle border"><i
                 class="fa fa-shopping-cart"></i></a>
-              <span class="badge badge-pill badge-danger notify">0</span>
+              <span *ngIf="+number>0 " class="badge badge-pill badge-danger notify">{{number}}</span>
+              <span *ngIf="+number <1" class="badge badge-pill badge-danger notify">0</span>
             </div>
             <div class="widget-header icontext ">
               <div class="dropdown">

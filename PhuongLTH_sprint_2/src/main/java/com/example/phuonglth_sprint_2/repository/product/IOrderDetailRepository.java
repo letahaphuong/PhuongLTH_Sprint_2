@@ -2,6 +2,7 @@ package com.example.phuonglth_sprint_2.repository.product;
 
 import com.example.phuonglth_sprint_2.dto.product.CartTotalPrice;
 import com.example.phuonglth_sprint_2.dto.product.CartView;
+import com.example.phuonglth_sprint_2.entity.customer.Customer;
 import com.example.phuonglth_sprint_2.entity.product.OrderDetail;
 import com.example.phuonglth_sprint_2.entity.product.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -47,9 +48,11 @@ public interface IOrderDetailRepository extends JpaRepository<OrderDetail, Long>
                     "where c.id_customer = :id", nativeQuery = true)
     List<CartView> getCartByIdCustomer(@Param("id") Long idCustomer);
 
-    Boolean existsByProduct(Product product);
+    Boolean existsByProductAndCustomer(Product product, Customer customer);
 
-    OrderDetail findOrderDetailByProduct(Product product);
+    Boolean existsByCustomer(Customer customer);
+
+    OrderDetail findOrderDetailByProductAndCustomer(Product product, Customer customer);
 
     @Query(value = "select sum((od.quantity_order * od.price))              as cartTotalPrice\n" +
             "from product p\n" +

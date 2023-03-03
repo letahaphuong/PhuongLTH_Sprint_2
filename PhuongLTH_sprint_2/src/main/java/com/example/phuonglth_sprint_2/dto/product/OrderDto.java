@@ -13,19 +13,17 @@ public class OrderDto {
     private String shippingAddress;// địa chỉ giao hàng
     private String orderPhoneNumber;// số điện thoại giao hàng
 
-    private Customer customer;
     private OrderDetail orderDetail;
 
     public OrderDto() {
     }
 
-    public OrderDto(Long idOrder, String codeOrder, boolean paymentStatus, String shippingAddress, String orderPhoneNumber, Customer customer, OrderDetail orderDetail) {
+    public OrderDto(Long idOrder, String codeOrder, boolean paymentStatus, String shippingAddress, String orderPhoneNumber, OrderDetail orderDetail) {
         this.idOrder = idOrder;
         this.codeOrder = codeOrder;
         this.paymentStatus = paymentStatus;
         this.shippingAddress = shippingAddress;
         this.orderPhoneNumber = orderPhoneNumber;
-        this.customer = customer;
         this.orderDetail = orderDetail;
     }
 
@@ -67,14 +65,6 @@ public class OrderDto {
 
     public void setOrderPhoneNumber(String orderPhoneNumber) {
         this.orderPhoneNumber = orderPhoneNumber;
-    }
-
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
     }
 
     public OrderDetail getOrderDetail() {

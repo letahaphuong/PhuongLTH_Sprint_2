@@ -45,15 +45,12 @@ export class ProductCartComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getItem();
     this.idAccount = this.tokenService.getId();
     this.customerService.findIdCustomerByIdAccount(this.idAccount).subscribe(data => {
-      console.log('id nè', data);
       this.idCustomer = data.idCustomer;
-      console.log('this.idCustomer', this.idCustomer);
       this.productService.getItemForCartByIdCustomer(this.idCustomer).subscribe(next => {
         this.cartList = next;
-        console.log(this.cartList);
+        this.messageService.setMessageNumber(String(this.cartList.length));
       });
       if (this.idCustomer != null) {
         this.productService.getCartTotalPrice(this.idCustomer).subscribe(total => {
@@ -61,7 +58,6 @@ export class ProductCartComponent implements OnInit {
         });
       }
     });
-    console.log(this.idCustomer, 'aaaaaaaaaaa');
   }
 
   reload(): void {
