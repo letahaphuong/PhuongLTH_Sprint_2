@@ -3,6 +3,7 @@ package com.example.phuonglth_sprint_2.service.product;
 import com.example.phuonglth_sprint_2.dto.product.CartTotalPrice;
 import com.example.phuonglth_sprint_2.dto.product.CartView;
 import com.example.phuonglth_sprint_2.entity.customer.Customer;
+import com.example.phuonglth_sprint_2.entity.product.Order;
 import com.example.phuonglth_sprint_2.entity.product.OrderDetail;
 import com.example.phuonglth_sprint_2.entity.product.Product;
 import org.springframework.data.repository.query.Param;
@@ -15,15 +16,21 @@ public interface IOrderDetailService {
 
     List<CartView> getCartByIdCustomer(Long idCustomer);
 
-    Boolean existsByProductAndCustomer(Product product, Customer customer);
+    Boolean existsByProductAndCustomerAndFlagDelete(Product product, Customer customer,boolean flagDelete);
 
-    OrderDetail findOrderDetailByProductAndCustomer(Product product, Customer customer);
+    OrderDetail findOrderDetailByProductAndCustomerAndFlagDelete(Product product, Customer customer,boolean flagDelete);
 
     void delete(Long id);
 
     OrderDetail findByIdProductOrder(Long id);
 
     Optional<CartTotalPrice> getCartTotalPrice(Long idCustomer);
+
+    CartTotalPrice getCartTotalPriceOb(Long idCustomer);
+
+    void deleteFlag(Long id);
+
+    List<OrderDetail> getAllForOrder(Long idCustomer);
 
 
 }

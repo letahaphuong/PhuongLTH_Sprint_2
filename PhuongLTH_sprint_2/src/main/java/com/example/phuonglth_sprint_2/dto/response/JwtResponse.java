@@ -1,5 +1,6 @@
 package com.example.phuonglth_sprint_2.dto.response;
 
+import com.example.phuonglth_sprint_2.dto.customer.GetIdCustomerView;
 import com.example.phuonglth_sprint_2.entity.customer.Customer;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -14,7 +15,7 @@ public class JwtResponse {
     private String avatar;
     private String email;
     private String anony;
-    private Optional<Customer> customer;
+    private Optional<GetIdCustomerView> idCustomer;
     private Collection<? extends GrantedAuthority> roles;
 
     public JwtResponse() {
@@ -30,14 +31,14 @@ public class JwtResponse {
         this.roles = roles;
     }
 
-    public JwtResponse(String token, String name, Collection<? extends GrantedAuthority> authorities, Long id, String email, String avatar, Optional<Customer> customer, String anony) {
+    public JwtResponse(String token, String name, Collection<? extends GrantedAuthority> authorities, Long id, String email, String avatar, Optional<GetIdCustomerView> idCustomer, String anony) {
         this.token = token;
         this.name = name;
         this.roles = authorities;
         this.id = id;
         this.email = email;
         this.avatar = avatar;
-        this.customer = customer;
+        this.idCustomer = idCustomer;
         this.anony = anony;
     }
 
@@ -49,12 +50,12 @@ public class JwtResponse {
         this.anony = anony;
     }
 
-    public Optional<Customer> getCustomer() {
-        return customer;
+    public Optional<GetIdCustomerView> getIdCustomer() {
+        return idCustomer;
     }
 
-    public void setCustomer(Optional<Customer> customer) {
-        this.customer = customer;
+    public void setIdCustomer(Optional<GetIdCustomerView> idCustomer) {
+        this.idCustomer = idCustomer;
     }
 
     public Long getId() {

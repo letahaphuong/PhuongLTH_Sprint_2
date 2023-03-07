@@ -12,6 +12,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -175,4 +176,11 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
                     "   or p.price LIKE CONCAT('%', :price, '%'))\n" +
                     "order by p.create_date desc ", nativeQuery = true)
     Page<ProductView> getAllProductHome(@Param("nameCategory") String nameCategory, @Param("nameProduct") String nameProduct, @Param("price") String price, Pageable pageable);
+
+    @Query(value = "select p.*\n" +
+            "from customer c\n" +
+            "         join order_detail od on c.id_customer = od.customer_id_customer\n" +
+            "         join product p on p.id_product = od.product_id_product\n" +
+            "where p.flag_delete = false and id_customer = :id", nativeQuery = true)
+    List<Product> getAllForOrder(@Param("id") Long idCustomer);
 }

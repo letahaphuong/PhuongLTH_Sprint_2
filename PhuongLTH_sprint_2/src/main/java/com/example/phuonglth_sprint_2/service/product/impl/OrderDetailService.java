@@ -3,6 +3,7 @@ package com.example.phuonglth_sprint_2.service.product.impl;
 import com.example.phuonglth_sprint_2.dto.product.CartTotalPrice;
 import com.example.phuonglth_sprint_2.dto.product.CartView;
 import com.example.phuonglth_sprint_2.entity.customer.Customer;
+import com.example.phuonglth_sprint_2.entity.product.Order;
 import com.example.phuonglth_sprint_2.entity.product.OrderDetail;
 import com.example.phuonglth_sprint_2.entity.product.Product;
 import com.example.phuonglth_sprint_2.repository.product.IOrderDetailRepository;
@@ -30,13 +31,13 @@ public class OrderDetailService implements IOrderDetailService {
     }
 
     @Override
-    public Boolean existsByProductAndCustomer(Product product, Customer customer) {
-        return orderDetailRepository.existsByProductAndCustomer(product, customer);
+    public Boolean existsByProductAndCustomerAndFlagDelete(Product product, Customer customer, boolean flagDelete) {
+        return orderDetailRepository.existsByProductAndCustomerAndFlagDelete(product, customer,flagDelete);
     }
 
     @Override
-    public OrderDetail findOrderDetailByProductAndCustomer(Product product, Customer customer) {
-        return orderDetailRepository.findOrderDetailByProductAndCustomer(product,customer);
+    public OrderDetail findOrderDetailByProductAndCustomerAndFlagDelete(Product product, Customer customer,boolean flagDelete) {
+        return orderDetailRepository.findOrderDetailByProductAndCustomerAndFlagDelete(product,customer,flagDelete);
     }
 
     @Override
@@ -54,4 +55,18 @@ public class OrderDetailService implements IOrderDetailService {
         return orderDetailRepository.getCartTotalPrice(idCustomer);
     }
 
+    @Override
+    public CartTotalPrice getCartTotalPriceOb(Long idCustomer) {
+        return orderDetailRepository.getCartTotalPriceOb(idCustomer);
+    }
+
+    @Override
+    public void deleteFlag(Long id) {
+        orderDetailRepository.deleteFlag(id);
+    }
+
+    @Override
+    public List<OrderDetail> getAllForOrder(Long idCustomer) {
+        return orderDetailRepository.getAllForOrder(idCustomer);
+    }
 }

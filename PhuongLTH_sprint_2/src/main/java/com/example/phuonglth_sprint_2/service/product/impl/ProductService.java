@@ -75,4 +75,9 @@ public class ProductService implements IProductService {
         return productRepository.findById(id).orElse(null);
     }
 
+    @Override
+    public List<Product> getAllForOrder(Long idCustomer) {
+        return productRepository.getAllForOrder(idCustomer);
+    }
+
 }
