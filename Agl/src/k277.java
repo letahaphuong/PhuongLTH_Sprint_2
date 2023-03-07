@@ -1,10 +1,6 @@
-package oca15.p2;
-
-import oca15.p1.Acc;
-
 import java.util.Scanner;
 
-public class Test extends Acc {
+public class k277 {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("nhập số");

@@ -10,12 +10,13 @@ public class cho2mangsonguyentimsotrungnhau {
         for (int item1 : arr1) {
             if (!map.containsKey(item1)) {
                 map.put(item1, false);
+                System.out.println(item1);
             }
         }
 
         for (int item2 : arr2) {
             if (map.containsKey(item2)) {
-                System.out.print(item2 + ";");
+                System.out.print(item2 + ",");
                 map.remove(item2);
             }
         }

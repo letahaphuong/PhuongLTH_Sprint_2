@@ -4,6 +4,7 @@ b	java:S101"MRename this class name to match the regular expression '^[A-Z][a
 java:S1220""Move this file to a named package.
 c
 java:S3824"HReplace this "Map.containsKey()" with a call to "Map.computeIfAbsent()".(¹ìì˜ûÿÿÿÿ
-S	java:S106"9Replace this use of System.out or System.err by a logger.(ÏÌÚüÿÿÿÿ
+S	java:S106"9Replace this use of System.out or System.err by a logger.(í¦¯úÿÿÿÿ
+S	java:S106"9Replace this use of System.out or System.err by a logger.(’›Èæøÿÿÿÿ
 I
 java:S1128".Remove this unused import 'java.util.Scanner'.(ÒÜÅ¸úÿÿÿÿ
