@@ -34,13 +34,13 @@ public class JwtTokenFilter extends OncePerRequestFilter { // tìm kím token tr
                 String username = jwtProvider.getUserNameFromToken(token);
                 UserDetails userDetails = accountDetailService.loadUserByUsername(username);
                 UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-                        userDetails, null, userDetails.getAuthorities()
+                        username, null, userDetails.getAuthorities()
                 );
                 authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             }
         } catch (Exception e) {
-            logger.error("Can't set user authentication -> Message: {Không thể set account vào bảo mật}", e);
+            logger.error("Can't set user authentication -> Message: {Không thể set account }", e);
         }
         filterChain.doFilter(request, response);
     }

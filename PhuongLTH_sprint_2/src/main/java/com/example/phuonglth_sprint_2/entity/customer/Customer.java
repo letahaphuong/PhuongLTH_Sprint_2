@@ -32,6 +32,8 @@ public class Customer {
 
     @OneToOne
     private Account account;
+    @OneToMany(mappedBy = "customer")
+    private Set<Order> orders;
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)

@@ -33,7 +33,6 @@ export class CustomerListComponent implements OnInit {
 
   getAll(request: { page: number, size: number }): void {
     this.customerService.showAllList(request).subscribe(data => {
-      console.log(data);
       // @ts-ignore
       this.customerViewList = data;
       // @ts-ignore
@@ -63,12 +62,10 @@ export class CustomerListComponent implements OnInit {
     }
     this.name = name;
     this.email = email;
-    console.log(name);
     this.customerService.search(
       name.trim(),
       email.trim(),
       this.request).subscribe(data => {
-      console.log(data);
       this.customerService = data;
       // @ts-ignore
       this.customerViewInfo = data.content;

@@ -82,11 +82,11 @@ export class ProductEditComponent implements OnInit {
             this.productEditForm.patchValue({url: urlLink});
             this.productService.editProduct(this.productEditForm.value).subscribe(data => {
               this.checkUpload = false;
-              this.toast.success('Sửa thông tin thành công');
+              this.toast.success('Sửa thông tin thành công.');
             }, error => {
               if (error.status === 400) {
                 this.checkUpload = false;
-                this.toast.error('Sửa không thành công');
+                this.toast.error('Sửa không thành công.');
               }
             });
           });
@@ -94,17 +94,16 @@ export class ProductEditComponent implements OnInit {
       ).subscribe();
     } else {
       this.productService.editProduct(this.productEditForm.value).subscribe(data => {
-        this.toast.success('Sửa thông tin thành công');
+        this.toast.success('Sửa thông tin thành công.');
         this.router.navigateByUrl('/product');
       }, error => {
-        this.toast.error('Sửa không thành công');
+        this.toast.error('Sửa không thành công.');
       });
     }
   }
 
   showPreview($event: Event): void {
     this.checkInputUpload = true;
-    console.log(' input nè', true);
     // @ts-ignore
     this.selectedImage = $event.target.files[0];
   }

@@ -1,3 +1,8 @@
 .image-change {
   border-radius: 50%
 }
+
+.hover:hover {
+  cursor: pointer;
+  color: #1a56e9;
+}

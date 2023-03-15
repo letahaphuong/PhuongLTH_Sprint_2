@@ -5,12 +5,15 @@ import {ToastrService} from 'ngx-toastr';
 import {Title} from '@angular/platform-browser';
 import {HomeService} from '../service/home.service';
 import {MessageService} from '../../product/service/message.service';
-import {CartView} from "../../dto/product/cart-view";
-import {GetCartTotalPrice} from "../../dto/product/get-cart-total-price";
-import {CartItemVT} from "../../entity/product/CartItemVT";
-import {CustomerService} from "../../customer/service/customer.service";
-import {ProductService} from "../../product/service/product.service";
-import {TokenService} from "../../security/service/token.service";
+import {CartView} from '../../dto/product/cart-view';
+import {GetCartTotalPrice} from '../../dto/product/get-cart-total-price';
+import {CustomerService} from '../../customer/service/customer.service';
+import {ProductService} from '../../product/service/product.service';
+import {TokenService} from '../../security/service/token.service';
+import {MessagingService} from '../../service/messaging.service';
+import {FormControl, FormGroup} from '@angular/forms';
+import {FireBaseService} from '../../service/fire-base.service';
+import {AngularFireMessaging} from "@angular/fire/messaging";
 
 @Component({
   selector: 'app-home',
@@ -31,7 +34,7 @@ export class HomeComponent implements OnInit {
   idCustomer: number | undefined;
   temp: CartView | undefined;
   getCartTotalPrice: GetCartTotalPrice | undefined;
-
+  private token: string | null ='';
 
   constructor(
     private homeService: HomeService,
@@ -49,7 +52,6 @@ export class HomeComponent implements OnInit {
     this.messageService.getMessageSearch().subscribe(data => {
       this.searchs = data;
       this.search(this.searchs, true);
-      console.log('loading .....', this.searchs);
     });
     this.idAccount = this.tokenService.getId();
     this.customerService.findIdCustomerByIdAccount(this.idAccount).subscribe(data => {
@@ -68,12 +70,10 @@ export class HomeComponent implements OnInit {
 
   getAll(request: { page: number, size: number }): void {
     this.homeService.showAllList(request).subscribe(data => {
-      console.log(data);
       // @ts-ignore
       this.productViewList = data;
       // @ts-ignore
       this.productViewInfo = data.content;
-      console.log(this.productViewInfo);
       // @ts-ignore
       this.pageNumber = data.pageable.pageNumber;
       // @ts-ignore
@@ -93,17 +93,14 @@ export class HomeComponent implements OnInit {
   }
 
   search(searchs: string, flag: boolean): void {
-    console.log(1);
     if (!flag) {
       this.request.page = 0;
     }
     this.searchs = searchs;
-    console.log(name);
     this.homeService.searchs(
       searchs.trim(),
       this.request
     ).subscribe(data => {
-      console.log(data);
       this.productViewList = data;
       // @ts-ignore
       this.productViewInfo = data.content;
@@ -113,7 +110,7 @@ export class HomeComponent implements OnInit {
       // @ts-ignore
       this.pageNumber = data.pageable.pageNumber;
       if ((searchs !== '') && !flag) {
-        this.toast.success('Tim kiếm thành công.');
+        // this.toast.success('Tim kiếm thành công.');
       }
     }, error => {
       this.searchs = '';
@@ -121,8 +118,11 @@ export class HomeComponent implements OnInit {
       if (error.status === 400) {
         this.toast.error('Không có kết quả.', 'Thông báo');
       }
-
     }, () => {
     });
+  }
+
+  scrollToTop(): void {
+    window.scrollTo(0, 0);
   }
 }

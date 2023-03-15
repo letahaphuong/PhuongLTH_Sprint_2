@@ -5,8 +5,9 @@ import {TokenService} from '../../security/service/token.service';
 import {CustomerService} from '../../customer/service/customer.service';
 import {GetCartTotalPrice} from '../../dto/product/get-cart-total-price';
 import {MessageService} from '../service/message.service';
-import {ProductView} from '../../dto/product/product-view';
 import {CartItemVT} from '../../entity/product/CartItemVT';
+import {FormGroup} from '@angular/forms';
+import {ToastrService} from 'ngx-toastr';
 
 
 @Component({
@@ -24,24 +25,24 @@ export class ProductCartComponent implements OnInit {
   checkLogin = false;
 
   cartItemVT: CartItemVT[] = [];
+  form: FormGroup = new FormGroup({});
+  error: any = {
+    message: 'quantity not enough'
+  };
+  success: any = {
+    message: 'ok'
+  };
 
   constructor(
     private productService: ProductService,
     private tokenService: TokenService,
     private customerService: CustomerService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private toast: ToastrService
   ) {
     if (this.tokenService.getToken()) {
       this.checkLogin = true;
     }
-  }
-
-  getItem(): void {
-    this.messageService.getMessage().subscribe((productView: ProductView) => {
-      const cartItem = new CartItemVT(productView);
-      // @ts-ignore
-      this.cartItemVT.push(cartItem);
-    });
   }
 
   ngOnInit(): void {
@@ -62,5 +63,35 @@ export class ProductCartComponent implements OnInit {
 
   reload(): void {
     this.ngOnInit();
+  }
+
+  quantityUpdate(quantity: string, idCart: number): void {
+    this.productService.updateQuantity(quantity, idCart).subscribe(data => {
+      this.ngOnInit();
+      if (JSON.stringify(data) === JSON.stringify(this.error)) {
+        console.log(data.message);
+        this.toast.error('Số lượng trong kho không đủ.');
+      }
+    }, error => {
+    });
+  }
+
+  getItem(): void {
+    this.messageService.getMessage().subscribe(data => {
+      let exists = false;
+      this.cartItemVT.forEach(item => {
+        if (item.productId === data.id) {
+          exists = true;
+          item.qty++;
+        }
+      });
+      if (!exists) {
+        const cartItem = new CartItemVT(data);
+        this.cartItemVT.push(cartItem);
+      }
+      // this.total = this.getTotal();
+      // @ts-ignore
+      sessionStorage.setItem('cart', this.cartItemVT);
+    });
   }
 }

@@ -1,0 +1,47 @@
+<link href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,400i,700,900&display=swap" rel="stylesheet">
+<div class="row text-center">
+  <div class="card">
+    <div style="border-radius:200px; height:200px; width:200px; background: #F8FAF5; margin:0 auto;">
+      <i class="checkmark">✓</i>
+    </div>
+    <h1>Đặt hàng thành công</h1>
+    <p *ngIf="orderInfo.length >0"><b>Thông tin đơn hàng</b></p>
+    <div class="row">
+      <div class="col-lg-3"></div>
+      <div class="col-lg-6 align-items-center">
+        <table *ngIf="orderInfo.length >0 ; else elseBlock" class="table">
+          <thead>
+          <tr>
+            <th scope="col">Stt</th>
+            <th scope="col">Tên sản phẩm</th>
+            <th scope="col">Số lượng đặt hàng</th>
+            <th scope="col">Đơn giá</th>
+            <th scope="col">Hình ảnh</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let i of orderInfo;index as b">
+            <th scope="row">{{b + 1}}</th>
+            <td>{{i.nameProduct}}</td>
+            <td>{{i.quantityOrder}}</td>
+            <td>{{i.price}}</td>
+            <td ><img style="height: 90px; width: 90px " src="{{i.url}}" alt=""></td>
+          </tr>
+          </tbody>
+        </table>
+        <ng-template #elseBlock><span class="text-danger">Chưa có thông tin đơn hàng</span></ng-template>
+        <div *ngIf="orderInfo.length>0" class="row">
+          <h2> <span style="color: red">Tổng tiền :</span> {{getCartTotalPrice?.cartTotalPrice | number}} đ</h2>
+
+        </div>
+      </div>
+      <div class="col-lg-3">
+      </div>
+    </div>
+    <p>Chúng tôi đã nhận được yêu cầu mua hàng<br/> Nhân viên sẽ liên hệ bạn ngay!</p>
+    <br>
+    <p class="text-primary"> Vui lòng kiểm tra mail để kiểm tra lại thông tin!</p>    <br>
+    <a class="text-primary text-decoration-underline" routerLink="">Trở lại trang chủ</a>
+  </div>
+</div>
+

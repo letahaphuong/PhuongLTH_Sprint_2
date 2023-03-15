@@ -19,12 +19,10 @@ export class ProductService {
   }
 
   getProductById(idProduct: number): Observable<any> {
-    console.log('ảnh nè' + idProduct);
     return this.http.get(this.API_PRODUCT + '/' + idProduct);
   }
 
   createProduct(productForm: ProductCreate): Observable<ProductCreate> {
-    console.log('aaa', productForm.url);
     return this.http.post<ProductCreate>(this.API_PRODUCT + '/create/product', productForm);
   }
 
@@ -37,7 +35,6 @@ export class ProductService {
   }
 
   getItemForCartByIdCustomer(id: any): Observable<CartView[]> {
-    console.log('id service nè', id);
     return this.http.get<CartView[]>(this.API_PRODUCT + '/cart/object/' + id);
   }
 
@@ -59,5 +56,9 @@ export class ProductService {
 
   createOrder(orderForm: Orders): Observable<any> {
     return this.http.post<any>(this.API_PRODUCT + '/order/create', orderForm);
+  }
+
+  updateQuantity(quantity: string, idOrderDetail: number): Observable<any> {
+    return this.http.get<any>(this.API_PRODUCT + '/update-quantity?quantity=' + quantity + '&idOrderDetail=' + idOrderDetail);
   }
 }

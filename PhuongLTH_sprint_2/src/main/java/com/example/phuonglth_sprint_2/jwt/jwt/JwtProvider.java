@@ -21,8 +21,8 @@ public class JwtProvider {
 
         return Jwts.builder()
                 .setSubject(accountPrinciple.getUsername())// thêm vào
-                .setIssuedAt(new Date())
-                .setExpiration(new Date(new Date().getTime() + jwtExpiration * 1000L))
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(new Date(System.currentTimeMillis()).getTime() + jwtExpiration * 1000L))
                 .signWith(SignatureAlgorithm.HS384, jwtSecret)
                 .compact();
     }
@@ -43,7 +43,7 @@ public class JwtProvider {
         } catch (IllegalArgumentException e) {
             logger.error("JWT claims string is empty -> Message: {Token có khoảng trắng}", e);
         } catch (ExpiredJwtException e) {
-            logger.error("Expired JWT token -> Message: {Token hết hạn}", e);
+            logger.error("Expired JWT token -> Message: {Token hết hạn}", e , new ResponseMessage("timeout"));
         }
         return false;
     }

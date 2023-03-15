@@ -65,9 +65,12 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
 
     Boolean existsByEmail(String email);
 
-    @Query(value = "select email from customer",nativeQuery = true)
+    Boolean existsByPhone(String phone);
+
+    @Query(value = "select email from customer", nativeQuery = true)
     List<String> getAllEmailCustomer();
 
     @Query(value = "select id_customer as idCustomer from customer where email = :email", nativeQuery = true)
     Optional<GetIdCustomerView> getIdCustomer(String email);
+
 }

@@ -7,12 +7,13 @@ import {ProductView} from '../../dto/product/product-view';
 })
 export class MessageService {
 
-  message = new Subject();
   private resultSearch: BehaviorSubject<any> = new BehaviorSubject<any>('');
   private numberCart: BehaviorSubject<any> = new BehaviorSubject<any>('');
+  private message: BehaviorSubject<any> = new BehaviorSubject<any>('');
 
   constructor() {
   }
+
   setMessageNumber(value: string): void {
     this.numberCart.next(value);
   }

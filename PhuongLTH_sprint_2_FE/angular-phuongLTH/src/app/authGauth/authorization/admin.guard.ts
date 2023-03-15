@@ -22,9 +22,12 @@ export class AdminGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     if (this.tokenService.getToken()) {
       // @ts-ignore
-      if (JSON.stringify(CryptoJS.AES.decrypt(this.tokenService.getAnony().toString(), this.decPassword?.trim()).toString(CryptoJS.enc.Utf8)) === JSON.stringify('2')) {
+      if (this.tokenService.getAnony() === JSON.stringify(2)) {
+        console.log(this.tokenService.getAnony());
         return true;
       } else {
+
+        console.log(this.tokenService.getAnony());
         this.toast.warning('Vui lòng đăng nhập để sử dụng chức năng này.');
         this.router.navigateByUrl('');
         return false;

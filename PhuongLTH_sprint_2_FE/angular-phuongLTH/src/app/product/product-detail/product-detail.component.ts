@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {RatingUnit} from '../../entity/rating/rating-unit';
 import {ProductService} from '../service/product.service';
 import {ProductView} from '../../dto/product/product-view';
@@ -13,6 +13,8 @@ import {Customer} from '../../entity/customer/customer';
 // @ts-ignore
 import * as CryptoJS from 'crypto-js';
 import {MessageService} from '../service/message.service';
+import {CartView} from '../../dto/product/cart-view';
+import {GetCartTotalPrice} from '../../dto/product/get-cart-total-price';
 
 @Component({
   selector: 'app-product-detail',
@@ -20,74 +22,6 @@ import {MessageService} from '../service/message.service';
   styleUrls: ['./product-detail.component.css']
 })
 export class ProductDetailComponent implements OnInit {
-  cartForm: FormGroup = new FormGroup({});
-  productDetail: ProductView | undefined;
-  idProduct = 0;
-  getPrice: number | undefined;
-  product: ProductCreate | undefined;
-  idAccount: string | null | undefined;
-  idCustomer: string | null | undefined;
-  customer: Customer | undefined;
-  checkRoles: string | null | undefined;
-  decPassword = '123123';
-  checkLogin = false;;
-
-  constructor(
-    private productService: ProductService,
-    private title: Title,
-    private activatedRoute: ActivatedRoute,
-    private router: Router,
-    private toast: ToastrService,
-    private customerService: CustomerService,
-    private tokenService: TokenService,
-    private messageService: MessageService
-  ) {
-    if (this.tokenService.getToken()) {
-      this.checkLogin = true;
-      // @ts-ignore
-      this.checkRoles = CryptoJS.AES.decrypt(this.tokenService.getAnony().toString(), this.decPassword?.trim()).toString(CryptoJS.enc.Utf8);
-    }
-    if (this.tokenService.getId() != null) {
-      this.idAccount = this.tokenService.getId();
-      this.customerService.findIdCustomerByIdAccount(this.idAccount).subscribe(data => {
-        this.customer = data;
-        console.log(this.customer, 'loadding....');
-      });
-    } else if (this.tokenService.getIdSession() != null) {
-      this.idAccount = this.tokenService.getIdSession();
-      this.customerService.findIdCustomerByIdAccount(this.idAccount).subscribe(data => {
-        this.customer = data;
-      });
-    }
-    // this.customerService.findCustomerById(this.idCustomer).subscribe(data => {
-    //   this.customer = data;
-    // });
-    this.cartForm = new FormGroup({
-      idProductOrder: new FormControl(),
-      quantityOrder: new FormControl(),
-      price: new FormControl(),
-      product: new FormControl(),
-      customer: new FormControl()
-    });
-    this.activatedRoute.paramMap.subscribe(param => {
-      const idProduct = param.get('idProduct');
-      if (idProduct !== null) {
-        this.idProduct = Number(idProduct);
-        this.productService.getProductById(this.idProduct).subscribe(data => {
-          this.cartForm.patchValue(data);
-          this.getPrice = data.price;
-          this.product = data;
-          this.productDetail = data;
-          console.log(data);
-        }, error => {
-
-        }, () => {
-
-        });
-      }
-    });
-  }
-
   @Input()
   max = 10;
   @Input()
@@ -102,6 +36,84 @@ export class ProductDetailComponent implements OnInit {
   quantity = 1;
   i = 1;
 
+  checkProduct = 0;
+  error: any = {
+    message: 'quantity not enough'
+  };
+  success: any = {
+    message: 'ok'
+  };
+  cartForm: FormGroup = new FormGroup({});
+  productDetail: ProductView | undefined;
+  idProduct = 0;
+  getPrice: number | undefined;
+  product: ProductCreate | undefined;
+  idAccount: string | null | undefined;
+  idCustomer: string | null | undefined;
+  customer: Customer | undefined;
+  checkRoles: string | null | undefined;
+  decPassword = '123123';
+  checkLogin = false;
+  cartList: CartView[] | undefined;
+  getCartTotalPrice: GetCartTotalPrice | undefined;
+  productDetail1: ProductView | undefined;
+
+  constructor(
+    private productService: ProductService,
+    private title: Title,
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
+    private toast: ToastrService,
+    private customerService: CustomerService,
+    private tokenService: TokenService,
+    private messageService: MessageService
+  ) {
+    if (this.tokenService.getToken()) {
+      this.checkLogin = true;
+      // @ts-ignore
+      this.checkRoles = this.tokenService.getAnony();
+    }
+    if (this.tokenService.getId() != null) {
+      this.idAccount = this.tokenService.getId();
+      this.customerService.findIdCustomerByIdAccount(this.idAccount).subscribe(data => {
+        this.customer = data;
+      });
+    } else if (this.tokenService.getIdSession() != null) {
+      this.idAccount = this.tokenService.getIdSession();
+      this.customerService.findIdCustomerByIdAccount(this.idAccount).subscribe(data => {
+        this.customer = data;
+      });
+    }
+    this.cartForm = new FormGroup({
+      idProductOrder: new FormControl(),
+      quantityOrder: new FormControl(this.quantity),
+      price: new FormControl(),
+      product: new FormControl(),
+      customer: new FormControl()
+    });
+    this.activatedRoute.paramMap.subscribe(param => {
+      const idProduct = param.get('idProduct');
+      if (idProduct !== null) {
+        this.idProduct = Number(idProduct);
+        this.productService.getProductById(this.idProduct).subscribe(data => {
+          this.cartForm.patchValue(data);
+          this.getPrice = data.price;
+          this.product = data;
+          this.productDetail = data;
+          this.checkProduct = data.quantity;
+        }, error => {
+
+        }, () => {
+
+        });
+      }
+    });
+  }
+
+  ngOnInit(): void {
+    this.calculate(this.max, this.ratingValue);
+  }
+
   calculate(max: number, ratingValue: number): void {
     this.ratingUnits = Array.from({length: max},
       (_, index) => ({
@@ -110,9 +122,6 @@ export class ProductDetailComponent implements OnInit {
       }));
   }
 
-  ngOnInit(): void {
-    this.calculate(this.max, this.ratingValue);
-  }
 
   minus = () => {
     if (this.i !== 1) {
@@ -127,7 +136,6 @@ export class ProductDetailComponent implements OnInit {
       this.quantity = this.i;
     }
   }
-
 
   select(index: number): void {
     this.toast.success('Cảm ơn bạn đã đánh giá.');
@@ -145,6 +153,22 @@ export class ProductDetailComponent implements OnInit {
   }
 
   createCart(): void {
+    this.idAccount = this.tokenService.getId();
+    this.customerService.findIdCustomerByIdAccount(this.idAccount).subscribe(data => {
+      this.idCustomer = data.idCustomer;
+      console.log(this.idCustomer);
+      this.productService.getItemForCartByIdCustomer(this.idCustomer).subscribe(next => {
+        this.cartList = next;
+        this.ngOnInit();
+        this.messageService.setMessageNumber(String(this.cartList.length));
+        this.ngOnInit();
+      });
+      if (this.idCustomer != null) {
+        this.productService.getCartTotalPrice(+this.idCustomer).subscribe(total => {
+          this.getCartTotalPrice = total;
+        });
+      }
+    });
     this.cartForm = new FormGroup({
       idProductOrder: new FormControl(),
       quantityOrder: new FormControl(this.quantity),
@@ -152,21 +176,29 @@ export class ProductDetailComponent implements OnInit {
       product: new FormControl(this.product),
       customer: new FormControl(this.customer)
     });
-    console.log(this.cartForm.value);
     this.productService.createCart(this.cartForm.value).subscribe(data => {
-      this.toast.success('Thêm giỏ hàng thành công');
+      if (JSON.stringify(data) === JSON.stringify(this.error)) {
+        this.toast.error('Số lượng trong kho không đủ.');
+      } else if (JSON.stringify(data) === JSON.stringify(this.success)) {
+        this.toast.success('Thêm giỏ hàng thành công.');
+
+      }
     }, error => {
-      this.toast.error('Thêm giỏ hàng không thành công');
+      if (error.status === 404) {
+        this.toast.warning('Số lượng trong kho không còn đủ hàng.');
+      } else {
+        this.toast.error('Thêm giỏ hàng không thành công.');
+      }
     });
   }
 
   cantAcctive(): void {
-    this.toast.warning('Không được dùng tài khoản ADMIN đặt hàng');
+    this.toast.warning('Vui lòng đăng nhập để sử dụng chức năng.');
   }
 
   addCart(): void {
-    if (this.productDetail) {
-      this.messageService.sendMessage(this.productDetail);
+    if (this.cartForm) {
+      this.messageService.sendMessage(this.cartForm.value);
     }
   }
 }

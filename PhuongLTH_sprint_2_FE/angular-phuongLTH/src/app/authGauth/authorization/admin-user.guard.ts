@@ -22,10 +22,10 @@ export class ADMINUSERGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     if (this.tokenService.getToken()) {
       // @ts-ignore
-      if (JSON.stringify(CryptoJS.AES.decrypt(this.tokenService.getAnony().toString(), this.decPassword?.trim()).toString(CryptoJS.enc.Utf8)) === JSON.stringify('2')) {
+      if (this.tokenService.getAnony() === JSON.stringify(2)) {
         return true;
       } else { // @ts-ignore
-        if (JSON.stringify(CryptoJS.AES.decrypt(this.tokenService.getAnony().toString(), this.decPassword?.trim()).toString(CryptoJS.enc.Utf8)) === JSON.stringify('1')) {
+        if (this.tokenService.getAnony() === JSON.stringify(1)) {
                 return true;
               } else {
                 this.toast.warning('Bạn không đủ quyền, vui lòng đăng nhập để tiếp tục.', 'Thông báo');

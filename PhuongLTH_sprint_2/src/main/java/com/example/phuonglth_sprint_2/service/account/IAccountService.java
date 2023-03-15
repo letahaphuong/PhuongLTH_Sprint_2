@@ -11,4 +11,8 @@ public interface IAccountService {
     Boolean existsByEmail(String email);
 
     Account save(Account account);
+
+    Long getLastInsertId();
+
+
 }

@@ -41,9 +41,10 @@ export class ChangeAvatrComponent implements OnInit {
   ) {
     this.avatar_get = this.tokenService.getAvatar();
     // @ts-ignore
-    this.name_get = CryptoJS.AES.decrypt(this.tokenService.getName().toString(), this.decPassword?.trim()).toString(CryptoJS.enc.Utf8);
+    this.name_get = this.tokenService.getName();
+    // this.name_get = CryptoJS.AES.decrypt(this.tokenService.getName().toString(), this.decPassword?.trim()).toString(CryptoJS.enc.Utf8);
     // @ts-ignore
-    this.email_get = CryptoJS.AES.decrypt(this.tokenService.getEmail().toString(), this.decPassword?.trim()).toString(CryptoJS.enc.Utf8);
+    this.email_get = this.tokenService.getEmail();
   }
 
   ngOnInit(): void {
@@ -56,11 +57,11 @@ export class ChangeAvatrComponent implements OnInit {
     this.changeAvatar = new ChangeAvatar(this.form.avatar);
     this.securityService.changeAvatar(this.changeAvatar).subscribe(data => {
       if (JSON.stringify(data) === JSON.stringify(this.error)) {
-        this.status = 'Xin hãy upload avatar';
-        this.toast.warning('Xin hãy upload hình ảnh');
+        this.status = 'Xin hãy upload avatar.';
+        this.toast.warning('Xin hãy upload hình ảnh.');
       }
       if (JSON.stringify(data) === JSON.stringify(this.success)) {
-        this.status = 'Thay đổi avatar thành công';
+        this.status = 'Thay đổi avatar thành công.';
         this.toast.success('Thay đổi hình ảnh thành công.');
         this.tokenService.setAvatar(this.form.avatar);
         location.reload();

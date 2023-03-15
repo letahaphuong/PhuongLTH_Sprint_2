@@ -74,7 +74,7 @@ public class CustomerController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("id-customer/{id}")
+    @GetMapping("/id-customer/{id}")
     public ResponseEntity<?> getIdCustomerByIdAccount(@PathVariable("id") Long idAccount) {
         Optional<?> getIdCustomerViewOptional = customerService.getIdCustomerByIdAccount(idAccount);
         if (!getIdCustomerViewOptional.isPresent()) {

@@ -20,9 +20,9 @@ public class AccountDetailService implements UserDetailsService {
 //    ICustomerService customerService;
 
     @Override// tìm account có tồn tại trong DB không
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Account account = accountRepository.findByEmail(username).orElseThrow(() -> new
-                UsernameNotFoundException("Account không tìm thấy -> email hoặc passwword" + username));
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        Account account = accountRepository.findByEmail(email).orElseThrow(() -> new
+                UsernameNotFoundException("Account không tìm thấy -> email hoặc passwword" + email));
         return AccountPrinciple.build(account); // gọi lại hàm build bên Accountprinciple để build account mới
     }
 }

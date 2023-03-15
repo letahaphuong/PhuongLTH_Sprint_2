@@ -3,9 +3,10 @@ import { Routes, RouterModule } from '@angular/router';
 import {CustomerListComponent} from './customer-list/customer-list.component';
 import {AuthGuardGuard} from '../authGauth/authorization/auth-guard.guard';
 import {AdminGuard} from '../authGauth/authorization/admin.guard';
+import {SuperAdminGuard} from '../authGauth/authorization/super-admin.guard';
 
 const routes: Routes = [
-  {path: '', component: CustomerListComponent, canActivate: [AuthGuardGuard] && [AdminGuard]}
+  {path: '', component: CustomerListComponent, canActivate: [AuthGuardGuard] && [SuperAdminGuard]}
 ];
 
 @NgModule({

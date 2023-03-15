@@ -23,7 +23,7 @@
               <h6 class="title-attr" style="margin-top:15px;"><span>Tốc độ ghi hình : <span
                 class="title-attr">{{productDetail?.speedRecord}}.</span></span></h6>
               <h6 class="title-attr" style="margin-top:15px;"><span>Số lượng trong kho : <span
-                class="title-attr">{{productDetail?.quantity}} cái</span></span></h6>
+                class="title-attr" >{{productDetail?.quantity}} cái</span></span></h6>
               <h6 class="title-attr" style="margin-top:15px;"><span style="color: blue">Tư vấn mua hàng :</span> <span
                 class="title-attr">0964 80 81 85</span></h6>
             </div>
@@ -31,25 +31,24 @@
               <h6 class="title-attr"><span>Số lượng</span></h6>
               <div>
                 <div style="height: 27px" class="btn btn-minus" (click)="minus()"><p>-</p></div>
-                <input style="height: 27px" formControlName="quantityOrder" [value]="quantity" style="width: 40px"/>
+                <label>
+                  <input style="height: 27px;width: 40px" formControlName="quantityOrder" [value]="quantity"/>
+                </label>
                 <div style="height: 27px" class="btn btn-plus" (click)="plus()"><p>+</p></div>
               </div>
             </div>
 
             <div class="section" style="padding-bottom:20px;">
               <button *ngIf="checkRoles == '1' && checkLogin" class="btn btn-success" type="submit"
-                      style="border-radius: 10px"
-              >
-            <span style="margin-right:20px" class=" glyphicon glyphicon-shopping-cart"
-                  aria-hidden="true"></span>Thêm vào giỏ hàng
+                      style="border-radius: 10px">
+              Thêm vào giỏ hàng
               </button>
               <button [disabled]="checkRoles == '2'" *ngIf="checkRoles == '2' && checkLogin" class="btn btn-success"
-                      style="border-radius: 10px"
-              >
+                      style="border-radius: 10px">
             <span (click)="cantAcctive()" style="margin-right:20px" class=" glyphicon glyphicon-shopping-cart"
                   aria-hidden="true"></span>Thêm vào giỏ hàng
               </button>
-              <button *ngIf="!checkLogin" class="btn btn-success" style="border-radius: 10px" >
+              <button  *ngIf="!checkLogin" class="btn btn-success" style="border-radius: 10px" >
               <span style="margin-right:20px" class=" glyphicon glyphicon-shopping-cart"
                   aria-hidden="true"></span>Thêm vào giỏ hàng
               </button>
@@ -112,13 +111,7 @@
             <span style="margin-right:20px" class=" glyphicon glyphicon-shopping-cart"
                   aria-hidden="true"></span>Thêm vào giỏ hàng
               </button>
-              <button [disabled]="checkRoles == '2'" *ngIf="checkRoles == '2' && checkLogin" class="btn btn-success"
-                      style="border-radius: 10px"
-              >
-            <span (click)="cantAcctive()" style="margin-right:20px" class=" glyphicon glyphicon-shopping-cart"
-                  aria-hidden="true"></span>Thêm vào giỏ hàng
-              </button>
-              <button *ngIf="!checkLogin"  class="btn btn-success" style="border-radius: 10px">
+              <button *ngIf="!checkLogin" (click)="cantAcctive()"  class="btn btn-success" style="border-radius: 10px">
               <span style="margin-right:20px" class=" glyphicon glyphicon-shopping-cart"
                   aria-hidden="true"></span>Thêm vào giỏ hàng
               </button>
@@ -161,7 +154,7 @@
             <li>Tốc độ ghi hình: {{productDetail?.speedRecord}}</li>
             <li>Công nghệ tự động cân bằng ánh sáng: {{productDetail?.autoWhiteBalanceFunction}}.</li>
             <li>Tầm quan sát: {{productDetail?.infraredVision}}</li>
-            <li>Ngày tạo: {{productDetail?.createDateProduct}}</li>
+            <li>Ngày tạo: {{productDetail?.createDateProduct | date: 'dd/MM/yyyy'}}</li>
           </ul>
         </span>
           </div>
@@ -169,7 +162,6 @@
       </div>
     </div>
   </div>
-
 </div>
 <div *ngIf="checkLogin" class="container">
   <div class="row">

@@ -1,0 +1,10 @@
+.save {
+  padding: 8px 14px;
+  background: #ffedc7;
+  color: black;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  margin-top: 10px;
+  border-radius: 10px;
+}

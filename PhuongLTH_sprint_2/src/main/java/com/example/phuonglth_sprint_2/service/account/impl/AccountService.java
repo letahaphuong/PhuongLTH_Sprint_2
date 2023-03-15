@@ -29,4 +29,9 @@ public class AccountService implements IAccountService {
     public Account save(Account account) {
         return accountRepository.save(account);
     }
+
+    @Override
+    public Long getLastInsertId() {
+        return accountRepository.getLastInsertId();
+    }
 }

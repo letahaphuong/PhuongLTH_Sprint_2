@@ -11,7 +11,7 @@
                 <div class="input-group w-100">
                   <input type="text" name="search" #searchs class="form-control" placeholder="Tìm kiếm">
                   <div class="input-group-append">
-                    <button class="btn btn-primary" (click)="search(searchs.value, false)" type="button">
+                    <button class="btn btn-primary"  (click)="search(searchs.value, false)" type="button">
                       <i class="fa fa-search"></i>
                     </button>
                     <button class="btn btn-primary-light" (click)="reload()" type="reset">
@@ -36,7 +36,7 @@
   <div class="container">
 
     <header class="section-heading">
-      <h3 class="section-title">Sản phẩm phổ biến</h3>
+      <h3 class="section-title">Danh sách sản phẩm</h3>
     </header>
     <div class="row">
       <div class="col-md-3" *ngFor="let item of productViewInfo">
@@ -123,4 +123,4 @@
   </div>
 </section>
 <!-- ========================= SECTION  END// ========================= -->
-
+<button class="fi" id="btnScrollToTop" (click)="scrollToTop()"><i class="fa-sharp fa-solid fa-arrow-up"></i></button>

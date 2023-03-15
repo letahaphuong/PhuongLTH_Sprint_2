@@ -14,6 +14,9 @@ const routes: Routes = [
     loadChildren: () => import('./customer/customer.module').then(module => module.CustomerModule),
     canActivate: [AuthGuardGuard]
   },
+  {path: 'order', loadChildren: () => import('./order/order.module').then(module => module.OrderModule), canActivate: [AuthGuardGuard]},
+  {path: 'chat', loadChildren: () => import('./chat/chat.module').then(module => module.ChatModule)}
+  ,
   {path: '**', component: NotFoundComponent}
 ];
 

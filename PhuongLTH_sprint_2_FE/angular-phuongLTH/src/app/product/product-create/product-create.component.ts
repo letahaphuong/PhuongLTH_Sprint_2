@@ -29,22 +29,21 @@ export class ProductCreateComponent implements OnInit {
     private toast: ToastrService
   ) {
     this.productForm = new FormGroup({
-      autoWhiteBalanceFunction: new FormControl(),
-      nameProduct: new FormControl(),
-      categoryProduct: new FormControl(),
-      imageSensor: new FormControl(),
-      infraredVision: new FormControl(),
-      speedRecord: new FormControl(),
-      description: new FormControl(),
-      material: new FormControl(),
-      memory: new FormControl(),
-      quantity: new FormControl(),
-      resolution: new FormControl(),
-      url: new FormControl(),
-      price: new FormControl(),
+      autoWhiteBalanceFunction: new FormControl('', [Validators.required]),
+      nameProduct: new FormControl('', [Validators.required]),
+      categoryProduct: new FormControl('', [Validators.required]),
+      imageSensor: new FormControl('', [Validators.required]),
+      infraredVision: new FormControl('', [Validators.required]),
+      speedRecord: new FormControl('', [Validators.required]),
+      description: new FormControl('', [Validators.required]),
+      material: new FormControl('', [Validators.required]),
+      memory: new FormControl('', [Validators.required]),
+      quantity: new FormControl('', [Validators.required]),
+      resolution: new FormControl('', [Validators.required]),
+      url: new FormControl('', [Validators.required]),
+      price: new FormControl('', [Validators.required]),
     });
     this.productService.getAllCategory().subscribe(data => {
-      console.log(data);
       this.categoryList = data;
     });
   }
@@ -54,7 +53,6 @@ export class ProductCreateComponent implements OnInit {
 
 
   createProduct(): void {
-    console.log(this.productForm);
     this.checkUpload = true;
     const nameImg = this.getCurrentDateTime() + this.selectedImage.name;
     const fileRef = this.storage.ref(nameImg);
@@ -63,7 +61,7 @@ export class ProductCreateComponent implements OnInit {
         fileRef.getDownloadURL().subscribe((urlLink) => {
           this.productForm.patchValue({url: urlLink});
           this.productService.createProduct(this.productForm.value).subscribe(data => {
-            this.toast.success('Thêm mới thành công');
+            this.toast.success('Thêm mới thành công.');
             this.productForm.reset();
             this.checkUpload = false;
           }, error => {

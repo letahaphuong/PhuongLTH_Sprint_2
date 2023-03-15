@@ -38,12 +38,10 @@ export class ProductListComponent implements OnInit {
   }
   getAll(request: { page: number, size: number }): void {
     this.homeService.showAllList(request).subscribe(data => {
-      console.log(data);
       // @ts-ignore
       this.productViewList = data;
       // @ts-ignore
       this.productViewInfo = data.content;
-      console.log(this.productViewInfo);
       // @ts-ignore
       this.pageNumber = data.pageable.pageNumber;
       // @ts-ignore
@@ -57,20 +55,17 @@ export class ProductListComponent implements OnInit {
   }
 
   search(nameCategory: string, nameProduct: string, price: string, flag: boolean): void {
-    console.log(1);
     if (!flag) {
       this.request.page = 0;
     }
     this.nameCategory = nameCategory;
     this.nameProduct = nameProduct;
     this.price = price;
-    console.log(name);
     this.homeService.search(
       nameCategory.trim(),
       nameProduct.trim(),
       price.trim(),
       this.request).subscribe(data => {
-      console.log(data);
       this.productViewList = data;
       // @ts-ignore
       this.productViewInfo = data.content;

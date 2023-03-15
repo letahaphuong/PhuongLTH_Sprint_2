@@ -62,4 +62,9 @@ public class CustomerService implements ICustomerService {
     public List<String> getAllEmailCustomer() {
         return customerRepository.getAllEmailCustomer();
     }
+
+    @Override
+    public Optional<GetIdCustomerView> getIdCustomer(String email) {
+        return customerRepository.getIdCustomer(email);
+    }
 }

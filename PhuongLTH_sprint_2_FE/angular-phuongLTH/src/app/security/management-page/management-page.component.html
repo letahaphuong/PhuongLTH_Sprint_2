@@ -1,0 +1,44 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
+<div class="row">
+  <div class="col-lg-2">
+    <div class="list-group">
+      <a data-toggle="pill" href="#noti" type="button" class="list-group-item list-group-item-action nav-link">Thông
+        báo</a>
+      <a data-toggle="pill" href="#employee" type="button" class="list-group-item list-group-item-action nav-link">Quản
+        lý nhân viên</a>
+      <a data-toggle="pill" href="#customer" type="button" class="list-group-item list-group-item-action nav-link ">Quản
+        lý khách hàng</a>
+      <a data-toggle="pill" href="#category" type="button" class="list-group-item list-group-item-action nav-link">Quản
+        lý danh mục sản phẩm</a>
+      <a data-toggle="pill" href="#addCategory" type="button" class="list-group-item list-group-item-action">Thêm danh
+        mục sản phẩm</a>
+      <a data-toggle="pill" href="#order" type="button" class="list-group-item list-group-item-action">Quản lý đơn đặt
+        hàng</a>
+      <a data-toggle="pill" href="#addProduct" type="button" class="list-group-item list-group-item-action">Thêm sản
+        phẩm</a>
+      <a data-toggle="pill" href="#addCustomer" type="button" class="list-group-item list-group-item-action">Thêm khách
+        hàng</a>
+      <a data-toggle="pill" href="#addEmployee" type="button" class="list-group-item list-group-item-action">Thêm nhân
+        viên</a>
+    </div>
+  </div>
+  <div class="col-lg-7">
+    <div class="tab-pane fade pt-3" id="noti">
+      <input #title type="text" id="title" placeholder="Tiêu đề"/>
+      <input #message type="text" id="message" placeholder="Nội dung tin nhắn"/>
+      <button (click)="notify(title.value,message.value)">gửi thông báo</button>
+    </div>
+    <div class="tab-pane fade pt-3" id="employee"> employee nè</div>
+    <div class="tab-pane fade pt-3" id="customer"> customer nè</div>
+    <div class="tab-pane fade pt-3" id="category"> category nè</div>
+    <div class="tab-pane fade pt-3" id="addCategory"> addCategory nè</div>
+    <div class="tab-pane fade pt-3" id="order"> order nè</div>
+    <div class="tab-pane fade pt-3" id="addProduct"> addProduct nè</div>
+    <div class="tab-pane fade pt-3" id="addCustomer"> addCustomer nè</div>
+    <div class="tab-pane fade pt-3" id="addEmployee"> addEmployee nè</div>
+  </div>
+  <div class="col-lg-3"></div>
+</div>

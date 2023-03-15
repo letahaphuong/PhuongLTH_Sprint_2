@@ -1,7 +1,9 @@
 package com.example.phuonglth_sprint_2.controller.security;
 
+import com.example.phuonglth_sprint_2.dto.account.TokenDto;
 import com.example.phuonglth_sprint_2.dto.avatar.ChangeAvatarDto;
 import com.example.phuonglth_sprint_2.dto.customer.CustomerDto;
+import com.example.phuonglth_sprint_2.dto.customer.GetIdCustomerView;
 import com.example.phuonglth_sprint_2.dto.employee.EmployeeDto;
 import com.example.phuonglth_sprint_2.dto.request.SignInForm;
 import com.example.phuonglth_sprint_2.dto.response.JwtResponse;
@@ -19,22 +21,35 @@ import com.example.phuonglth_sprint_2.service.customer.ICustomerService;
 import com.example.phuonglth_sprint_2.service.account.IRoleService;
 import com.example.phuonglth_sprint_2.service.employee.IEmployeeService;
 import com.example.phuonglth_sprint_2.service.send_mail.SendMail;
+import com.example.phuonglth_sprint_2.service.valid.IValidService;
+import com.example.phuonglth_sprint_2.service.valid.impl.ValidService;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
+import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.json.jackson2.JacksonFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.social.facebook.api.Facebook;
+import org.springframework.social.facebook.api.User;
+import org.springframework.social.facebook.api.impl.FacebookTemplate;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.mail.MessagingException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.io.IOException;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -43,7 +58,12 @@ import java.util.Set;
 @RequestMapping("api/public")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class SecurityController {
+    @Value("${google.clientId}")
+    String googleClientId;
+    @Value("${secretPsw}")
+    String secretPsw;
 
+    private static final Logger logger = LoggerFactory.getLogger(SecurityController.class);
     private final
     IAccountService accountService;
 
@@ -58,13 +78,20 @@ public class SecurityController {
 
     private final
     JwtProvider jwtProvider;
+
     private final
     JwtTokenFilter jwtTokenFilter;
+
     private final ICustomerService customerService;
+
     private final IEmployeeService employeeService;
+
     private final SendMail sendMail;
 
-    public SecurityController(SendMail sendMail, IAccountService accountService, IRoleService roleService, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, JwtProvider jwtProvider, JwtTokenFilter jwtTokenFilter, ICustomerService customerService, IEmployeeService employeeService) {
+    private final IValidService validService;
+
+    public SecurityController(SendMail sendMail, IAccountService accountService, IRoleService roleService, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, JwtProvider jwtProvider, JwtTokenFilter jwtTokenFilter, ICustomerService customerService, IEmployeeService employeeService, IValidService validService) {
+        this.validService = validService;
         this.accountService = accountService;
         this.roleService = roleService;
         this.passwordEncoder = passwordEncoder;
@@ -74,6 +101,85 @@ public class SecurityController {
         this.customerService = customerService;
         this.employeeService = employeeService;
         this.sendMail = sendMail;
+    }
+
+    @PostMapping("/google")
+    public ResponseEntity<?> google(@RequestBody TokenDto tokenDto) throws IOException {
+        final NetHttpTransport transport = new NetHttpTransport();
+        final JacksonFactory jacksonFactory = new JacksonFactory();
+        GoogleIdTokenVerifier.Builder verifier = new GoogleIdTokenVerifier.Builder(transport, jacksonFactory)
+                .setAudience(Collections.singletonList(googleClientId));
+        final GoogleIdToken googleIdToken = GoogleIdToken.parse(verifier.getJsonFactory(), tokenDto.getValue());
+        final GoogleIdToken.Payload payload = googleIdToken.getPayload();
+        Account account = new Account();
+        Customer customer = new Customer();
+        if (accountService.existsByEmail(payload.getEmail())) {
+            account = accountService.findByEmail(payload.getEmail()).get();
+        } else {
+            account.setEmail(payload.getEmail());
+            account.setAnony("1");
+            account.setEncryptPassword(passwordEncoder.encode(secretPsw));
+            accountService.save(account);
+            account = saveAccount(account);
+            Optional<Account> accountOptional = accountService.findByEmail(payload.getEmail());
+            customer.setAccount(accountOptional.get());
+            customer.setEmail(payload.getEmail());
+            customer.setAnony(1);
+            customerService.save(customer);
+        }
+        ResponseEntity<?> tokenRes = loginOauth(account);
+        return new ResponseEntity<>(tokenRes, HttpStatus.OK);
+    }
+
+    @PostMapping("/facebook")
+    public ResponseEntity<?> facebook(@RequestBody TokenDto tokenDto) {
+        Facebook facebook = new FacebookTemplate(tokenDto.getValue());
+        final String[] fields = {"email", "picture", "name", "gender"};
+        User user = facebook.fetchObject("me", User.class, fields);
+        Account account = new Account();
+        Customer customer = new Customer();
+        if (accountService.existsByEmail(user.getEmail())) {
+            account = accountService.findByEmail(user.getEmail()).get();
+        } else {
+            account.setName(user.getName());
+            account.setEmail(user.getEmail());
+            account.setEncryptPassword(passwordEncoder.encode(secretPsw));
+            account.setAnony("1");
+            account = saveAccount(account);
+            Optional<Account> accountOptional = accountService.findByEmail(user.getEmail());
+            customer.setAccount(accountOptional.get());
+            customer.setEmail(user.getEmail());
+            customer.setName(user.getName());
+            customer.setAnony(1);
+            customerService.save(customer);
+        }
+        ResponseEntity<?> tokenRes = loginOauth(account);
+        return new ResponseEntity<>(tokenRes, HttpStatus.OK);
+    }
+
+    private ResponseEntity<?> loginOauth(Account account) {
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(account.getEmail(), secretPsw)
+        );
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String jwt = jwtProvider.createToken(authentication);
+        AccountPrinciple accountPrinciple = (AccountPrinciple) authentication.getPrincipal();
+        Optional<GetIdCustomerView> idCustomer = customerService.getIdCustomer(account.getEmail());
+        return ResponseEntity.ok(new JwtResponse(jwt,
+                accountPrinciple.getAuthorities(),
+                accountPrinciple.getId(),
+                accountPrinciple.getEmail(),
+                idCustomer,
+                accountPrinciple.getAnony()));
+    }
+
+    private Account saveAccount(Account account) {
+        accountService.save(account);
+        Role rolUser = roleService.findByName(RoleName.USER).get();
+        Set<Role> roles = new HashSet<>();
+        roles.add(rolUser);
+        account.setRoles(roles);
+        return accountService.save(account);
     }
 
     @PostMapping(value = "/signup")
@@ -86,7 +192,7 @@ public class SecurityController {
 //        if (accountService.existsByEmail(customerDto.getEmail())) {
 //            return new ResponseEntity<>(new ResponseMessage("Email đã được đăng ký."), HttpStatus.CONFLICT);
 //        }
-        if (!customerService.checkMail(customerDto.getEmail())){
+        if (!customerService.checkMail(customerDto.getEmail())) {
             Customer customer = new Customer();
             BeanUtils.copyProperties(customerDto, customer);
             Account account = new Account();
@@ -107,7 +213,7 @@ public class SecurityController {
             customerService.save(customer);
             sendMail.SendEmailToCustomer(customerDto);
             return new ResponseEntity<>(HttpStatus.OK);
-        }else {
+        } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
@@ -122,14 +228,14 @@ public class SecurityController {
 
         String token = jwtProvider.createToken(authentication);
         AccountPrinciple accountPrinciple = (AccountPrinciple) authentication.getPrincipal();
-        Optional<Customer> customer = customerService.findByEmail(signInForm.getEmail());
+        Optional<GetIdCustomerView> idCustomer = customerService.getIdCustomer(signInForm.getEmail());
         return ResponseEntity.ok(new JwtResponse(token,
                 accountPrinciple.getName(),
                 accountPrinciple.getAuthorities(),
                 accountPrinciple.getId(),
                 accountPrinciple.getEmail(),
                 accountPrinciple.getAvatar(),
-                customer,
+                idCustomer,
                 accountPrinciple.getAnony()));
     }
 
@@ -182,5 +288,15 @@ public class SecurityController {
         employee.setAccount(account);
         employeeService.save(employee);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("check-valid/{value}")
+    public ResponseEntity<?> checkValid(@PathVariable("value") String value) {
+        Boolean checkEmail = validService.existsByEmail(value);
+        if (!checkEmail) {
+            return new ResponseEntity<>(new ResponseMessage("ok"), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(new ResponseMessage("Thông tin đã tồn tại. Vui lòng nhập lại."), HttpStatus.CREATED);
+        }
     }
 }

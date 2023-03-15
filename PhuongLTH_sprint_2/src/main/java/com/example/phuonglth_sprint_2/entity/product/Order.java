@@ -15,9 +15,11 @@ public class Order {
     private Long idOrder;
 
     private String codeOrder; // mã đơn hàng
+    private String name; // mã đơn hàng
     private boolean paymentStatus; // tình trạng thanh toán
-    private String shippingAddress;// địa chỉ giao hàng
-    private String orderPhoneNumber;// số điện thoại giao hàng
+    private String address;// địa chỉ giao hàng
+    private String phone;// số điện thoại giao hàng
+
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "create_date")
@@ -29,21 +31,20 @@ public class Order {
     private Date modifyDate;
 
     @ManyToOne
-    private OrderDetail orderDetail;
+    private Customer customer;
 
 
     public Order() {
     }
 
-    public Order(Long idOrder, String codeOrder, boolean paymentStatus, String shippingAddress, String orderPhoneNumber, Date createDate, Date modifyDate, OrderDetail orderDetail) {
+    public Order(Long idOrder, String codeOrder, String name, boolean paymentStatus, String address, String phone, Customer customer) {
         this.idOrder = idOrder;
         this.codeOrder = codeOrder;
+        this.name = name;
         this.paymentStatus = paymentStatus;
-        this.shippingAddress = shippingAddress;
-        this.orderPhoneNumber = orderPhoneNumber;
-        this.createDate = createDate;
-        this.modifyDate = modifyDate;
-        this.orderDetail = orderDetail;
+        this.address = address;
+        this.phone = phone;
+        this.customer = customer;
     }
 
     public Long getIdOrder() {
@@ -62,6 +63,14 @@ public class Order {
         this.codeOrder = codeOrder;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public boolean isPaymentStatus() {
         return paymentStatus;
     }
@@ -70,43 +79,27 @@ public class Order {
         this.paymentStatus = paymentStatus;
     }
 
-    public String getShippingAddress() {
-        return shippingAddress;
+    public String getAddress() {
+        return address;
     }
 
-    public void setShippingAddress(String shippingAddress) {
-        this.shippingAddress = shippingAddress;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public String getOrderPhoneNumber() {
-        return orderPhoneNumber;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setOrderPhoneNumber(String orderPhoneNumber) {
-        this.orderPhoneNumber = orderPhoneNumber;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
-    public Date getCreateDate() {
-        return createDate;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
-
-    public Date getModifyDate() {
-        return modifyDate;
-    }
-
-    public void setModifyDate(Date modifyDate) {
-        this.modifyDate = modifyDate;
-    }
-
-    public OrderDetail getOrderDetail() {
-        return orderDetail;
-    }
-
-    public void setOrderDetail(OrderDetail orderDetail) {
-        this.orderDetail = orderDetail;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 }

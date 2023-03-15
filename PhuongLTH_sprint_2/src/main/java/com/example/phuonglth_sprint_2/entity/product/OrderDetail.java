@@ -17,6 +17,18 @@ public class OrderDetail {
     private int quantityOrder;
 
     private double price;
+
+    @Column(columnDefinition = "bit default false")
+    private boolean flagDelete;
+
+    private String codeOrder;
+
+    @ManyToOne
+    private Product product;
+
+    @OneToOne
+    private Customer customer;
+
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "create_date")
@@ -27,25 +39,19 @@ public class OrderDetail {
     @Column(name = "modify_date")
     private Date modifyDate;
 
-    @OneToMany(mappedBy = "orderDetail")
-    private Set<Order> orders;
-    @ManyToOne
-    private Product product;
-
-    @ManyToOne
-    private Customer customer;
-
     public OrderDetail() {
     }
 
-    public OrderDetail(Long idProductOrder, int quantityOrder, double price, Date createDate, Date modifyDate, Product product, Customer customer) {
+    public OrderDetail(Long idProductOrder, int quantityOrder, double price, boolean flagDelete, String codeOrder, Product product, Customer customer, Date createDate, Date modifyDate) {
         this.idProductOrder = idProductOrder;
         this.quantityOrder = quantityOrder;
         this.price = price;
-        this.createDate = createDate;
-        this.modifyDate = modifyDate;
+        this.flagDelete = flagDelete;
+        this.codeOrder = codeOrder;
         this.product = product;
         this.customer = customer;
+        this.createDate = createDate;
+        this.modifyDate = modifyDate;
     }
 
     public Long getIdProductOrder() {
@@ -72,20 +78,20 @@ public class OrderDetail {
         this.price = price;
     }
 
-    public Date getCreateDate() {
-        return createDate;
+    public boolean isFlagDelete() {
+        return flagDelete;
     }
 
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
+    public void setFlagDelete(boolean flagDelete) {
+        this.flagDelete = flagDelete;
     }
 
-    public Date getModifyDate() {
-        return modifyDate;
+    public String getCodeOrder() {
+        return codeOrder;
     }
 
-    public void setModifyDate(Date modifyDate) {
-        this.modifyDate = modifyDate;
+    public void setCodeOrder(String codeOrder) {
+        this.codeOrder = codeOrder;
     }
 
     public Product getProduct() {
@@ -102,5 +108,21 @@ public class OrderDetail {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    public Date getModifyDate() {
+        return modifyDate;
+    }
+
+    public void setModifyDate(Date modifyDate) {
+        this.modifyDate = modifyDate;
     }
 }

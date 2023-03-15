@@ -47,6 +47,7 @@ public class Account {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "modify_date")
     private Date modifyDate;
+
     public Account() {
     }
 
@@ -61,6 +62,11 @@ public class Account {
         this.roles = roles;
         this.createDate = createDate;
         this.modifyDate = modifyDate;
+    }
+
+    public Account(String email, String encode) {
+        this.email = email;
+        this.encryptPassword = encode;
     }
 
     public String getAnony() {

@@ -21,14 +21,16 @@
         <div class="input-group-prepend">
           <span class="input-group-text" style="width: 190px"> Email </span>
         </div>
-        <input formControlName="email" style="width: 340px" class="form-control" placeholder="Địa chỉ email" type="text">
-        <div class="text-danger"
-             *ngIf="createCustomer.controls.email.invalid && createCustomer.controls.email.touched else elseBlock">
+        <input #email (change)="checkValid(email.value)" formControlName="email" style="width: 340px" class="form-control" placeholder="Địa chỉ email" type="text">
+        <div  class="text-danger"
+             *ngIf="createCustomer.controls.email.invalid && !flag && createCustomer.controls.email.touched else elseBlock">
           <span *ngIf="createCustomer.controls.email.hasError('required')"><i class="fa-solid fa-triangle-exclamation"></i>&nbsp;Email không được để trống.</span>
           <span *ngIf="createCustomer.controls.email.hasError('pattern')"><i class="fa-solid fa-triangle-exclamation"></i>&nbsp;Email không đúng định dạng. VD: nguyentanminh@gmailcom</span>
           <span *ngIf="createCustomer.controls.email.hasError('minlength')"><i class="fa-solid fa-triangle-exclamation"></i>&nbsp;Email không nhỏ hơn 5 ký tự.</span>
           <span *ngIf="createCustomer.controls.email.hasError('maxlength')"><i class="fa-solid fa-triangle-exclamation"></i>&nbsp;Email không được quá 100 ký tự.</span>
+
         </div>
+        <span class="text-danger" *ngIf="valueCheck != '' && flag && valueCheck != 'ok'"><i class="fa-solid fa-triangle-exclamation"></i>&nbsp;{{valueCheck}}</span>
         <ng-template #elseBlock><br></ng-template>
       </div> <!-- form-group// -->
       <div class="form-group input-group">
@@ -39,7 +41,7 @@
         <div class="text-danger"
              *ngIf="createCustomer.controls.address.invalid && createCustomer.controls.address.touched else elseBlock">
           <span *ngIf="createCustomer.controls.address.hasError('required')"><i class="fa-solid fa-triangle-exclamation"></i>&nbsp;Địa chỉ không được để trống.</span>
-          <span *ngIf="createCustomer.controls.address.hasError('pattern')"><i class="fa-solid fa-triangle-exclamation"></i>&nbsp;Địa chỉ không đúng định dạng. VD: 43 Trưng Nữ Vương, Đà Nẵng</span>
+<!--          <span *ngIf="createCustomer.controls.address.hasError('pattern')"><i class="fa-solid fa-triangle-exclamation"></i>&nbsp;Địa chỉ không đúng định dạng. VD: 43 Trưng Nữ Vương, Đà Nẵng</span>-->
           <span *ngIf="createCustomer.controls.address.hasError('minlength')"><i class="fa-solid fa-triangle-exclamation"></i>&nbsp;Địa chỉ không nhỏ hơn 5 ký tự.</span>
           <span *ngIf="createCustomer.controls.address.hasError('maxlength')"><i class="fa-solid fa-triangle-exclamation"></i>&nbsp;Địa chỉ không được quá 100 ký tự.</span>
         </div>

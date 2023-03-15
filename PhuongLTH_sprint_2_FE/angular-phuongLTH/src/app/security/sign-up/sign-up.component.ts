@@ -22,6 +22,14 @@ import {differenceInYears} from 'date-fns';
 })
 export class SignUpComponent implements OnInit {
   createCustomer: FormGroup = new FormGroup({});
+  flag = false;
+  valueCheck = '';
+  error: any = {
+    message: 'Email đã tồn tại'
+  };
+  success: any = {
+    message: 'ok'
+  };
 
   constructor(
     private securityService: SecurityService,
@@ -39,8 +47,7 @@ export class SignUpComponent implements OnInit {
         'ễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]+'), Validators.minLength(3), Validators.maxLength(100)]),
       email: new FormControl('', [Validators.required, Validators.pattern('^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$'),
         Validators.minLength(5), Validators.maxLength(100)]),
-      address: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z _ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪ' +
-        'ễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]+')
+      address: new FormControl('', [Validators.required
         , Validators.minLength(5), Validators.maxLength(100)]),
       idCard: new FormControl('', [Validators.required, Validators.pattern('^\\d{12}$')]),
       gender: new FormControl('', [Validators.required]),
@@ -55,13 +62,12 @@ export class SignUpComponent implements OnInit {
 
   create(): void {
     const customer = this.createCustomer.value;
-    console.log(this.createCustomer);
     this.securityService.signUp(customer).subscribe(data => {
       this.toast.success('Thêm mới thành công.');
       this.router.navigateByUrl('/security/login');
     }, error => {
       if (error.status === 409) {
-        this.toast.error('Thêm mới thất bại, em mail đã tồn tại');
+        this.toast.error('Thêm mới thất bại, em mail đã tồn tại.');
       }
       this.toast.error('Thêm mới không thành công.');
     });
@@ -73,4 +79,20 @@ export class SignUpComponent implements OnInit {
     return (age <= 18) ? {greaterThan18: true} : null;
   }
 
+  checkValid(value: string): void {
+    console.log(value);
+    if (value !== '') {
+      this.securityService.checkValid(value).subscribe(data => {
+        if (JSON.stringify(data.message) !== 'ok') {
+          this.flag = true;
+          this.valueCheck = data.message;
+        }
+      }, error => {
+
+      });
+    } else {
+      this.flag = false;
+      this.valueCheck = '';
+    }
+  }
 }

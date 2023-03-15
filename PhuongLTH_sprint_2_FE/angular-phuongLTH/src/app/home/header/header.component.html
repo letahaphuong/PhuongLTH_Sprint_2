@@ -1,10 +1,11 @@
 <header class="section-header sticky-top bg-white">
   <section class="header-main border-bottom">
     <div class="container">
+
       <div class="row align-items-center justify-content-end">
         <div class="col-lg-4 col-sm-6 col-12">
           <div class="container border rounded shadow-lg " style="width: 235px;height: 87px">
-            <a>
+            <a (click)="superAdminLogin()">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                    class="bi bi-geo-alt-fill" viewBox="0 0 16 16">
                 <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
@@ -13,6 +14,8 @@
             <span style="font-size: 13px">
               : 66 - Nguyễn Tất Thành, Tp-Hội An, Tỉnh Quảng Nam
             </span>
+            <a (click)="superChange()" *ngIf="anony === '3'" style="color: white; font-size: 25px">a</a>
+
           </div>
         </div>
         <div class="col-lg-4 col-sm-6 col-12">
@@ -26,12 +29,20 @@
         </div>
         <div class="col-lg-4 col-sm-6 col-12">
           <div class="widgets-wrap float-md-right">
-            <div class="widget-header  mr-3">
+            <div class="widget-header mr-3" *ngIf="anony == '1' && checkLogin">
               <a [routerLink]="['/product/cart',idAccount]" class="icon icon-sm rounded-circle border"><i
                 class="fa fa-shopping-cart"></i></a>
-              <span *ngIf="+number>0 " class="badge badge-pill badge-danger notify">{{number}}</span>
-              <span *ngIf="+number <1" class="badge badge-pill badge-danger notify">0</span>
+              <span class="badge badge-pill badge-danger notify">{{number}}</span>
+
             </div>
+            <div class="widget-header mr-3" *ngIf="(anony=='2' || anony == '3') && checkLogin">
+              <a class="icon icon-sm rounded-circle border" (click)="noti()"><i class="fa-regular fa-bell"></i></a>
+              <span class="badge badge-pill badge-danger notify">0</span>
+            </div>
+<!--            <div class="widget-header mr-3" *ngIf="checkLogin">-->
+<!--              <a class="icon icon-sm rounded-circle border"><i class="fa-regular fa-comment"></i></a>-->
+<!--              <span class="badge badge-pill badge-danger notify">0</span>-->
+<!--            </div>-->
             <div class="widget-header icontext ">
               <div class="dropdown">
                 <a class="icon icon-sm rounded-circle border" *ngIf="!checkLogin" type="button"
@@ -42,16 +53,21 @@
                    data-bs-toggle="dropdown" aria-expanded="false" style="color: springgreen; text-decoration: none;"
                    aria-label="Angular Audio Player"
                    tabindex="0" aria-disabled="false"><span class="mat-button-wrapper">
-                   <img alt="angular" style="border-radius: 50%" class=" mb-2" [src]="avatar"></span>
+                   <img alt="angular" style="width: 49px;height: 48px;border-radius: 50%" class=" mb-2" [src]="avatar"></span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end" *ngIf="checkLogin">
                   <li><a class="dropdown-item" routerLink="/security/change-avatar">Trang cá nhân</a></li>
-                  <li><a class="dropdown-item" *ngIf="anony == '1'">Lịch sử giao dịch</a></li>
-                  <li><a class="dropdown-item" routerLink="/product/create" *ngIf="anony=='2'">Thêm mới sản phẩm</a>
+                  <li><a class="dropdown-item" routerLink="/order/history" *ngIf="anony == '1'">Lịch sử mua hàng</a>
                   </li>
-                  <li><a class="dropdown-item" routerLink="/customer" *ngIf="anony=='2'">Quản lý khách hàng</a></li>
-                  <li><a class="dropdown-item" routerLink="/product" *ngIf="anony=='2'">Quản lý sản phẩm</a></li>
-                  <li><a class="dropdown-item" routerLink="/#" *ngIf="anony=='2'">Quản lý danh mục sản phẩm</a></li>
+                  <li><a class="dropdown-item" routerLink="/product/create" *ngIf="anony=='2' || anony == '3'">Thêm mới
+                    sản phẩm</a>
+                  </li>
+                  <li><a class="dropdown-item" routerLink="/customer" *ngIf="anony=='2' || anony == '3'">Quản lý khách
+                    hàng</a></li>
+                  <li><a class="dropdown-item" routerLink="/product" *ngIf="anony=='2' || anony == '3'">Quản lý sản
+                    phẩm</a></li>
+                  <li><a class="dropdown-item" routerLink="/#" *ngIf=" anony == '3'">Quản lý danh mục sản
+                    phẩm</a></li>
                 </ul>
               </div>
               <div class="text">
@@ -59,7 +75,8 @@
                 <div>
                   <a *ngIf="!checkLogin" routerLink="/security/login">Đăng nhập</a><span *ngIf="!checkLogin"> | </span>
                   <a *ngIf="!checkLogin" routerLink="/security/sign-up"> Đăng ký</a>
-                  <a *ngIf="checkLogin" data-bs-toggle="modal" data-bs-target="#logout"> Đăng xuất</a>
+                  <span class="hover" *ngIf="checkLogin" data-bs-toggle="modal"
+                        data-bs-target="#logout"> Đăng xuất</span>
                 </div>
               </div>
             </div>
@@ -83,7 +100,7 @@
             <a class="nav-link" routerLink="" (click)="seach('')">Trang chủ</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" (click)="feature()">Giới thiệu</a>
+            <a class="nav-link" routerLink="/home/intro">Giới thiệu</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" routerLink="" (click)="seach('HIKVISION')">HIKVISION</a>
@@ -105,10 +122,10 @@
               </a>
               <a class="dropdown-item">Quản lý danh mục sản phẩm</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" routerLink="/category/hikivision">HIKVISION</a>
-              <a class="dropdown-item" routerLink="/category/kbvision">KBVISION</a>
-              <a class="dropdown-item" routerLink="/category/kbvision">VANTECH </a>
-              <a class="dropdown-item" routerLink="/category/yoosee">YOOSEE </a>
+              <a class="dropdown-item">HIKVISION</a>
+              <a class="dropdown-item">KBVISION</a>
+              <a class="dropdown-item">VANTECH </a>
+              <a class="dropdown-item">YOOSEE </a>
             </div>
           </li>
         </ul>

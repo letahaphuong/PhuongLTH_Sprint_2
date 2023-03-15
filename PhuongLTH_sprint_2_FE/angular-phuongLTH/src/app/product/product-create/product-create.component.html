@@ -11,6 +11,11 @@
       </div>
       <div class="col-5">
         <input formControlName="nameProduct" class="form-control" type="text" id="nameProduct">
+        <div class="text-danger"
+             *ngIf="productForm.controls.nameProduct.invalid && productForm.controls.nameProduct.touched else elseBlock">
+          <span *ngIf="productForm.controls.nameProduct.hasError('required')"><i class="fa-solid fa-triangle-exclamation"></i>&nbsp;Tên sản phẩm không được để trống.</span>
+        </div>
+        <ng-template #elseBlock><br></ng-template>
       </div>
     </div>
     <div class="row mt-4 mx-3 mb-3">
@@ -21,6 +26,11 @@
       </div>
       <div class="col-5">
         <textarea formControlName="description" class="form-control" type="text" id="description"></textarea>
+        <div class="text-danger"
+             *ngIf="productForm.controls.description.invalid && productForm.controls.description.touched else elseBlock">
+          <span *ngIf="productForm.controls.description.hasError('required')"><i class="fa-solid fa-triangle-exclamation"></i>&nbsp;Miêu tả không được để trống.</span>
+        </div>
+        <ng-template #elseBlock><br></ng-template>
       </div>
     </div>
     <div class="row mt-4 mx-3 mb-3">
@@ -31,6 +41,11 @@
       </div>
       <div class="col-5">
         <input formControlName="imageSensor" class="form-control" type="text" id="imageSensor">
+        <div class="text-danger"
+             *ngIf="productForm.controls.imageSensor.invalid && productForm.controls.imageSensor.touched else elseBlock">
+          <span *ngIf="productForm.controls.imageSensor.hasError('required')"><i class="fa-solid fa-triangle-exclamation"></i>&nbsp;Cảm biến hình ảnh không được để trống.</span>
+        </div>
+        <ng-template #elseBlock><br></ng-template>
       </div>
     </div>
     <div class="row mt-4 mx-3 mb-3">
@@ -41,6 +56,11 @@
       </div>
       <div class="col-5">
         <input formControlName="resolution" class="form-control" type="text" id="resolution">
+        <div class="text-danger"
+             *ngIf="productForm.controls.resolution.invalid && productForm.controls.resolution.touched else elseBlock">
+          <span *ngIf="productForm.controls.resolution.hasError('required')"><i class="fa-solid fa-triangle-exclamation"></i>&nbsp;Độ phân giải không được để trống.</span>
+        </div>
+        <ng-template #elseBlock><br></ng-template>
       </div>
     </div>
     <div class="row mt-4 mx-3 mb-3">
@@ -51,6 +71,11 @@
       </div>
       <div class="col-5">
         <input formControlName="memory" class="form-control" type="text" id="memory">
+        <div class="text-danger"
+             *ngIf="productForm.controls.memory.invalid && productForm.controls.memory.touched else elseBlock">
+          <span *ngIf="productForm.controls.memory.hasError('required')"><i class="fa-solid fa-triangle-exclamation"></i>&nbsp;Bộ nhớ không được để trống.</span>
+        </div>
+        <ng-template #elseBlock><br></ng-template>
       </div>
     </div>
     <div class="row mt-4 mx-3 mb-3">
@@ -61,6 +86,11 @@
       </div>
       <div class="col-5">
         <input formControlName="autoWhiteBalanceFunction" class="form-control" type="text" id="autoWhiteBalanceFunction">
+        <div class="text-danger"
+             *ngIf="productForm.controls.autoWhiteBalanceFunction.invalid && productForm.controls.autoWhiteBalanceFunction.touched else elseBlock">
+          <span *ngIf="productForm.controls.autoWhiteBalanceFunction.hasError('required')"><i class="fa-solid fa-triangle-exclamation"></i>&nbsp;Tự động cân bằng sáng không được để trống.</span>
+        </div>
+        <ng-template #elseBlock><br></ng-template>
       </div>
     </div>
     <div class="row mt-4 mx-3 mb-3">
@@ -71,6 +101,11 @@
       </div>
       <div class="col-5">
         <input formControlName="material" class="form-control" type="text" id="material">
+        <div class="text-danger"
+             *ngIf="productForm.controls.material.invalid && productForm.controls.material.touched else elseBlock">
+          <span *ngIf="productForm.controls.material.hasError('required')"><i class="fa-solid fa-triangle-exclamation"></i>&nbsp;Chất liệu không được để trống.</span>
+        </div>
+        <ng-template #elseBlock><br></ng-template>
       </div>
     </div>
     <div class="row mt-4 mx-3 mb-3">
@@ -81,6 +116,11 @@
       </div>
       <div class="col-5">
         <input formControlName="speedRecord" class="form-control" type="text" id="speedRecord">
+        <div class="text-danger"
+             *ngIf="productForm.controls.speedRecord.invalid && productForm.controls.speedRecord.touched else elseBlock">
+          <span *ngIf="productForm.controls.speedRecord.hasError('required')"><i class="fa-solid fa-triangle-exclamation"></i>&nbsp;Tốc độ ghi hình không được để trống.</span>
+        </div>
+        <ng-template #elseBlock><br></ng-template>
       </div>
     </div>
     <div class="row mt-4 mx-3 mb-3">
@@ -91,6 +131,11 @@
       </div>
       <div class="col-5">
         <input formControlName="infraredVision" class="form-control" type="text" id="infraredVision">
+        <div class="text-danger"
+             *ngIf="productForm.controls.infraredVision.invalid && productForm.controls.infraredVision.touched else elseBlock">
+          <span *ngIf="productForm.controls.infraredVision.hasError('required')"><i class="fa-solid fa-triangle-exclamation"></i>&nbsp;Tầm quan sát không được để trống.</span>
+        </div>
+        <ng-template #elseBlock><br></ng-template>
       </div>
     </div>
     <div class="row mt-4 mx-3 mb-3">
@@ -103,8 +148,12 @@
         <select class="form-select" formControlName="categoryProduct"  id="categoryProduct">
           <option [selected]="true" [value]="null">--Chọn hãng sản xuất--</option>
           <option *ngFor="let item of categoryList" [ngValue]="item">{{item?.nameCategory}}</option>
-
         </select>
+        <div class="text-danger"
+        *ngIf="productForm.controls.categoryProduct.invalid && productForm.controls.categoryProduct.touched else elseBlock">
+        <span *ngIf="productForm.controls.categoryProduct.hasError('required')"><i class="fa-solid fa-triangle-exclamation"></i>&nbsp;Hãng sản xuất không được để trống.</span>
+      </div>
+      <ng-template #elseBlock><br></ng-template>
       </div>
     </div>
 
@@ -117,8 +166,13 @@
       <div class="col-5">
         <div class="input-group flex-nowrap">
           <input formControlName="price" type="text" id="price" class="form-control">
-        </div>
 
+        </div>
+        <div class="text-danger"
+             *ngIf="productForm.controls.price.invalid && productForm.controls.price.touched else elseBlock">
+          <span *ngIf="productForm.controls.price.hasError('required')"><i class="fa-solid fa-triangle-exclamation"></i>&nbsp;Giá không được để trống.</span>
+        </div>
+        <ng-template #elseBlock><br></ng-template>
       </div>
     </div>
     <div class="row mx-3 mb-3">
@@ -131,7 +185,11 @@
         <div class="input-group flex-nowrap">
           <input formControlName="quantity" type="text" id="quantity" class="form-control">
         </div>
-
+        <div class="text-danger"
+             *ngIf="productForm.controls.quantity.invalid && productForm.controls.quantity.touched else elseBlock">
+          <span *ngIf="productForm.controls.quantity.hasError('required')"><i class="fa-solid fa-triangle-exclamation"></i>&nbsp;Số lượng không được để trống.</span>
+        </div>
+        <ng-template #elseBlock><br></ng-template>
       </div>
     </div>
     <div class="row mx-3">
@@ -142,6 +200,9 @@
       </div>
       <div class="col-8">
         <input id="addImage"  type="file" class="form-control-file" (change)="showPreview($event)">
+        <div *ngIf="downloadURL" style="margin-bottom: 10px; margin-top: 10px">
+          <img [src]="downloadURL" style="width: 300px; height: auto">
+        </div>
       </div>
     </div>
     <br>

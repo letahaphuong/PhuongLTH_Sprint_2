@@ -43,7 +43,6 @@ export class UploadAvatarComponent implements OnInit {
       this.checkUpload = false;
       return downloadURL;
     }).catch(error => {
-      console.log('failed upload avatar and get link ${error}', error);
     });
   }
 }

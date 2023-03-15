@@ -29,4 +29,6 @@ public interface ICustomerService {
 
     List<String> getAllEmailCustomer();
 
+    Optional<GetIdCustomerView> getIdCustomer(String email);
+
 }

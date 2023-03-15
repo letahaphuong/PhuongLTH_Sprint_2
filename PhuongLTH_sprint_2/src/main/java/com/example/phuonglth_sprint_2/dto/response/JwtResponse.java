@@ -1,5 +1,6 @@
 package com.example.phuonglth_sprint_2.dto.response;
 
+import com.example.phuonglth_sprint_2.dto.account.TokenDto;
 import com.example.phuonglth_sprint_2.dto.customer.GetIdCustomerView;
 import com.example.phuonglth_sprint_2.entity.customer.Customer;
 import org.springframework.security.core.GrantedAuthority;
@@ -38,6 +39,15 @@ public class JwtResponse {
         this.id = id;
         this.email = email;
         this.avatar = avatar;
+        this.idCustomer = idCustomer;
+        this.anony = anony;
+    }
+
+    public JwtResponse(String token, Collection<? extends GrantedAuthority> authorities, Long id, String email, Optional<GetIdCustomerView> idCustomer, String anony) {
+        this.token = token;
+        this.roles = authorities;
+        this.id = id;
+        this.email = email;
         this.idCustomer = idCustomer;
         this.anony = anony;
     }
