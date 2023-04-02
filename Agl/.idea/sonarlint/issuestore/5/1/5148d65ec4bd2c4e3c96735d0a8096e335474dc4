@@ -1,0 +1,10 @@
+
+Z	java:S106"9Replace this use of System.out or System.err by a logger.(ˆÀå¥ùÿÿÿÿ8ùÊ¼­ó0
+Z	java:S106
+"9Replace this use of System.out or System.err by a logger.(´üÜšüÿÿÿÿ8üÊ¼­ó0
+D
+java:S1125"'Remove the unnecessary boolean literal.(¼”¯‘8ÿÊ¼­ó0
+a
+java:S3358"DExtract this nested ternary operation into an independent statement.(¼”¯‘8‚Ë¼­ó0
+E
+java:S1125"(Remove the unnecessary boolean literals.(¼”¯‘8…Ë¼­ó0

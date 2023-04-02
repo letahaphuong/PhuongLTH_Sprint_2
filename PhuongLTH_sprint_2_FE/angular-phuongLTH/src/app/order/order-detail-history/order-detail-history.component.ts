@@ -63,7 +63,7 @@ export class OrderDetailHistoryComponent implements OnInit {
       });
       CsvString += '\r\n';
     });
-    CsvString = 'data:application/pdf, ' + encodeURIComponent(CsvString);
+    CsvString = 'data:application/csv, ' + encodeURIComponent(CsvString);
     var x = document.createElement('A');
     x.setAttribute('csv', CsvString);
     x.setAttribute('download', 'hoa-don-ma-' + arr[1].codeOrder + '.csv');

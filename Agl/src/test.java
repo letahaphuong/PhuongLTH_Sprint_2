@@ -1,20 +1,55 @@
 import java.util.*;
 
 public class test {
+
     public static void main(String[] args) {
-        String a = new String("Hello CodeGym");
 
-        String b = new String("Hello CodeGym");
+        int[] arr = {2,123,1,1,33,1,3};
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = i+1; j < arr.length; j++) {
+                if (arr[j] < arr[i]){
+                    int temp = arr[i];
+                    arr[i] = arr[j];
+                    arr[j] = temp;
+                }
+            }
+        }
+        System.out.println(Arrays.toString(arr));
 
-        String c = a;
 
-        System.out.println(a == b);
 
-        System.out.println(a == c);
 
-        System.out.println(a.equals(b));
 
-        System.out.println(a.equals(c));
+
+//        int[] arr = {1, 3, 2, 5, 74, 3, 7, 5};
+//        for (int i = 0; i < arr.length; i++) {
+//            for (int j = i + 1; j < arr.length; j++) {
+//                if (arr[i] > arr[j]) {
+//                    int temp = arr[i];
+//                    arr[i] = arr[j];
+//                    arr[j] = temp;
+//                }
+//            }
+//        }
+//        System.out.println(Arrays.toString(arr));
+
+
+
+//        int[] arr = {1, 2, 3, 4, 7, 8, 9, 9, 9, 9, 7, 7, 7, 8, 8,};
+//        int min1 = arr[0];
+//        int min2 = arr[1];
+//        int min3 = arr[2];
+//        for (int i = 0; i < arr.length; i++) {
+//            if (arr[i] < min1){
+//                min3 = min2;
+//                min2 = min1;
+//                min1 = arr[i];
+//            }else if (arr[i] > min1 && arr[i]< min2){
+//                min3 = min2;
+//                min2 = arr[i];
+//            }
+//        }
+//        System.out.println(min2);
 
 //        Scanner scanner = new Scanner(System.in);
 //        System.out.println("Nhập số cần kiểm tra: ");

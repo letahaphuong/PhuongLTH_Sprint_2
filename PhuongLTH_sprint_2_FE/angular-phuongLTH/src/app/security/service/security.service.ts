@@ -8,7 +8,7 @@ import {Customer} from '../../entity/customer/customer';
 import {Orders} from '../../dto/product/orders';
 import {TokenDto} from '../../dto/token/TokenDto';
 
-const cabecera = {headers: new HttpHeaders({'Content-Type': 'application/json'})};
+const header = {headers: new HttpHeaders({'Content-Type': 'application/json'})};
 
 @Injectable({
   providedIn: 'root'
@@ -47,7 +47,7 @@ export class SecurityService {
   }
 
   facebook(tokenDto: TokenDto): Observable<JwtResponse> {
-    return this.httpClient.post<JwtResponse>(this.API_SIGNIN_FACEBOOK, tokenDto, cabecera);
+    return this.httpClient.post<JwtResponse>(this.API_SIGNIN_FACEBOOK, tokenDto, header);
   }
 
   checkValid(value: string): Observable<any> {

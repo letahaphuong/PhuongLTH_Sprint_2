@@ -1,0 +1,9 @@
+package on_tap.on_tap_2;
+
+public interface SecondInterface {
+    void secondMethod();
+
+    default void log(String str){
+        System.out.println("This method is default implementation" + str);
+    }
+}

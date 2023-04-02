@@ -49,7 +49,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity.authorizeRequests().antMatchers("api/change-avatar", "api/product/**").access("hasAnyRole('ADMIN','USER')");
         httpSecurity.cors().and().csrf().disable()// huỷ CrossOrigin
                 .authorizeRequests()
-                .antMatchers("/api/**", "api/public") // cho tất cả các role vào
+                .antMatchers( "api/public") // cho tất cả các role vào
                 .permitAll()
                 .anyRequest()
                 .authenticated()// khi có account đăng nhập

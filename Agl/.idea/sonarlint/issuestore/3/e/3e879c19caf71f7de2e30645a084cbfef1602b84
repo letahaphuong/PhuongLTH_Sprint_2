@@ -1,0 +1,10 @@
+
+:
+java:S1659"Declare "y" on a separate line.(¡Ê²‘þÿÿÿÿ
+R
+java:S1854"7Remove this useless assignment to local variable "obj".(à—úñüÿÿÿÿ
+C
+java:S1481"(Remove this unused "obj" local variable.(à—úñüÿÿÿÿ
+S	java:S106"9Replace this use of System.out or System.err by a logger.(›Á¹žùÿÿÿÿ
+M
+java:S1128"2Remove this unused import 'java.util.Collections'.(¢³ïÓþÿÿÿÿ

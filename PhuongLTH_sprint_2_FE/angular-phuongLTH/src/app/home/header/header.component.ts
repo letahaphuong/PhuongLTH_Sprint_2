@@ -40,8 +40,8 @@ export class HeaderComponent implements OnInit {
         this.tokenService.setAvatar(this.userLogged.photoUrl);
         this.tokenService.setName(this.userLogged.name);
         this.isLogged = (this.userLogged != null && this.tokenService.getToken() != null);
-      }
-    );
+      });
+
   }
 
   getNumber(): void {
